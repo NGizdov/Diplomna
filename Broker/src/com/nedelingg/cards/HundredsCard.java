@@ -7,7 +7,6 @@ public class HundredsCard extends Card {
 
 	public HundredsCard(Additioner raiser, Substractor lowerer) {
 		super(raiser, lowerer);
-		// TODO Auto-generated constructor stub
 	}
 
 }

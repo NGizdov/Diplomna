@@ -1,11 +1,11 @@
 package com.nedelingg.actions;
 
-import com.nedelingg.model.Company;
-import com.nedelingg.value.ValueAdditioner;
+import com.nedelingg.cardvalue.ValueAdditioner;
+import com.nedelingg.model.CompanyID;
 
 public class Additioner extends Raiser {
 
-	public Additioner(Company company, ValueAdditioner value) {
+	public Additioner(CompanyID company, ValueAdditioner value) {
 		super(company, value);
 	}
 

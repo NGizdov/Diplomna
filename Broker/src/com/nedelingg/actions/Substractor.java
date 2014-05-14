@@ -1,12 +1,11 @@
 package com.nedelingg.actions;
 
-import com.nedelingg.model.Company;
-import com.nedelingg.value.ValueSubstractor;
+import com.nedelingg.cardvalue.ValueSubstractor;
+import com.nedelingg.model.CompanyID;
 
 public class Substractor extends Lowerer {
 
-	public Substractor(Company company, ValueSubstractor value) {
+	public Substractor(CompanyID company, ValueSubstractor value) {
 		super(company, value);
 	}
-
 }

@@ -1,13 +1,12 @@
 package com.nedelingg.actions;
 
-import com.nedelingg.model.Company;
-import com.nedelingg.value.ValueMultiplier;
+import com.nedelingg.cardvalue.ValueMultiplier;
+import com.nedelingg.model.CompanyID;
 
 public class Multiplier extends Raiser {
 
-	public Multiplier(Company company, ValueMultiplier  value) {
+	public Multiplier(CompanyID company, ValueMultiplier  value) {
 		super(company, value);
-		// TODO Auto-generated constructor stub
 	}
 
 }

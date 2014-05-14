@@ -11,4 +11,12 @@ public abstract class Card {
 		this.raiser = raiser;
 		this.lowerer = lowerer;
 	}
+
+	public Raiser getRaiser() {
+		return raiser;
+	}
+
+	public Lowerer getLowerer() {
+		return lowerer;
+	}
 }

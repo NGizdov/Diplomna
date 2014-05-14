@@ -1,13 +1,12 @@
 package com.nedelingg.actions;
 
-import com.nedelingg.model.Company;
-import com.nedelingg.value.ValueLowerer;
+import com.nedelingg.cardvalue.ValueLowerer;
+import com.nedelingg.model.CompanyID;
 
 public abstract class Lowerer extends Actioner {
 
-	public Lowerer(Company company, ValueLowerer value) {
+	public Lowerer(CompanyID company, ValueLowerer value) {
 		super(company, value);
-		// TODO Auto-generated constructor stub
 	}
 
 }

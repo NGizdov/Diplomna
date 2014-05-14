@@ -1,13 +1,12 @@
 package com.nedelingg.actions;
 
-import com.nedelingg.model.Company;
-import com.nedelingg.value.ValueDivider;
+import com.nedelingg.cardvalue.ValueDivider;
+import com.nedelingg.model.CompanyID;
 
 public class Divider extends Lowerer {
 
-	public Divider(Company company, ValueDivider value) {
+	public Divider(CompanyID company, ValueDivider value) {
 		super(company, value);
-		// TODO Auto-generated constructor stub
 	}
 
 }
