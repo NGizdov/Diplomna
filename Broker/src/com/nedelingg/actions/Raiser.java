@@ -1,7 +1,7 @@
 package com.nedelingg.actions;
 
 import com.nedelingg.cardvalue.ValueRaiser;
-import com.nedelingg.model.CompanyID;
+import com.nedelingg.companies.CompanyID;
 
 public abstract class Raiser extends Actioner {
 

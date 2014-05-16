@@ -3,7 +3,7 @@ package com.nedelingg.stock;
 import java.util.Arrays;
 import java.util.List;
 
-import com.nedelingg.model.CompanyID;
+import com.nedelingg.companies.CompanyID;
 
 public abstract class CompanyStock {
 	protected List<Share> ones;

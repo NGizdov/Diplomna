@@ -1,6 +1,6 @@
 package com.nedelingg.stock;
 
-import com.nedelingg.model.CompanyID;
+import com.nedelingg.companies.CompanyID;
 
 public class FirstCompanyStock extends CompanyStock {
 

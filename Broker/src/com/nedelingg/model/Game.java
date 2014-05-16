@@ -21,6 +21,5 @@ public class Game {
 	private SecondCompanyStock secondCompanyStock;
 	private ThirdCompanyStock thirdCompanyStock;
 	private FourthCompanyStock fourthCompanyStock;
-	
-	private List<Money> moneys;
+	private int moneys;
 }

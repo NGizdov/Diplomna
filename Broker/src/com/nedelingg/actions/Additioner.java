@@ -1,7 +1,7 @@
 package com.nedelingg.actions;
 
 import com.nedelingg.cardvalue.ValueAdditioner;
-import com.nedelingg.model.CompanyID;
+import com.nedelingg.companies.CompanyID;
 
 public class Additioner extends Raiser {
 
