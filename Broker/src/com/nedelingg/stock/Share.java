@@ -15,10 +15,6 @@ public class Share {
 		return value;
 	}
 
-	public void setValue(int value) {
-		this.value = value;
-	}
-
 	public CompanyID getCompanyID() {
 		return companyID;
 	}

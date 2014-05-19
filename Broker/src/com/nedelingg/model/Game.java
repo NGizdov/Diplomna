@@ -2,6 +2,10 @@ package com.nedelingg.model;
 
 import java.util.List;
 
+import com.nedelingg.companies.FirstCompany;
+import com.nedelingg.companies.FourthCompany;
+import com.nedelingg.companies.SecondCompany;
+import com.nedelingg.companies.ThirdCompany;
 import com.nedelingg.decks.ByTwoDeck;
 import com.nedelingg.decks.HundredDeck;
 import com.nedelingg.decks.PercentageDeck;
@@ -17,9 +21,9 @@ public class Game {
 	private ByTwoDeck byTwoDeck;
 	private HundredDeck hundredDeck;
 	private PercentageDeck percentageDeck;
-	private FirstCompanyStock firstCompanyStock;
-	private SecondCompanyStock secondCompanyStock;
-	private ThirdCompanyStock thirdCompanyStock;
-	private FourthCompanyStock fourthCompanyStock;
+	private FirstCompany firstCompany;
+	private SecondCompany secondCompany;
+	private ThirdCompany thirdCompany;
+	private FourthCompany fourthCompany;
 	private int moneys;
 }

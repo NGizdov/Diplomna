@@ -6,14 +6,17 @@ import com.nedelingg.actions.Divider;
 import com.nedelingg.actions.Multiplier;
 import com.nedelingg.actions.Substractor;
 import com.nedelingg.model.Board;
+import com.nedelingg.stock.CompanyStock;
 
 public abstract class Company {
 	private CompanyID id;
 	private int currentValue;
+	protected CompanyStock stock;
 	
-	public Company(CompanyID id) {
+	public Company(CompanyID id, CompanyStock stock) {
 		this.id = id;
 		this.currentValue = 100;
+		this.stock = stock;
 	}
 
 	public int getCurrentValue() {
@@ -24,6 +27,10 @@ public abstract class Company {
 		return id;
 	}
 	
+	public CompanyStock getStock() {
+		return stock;
+	}
+
 	public int changeCurrentValue(Actioner action) {
 		if (action instanceof Additioner) {
 			this.currentValue = this.currentValue + action.getValue().getValue();

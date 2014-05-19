@@ -1,5 +1,14 @@
 package com.nedelingg.companies;
 
 public enum CompanyID {
-	 FIRST, SECOND, THIRD, FOURTH, ALL, BY_CHOICE
+	 FIRST(1), SECOND(2), THIRD(3), FOURTH(4), ALL(100), BY_CHOICE(0);
+	 
+	 private int value;
+	 
+	 CompanyID(int id){
+		 this.value = id;
+	 }
+	 public int value() {
+		 return value;
+	 }
 }
