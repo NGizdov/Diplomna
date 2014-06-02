@@ -1,14 +1,27 @@
 package com.nedelingg.main;
 
-import com.nedelingg.cards.ByTwoCard;
-import com.nedelingg.decks.ByTwoDeck;
+import java.util.Scanner;
+
+import com.nedelingg.model.Game;
 
 public class Main {
 
 	public static void main(String[] args) {
-		System.out.println("Hello World");
+		Scanner input = new Scanner(System.in);
 		
-		ByTwoDeck dekc = new ByTwoDeck();
+		// Enter number of Players
+		boolean correctPlayers = false;
+		int players = 0;
+		while(!correctPlayers) {
+			System.out.println("Enter the number of players (2-6): ");
+			players = input.nextInt();
+			if ((players >= 2) && (players <= 6)) correctPlayers = true;
+		}
+		
+		Game game =  new Game(players);
+		game.prepare();
+		
+		
 	}
 	
 }

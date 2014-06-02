@@ -1,12 +1,16 @@
 package com.nedelingg.companies;
 
+import java.util.List;
+
 import com.nedelingg.actions.Actioner;
 import com.nedelingg.actions.Additioner;
 import com.nedelingg.actions.Divider;
 import com.nedelingg.actions.Multiplier;
 import com.nedelingg.actions.Substractor;
+import com.nedelingg.exceptions.NotEnoughShares;
 import com.nedelingg.model.Board;
 import com.nedelingg.stock.CompanyStock;
+import com.nedelingg.stock.Share;
 
 public abstract class Company {
 	private CompanyID id;
@@ -27,8 +31,8 @@ public abstract class Company {
 		return id;
 	}
 	
-	public CompanyStock getStock() {
-		return stock;
+	public int availableShares() {
+		return stock.getShares().size();
 	}
 
 	public int changeCurrentValue(Actioner action) {
@@ -55,5 +59,13 @@ public abstract class Company {
 		}
 		
 		return reminder;
+	}
+
+	public List<Share> getShare(int value) throws NotEnoughShares {
+		return this.stock.getShares(value);
+	}
+	
+	public boolean putShare(int value) {
+		return this.stock.putShares(value);
 	}
 }

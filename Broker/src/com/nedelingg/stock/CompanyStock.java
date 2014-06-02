@@ -22,7 +22,7 @@ public abstract class CompanyStock {
 		}
 	}
 
-	public List<Share> getShare(int value) throws NotEnoughShares {
+	public List<Share> getShares(int value) throws NotEnoughShares {
 		if (value > this.shares.size()){
 			throw new NotEnoughShares("Not enough shares");
 		}
@@ -32,5 +32,10 @@ public abstract class CompanyStock {
 			returned.add(this.shares.remove(i));
 		}
 		return shares;
+	}
+	
+	public boolean putShares(int value) {
+//		this.shares.
+		return true;
 	}
 }

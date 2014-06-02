@@ -9,23 +9,28 @@ import com.nedelingg.cards.Card;
 import com.nedelingg.cards.HundredsCard;
 import com.nedelingg.cards.PercentageCard;
 import com.nedelingg.companies.Company;
+import com.nedelingg.companies.CompanyID;
 import com.nedelingg.exceptions.NotEnoughMoney;
 import com.nedelingg.exceptions.NotEnoughShares;
 import com.nedelingg.stock.Share;
 
 public class Player {
+	private String name;
 	private int moneys;
 	private List<HundredsCard> hudredCards;
 	private List<PercentageCard> percentageCards;
 	private List<ByTwoCard> byTwoCards;
-	private HashMap<Integer, List<Share>> shares;
+	private HashMap<CompanyID, List<Share>> shares;
+	private Game game;
 	
-	public Player() {
+	public Player(Game game, String name) {
+		this.name = name;
+		this.game = game;
 		this.moneys = 160;
 		this.byTwoCards = new LinkedList<ByTwoCard>();
 		this.percentageCards = new LinkedList<PercentageCard>();
 		this.hudredCards = new LinkedList<HundredsCard>();
-		this.shares = new HashMap<Integer, List<Share>>();
+		this.shares = new HashMap<CompanyID, List<Share>>();
 	}
 	
 	public void addCard(Card card) {
@@ -37,15 +42,31 @@ public class Player {
 			this.byTwoCards.add((ByTwoCard) card);
 	}
 	
-	public void buyCompanyShares(int intShares, Company company) throws NotEnoughMoney, NotEnoughShares {
-		if (intShares > company.getStock().getShares().size())
-			throw new NotEnoughShares();
+	public void playCard(Card card) {
+		// TODO play card
+	}
+	
+	public void buyCompanyShares(int intShares, CompanyID companyID) throws NotEnoughMoney {
 		
-		int countedMoney = intShares * company.getCurrentValue();
+		int countedMoney = intShares * this.game.checkCompanyCurrentValue(companyID);
 		if (countedMoney > this.moneys)
 			throw new NotEnoughMoney();
 		
-		List<Share> shares = company.getStock().getShare(intShares);
-		this.shares.put(new Integer(company.getId().value()), shares);
+//		List<Share> shares = company.getShare(intShares);
+//		this.shares.put(new Integer(company.getId().value()), shares);
 	} 
+	
+	public void sellCompanyShares(int intShares, CompanyID companyID) throws NotEnoughMoney, NotEnoughShares {
+//		if (intShares > this.shares.get(company.getId()).size())
+//			throw new NotEnoughShares();
+//		
+//		this.moneys += intShares * company.getCurrentValue();
+//
+//		this.game.putShares(intShares, company);
+		// TODO Add shares to board company shares
+	}
+
+	public String getName() {
+		return this.name;
+	}
 }
