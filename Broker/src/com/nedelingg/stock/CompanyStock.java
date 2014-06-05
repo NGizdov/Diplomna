@@ -34,8 +34,7 @@ public abstract class CompanyStock {
 		return shares;
 	}
 	
-	public boolean putShares(int value) {
-//		this.shares.
-		return true;
+	public boolean putShares(List<Share> shares) {
+		return this.shares.addAll(shares);
 	}
 }

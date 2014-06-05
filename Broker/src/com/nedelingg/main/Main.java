@@ -20,8 +20,9 @@ public class Main {
 		
 		Game game =  new Game(players);
 		game.prepare();
+		game.playPhase();
 		
-		
+		input.close();
 	}
 	
 }

@@ -65,7 +65,7 @@ public abstract class Company {
 		return this.stock.getShares(value);
 	}
 	
-	public boolean putShare(int value) {
-		return this.stock.putShares(value);
+	public boolean putShare(List<Share> shares) {
+		return this.stock.putShares(shares);
 	}
 }

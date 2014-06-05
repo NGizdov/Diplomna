@@ -9,7 +9,7 @@ public abstract class Actioner {
 	private Value value;
 	
 	public Actioner(CompanyID company, Value value){
-		this.setCompany(company);
+		this.company = company;
 		this.value = value;
 	}
 
@@ -17,15 +17,7 @@ public abstract class Actioner {
 		return company;
 	}
 
-	public void setCompany(CompanyID company) {
-		this.company = company;
-	}
-
 	public Value getValue() {
 		return value;
-	}
-
-	public void setValue(Value value) {
-		this.value = value;
 	}
 }

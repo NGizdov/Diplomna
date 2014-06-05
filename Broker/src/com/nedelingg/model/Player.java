@@ -3,15 +3,16 @@ package com.nedelingg.model;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 import com.nedelingg.cards.ByTwoCard;
 import com.nedelingg.cards.Card;
 import com.nedelingg.cards.HundredsCard;
 import com.nedelingg.cards.PercentageCard;
-import com.nedelingg.companies.Company;
 import com.nedelingg.companies.CompanyID;
 import com.nedelingg.exceptions.NotEnoughMoney;
 import com.nedelingg.exceptions.NotEnoughShares;
+import com.nedelingg.exceptions.UnsupportedCompanyID;
 import com.nedelingg.stock.Share;
 
 public class Player {
@@ -21,12 +22,12 @@ public class Player {
 	private List<PercentageCard> percentageCards;
 	private List<ByTwoCard> byTwoCards;
 	private HashMap<CompanyID, List<Share>> shares;
-	private Game game;
+	private Board board;
 	
-	public Player(Game game, String name) {
+	public Player(Board board, String name) {
 		this.name = name;
-		this.game = game;
-		this.moneys = 160;
+		this.board = board;
+		this.moneys = 300;
 		this.byTwoCards = new LinkedList<ByTwoCard>();
 		this.percentageCards = new LinkedList<PercentageCard>();
 		this.hudredCards = new LinkedList<HundredsCard>();
@@ -42,28 +43,51 @@ public class Player {
 			this.byTwoCards.add((ByTwoCard) card);
 	}
 	
-	public void playCard(Card card) {
-		// TODO play card
+	public Card chooseCard() {
+		int cardIndex = 0;
+		Random rm =  new Random();
+		int cardId = rm.nextInt(2);
+		Card card = null;
+		switch (cardId) {
+			case 0: 
+				cardIndex = rm.nextInt(this.hudredCards.size() - 1);
+				card = this.hudredCards.remove(cardIndex);
+				break;
+			case 1:
+				cardIndex = rm.nextInt(this.percentageCards.size() - 1);
+				card = this.percentageCards.remove(cardIndex);
+				break;
+			case 2:
+				cardIndex = rm.nextInt(this.byTwoCards.size() - 1);
+				card = this.byTwoCards.remove(cardIndex);
+				break;
+		}
+		return card;
 	}
 	
-	public void buyCompanyShares(int intShares, CompanyID companyID) throws NotEnoughMoney {
-		
-		int countedMoney = intShares * this.game.checkCompanyCurrentValue(companyID);
+	public void buyCompanyShares(int intShares, CompanyID companyID) throws NotEnoughMoney, NotEnoughShares, UnsupportedCompanyID {		
+		int countedMoney = intShares * this.board.getCompanyCurrentValue(companyID);
 		if (countedMoney > this.moneys)
 			throw new NotEnoughMoney();
 		
-//		List<Share> shares = company.getShare(intShares);
-//		this.shares.put(new Integer(company.getId().value()), shares);
+		List<Share> shares = this.board.getShares(intShares, companyID);
+		this.shares.put(companyID, shares);
 	} 
 	
-	public void sellCompanyShares(int intShares, CompanyID companyID) throws NotEnoughMoney, NotEnoughShares {
-//		if (intShares > this.shares.get(company.getId()).size())
-//			throw new NotEnoughShares();
-//		
-//		this.moneys += intShares * company.getCurrentValue();
-//
-//		this.game.putShares(intShares, company);
-		// TODO Add shares to board company shares
+	public void sellCompanyShares(int intShares, CompanyID companyID) throws NotEnoughShares, UnsupportedCompanyID {
+		if (intShares > this.shares.get(companyID).size())
+			throw new NotEnoughShares();
+		
+		List<Share> shares = new LinkedList<Share>();
+		for (int i = 0; i < intShares; i++) {
+			shares.add(this.shares.get(companyID).remove(0));			
+		}
+		
+		this.moneys += this.board.putShares(shares, companyID);
+	}
+	
+	public int checkCompanyShares(CompanyID companyID){
+		return this.shares.get(companyID).size();
 	}
 
 	public String getName() {
