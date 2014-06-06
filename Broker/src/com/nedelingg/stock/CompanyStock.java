@@ -27,11 +27,11 @@ public abstract class CompanyStock {
 			throw new NotEnoughShares("Not enough shares");
 		}
 		List<Share> returned = new LinkedList<Share>();
-		int length = this.shares.size();
-		for (int i = length - 1; i >= 0; i--) {
+//		int length = this.shares.size();
+		for (int i = 0; i < value; i++) {
 			returned.add(this.shares.remove(i));
 		}
-		return shares;
+		return returned;
 	}
 	
 	public boolean putShares(List<Share> shares) {
