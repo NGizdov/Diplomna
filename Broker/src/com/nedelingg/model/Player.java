@@ -2,7 +2,6 @@ package com.nedelingg.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -15,7 +14,6 @@ import com.nedelingg.decks.DeckTypes;
 import com.nedelingg.exceptions.NotEnoughMoney;
 import com.nedelingg.exceptions.NotEnoughShares;
 import com.nedelingg.exceptions.UnsupportedCompanyID;
-import com.nedelingg.stock.Share;
 
 public class Player {
 	private String name;
@@ -23,7 +21,7 @@ public class Player {
 	private List<HundredsCard> hudredCards;
 	private List<PercentageCard> percentageCards;
 	private List<ByTwoCard> byTwoCards;
-	private HashMap<CompanyID, List<Share>> shares;
+	private HashMap<CompanyID, Integer> shares;
 	private Board board;
 	private boolean isHuman;
 	
@@ -35,7 +33,7 @@ public class Player {
 		this.byTwoCards = new ArrayList<ByTwoCard>();
 		this.percentageCards = new ArrayList<PercentageCard>();
 		this.hudredCards = new ArrayList<HundredsCard>();
-		this.shares = new HashMap<CompanyID, List<Share>>();
+		this.shares = new HashMap<CompanyID, Integer>();
 	}
 	
 	public Player(Board board, String name) {
@@ -50,28 +48,6 @@ public class Player {
 		else if (card instanceof ByTwoCard)
 			this.byTwoCards.add((ByTwoCard) card);
 	}
-	
-	/*public Card chooseCardCPU() {
-		int cardIndex = 0;
-		Random rm =  new Random();
-		int cardId = rm.nextInt(2);
-		Card card = null;
-		switch (cardId) {
-			case 0: 
-				cardIndex = rm.nextInt(this.hudredCards.size() - 1);
-				card = this.hudredCards.remove(cardIndex);
-				break;
-			case 1:
-				cardIndex = rm.nextInt(this.percentageCards.size() - 1);
-				card = this.percentageCards.remove(cardIndex);
-				break;
-			case 2:
-				cardIndex = rm.nextInt(this.byTwoCards.size() - 1);
-				card = this.byTwoCards.remove(cardIndex);
-				break;
-		}
-		return card;
-	}*/
 	
 	public Card chooseCard(DeckTypes type, int index) {
 		Card card = null;
@@ -98,22 +74,22 @@ public class Player {
 		if (countedMoney > this.moneys)
 			throw new NotEnoughMoney();
 		
-		List<Share> shares = this.board.getShares(intShares, companyID);
+		int shares = this.board.getShares(intShares, companyID);
 		this.shares.put(companyID, shares);
 		
 		this.moneys -= countedMoney;
 	} 
 	
 	public void sellCompanyShares(int intShares, CompanyID companyID) throws NotEnoughShares, UnsupportedCompanyID {
-		if (intShares > this.shares.get(companyID).size())
-			throw new NotEnoughShares();
-		
-		List<Share> shares = new LinkedList<Share>();
+		if (intShares > this.shares.get(companyID))
+			throw new NotEnoughShares();		
+	/*	List<Share> shares = new LinkedList<Share>();
 		for (int i = 0; i < intShares; i++) {
 			shares.add(this.shares.get(companyID).remove(0));			
-		}
-		
-		this.moneys += this.board.putShares(shares, companyID);
+		}*/
+		this.shares.put(companyID, this.shares.get(companyID) - intShares);
+//		this.shares.get(companyID);		
+		this.moneys += this.board.putShares(intShares, companyID);
 	}
 	
 	public void sellAllShares() {
@@ -121,16 +97,12 @@ public class Player {
 			for (CompanyID id : this.shares.keySet()) {
 				this.moneys += this.board.putShares(shares.get(id), id);
 			}
-//			this.moneys += this.board.putShares(shares.get(CompanyID.FIRST), CompanyID.FIRST);
-//			this.moneys += this.board.putShares(shares.get(CompanyID.SECOND), CompanyID.SECOND);
-//			this.moneys += this.board.putShares(shares.get(CompanyID.THIRD), CompanyID.THIRD);
-//			this.moneys += this.board.putShares(shares.get(CompanyID.FOURTH), CompanyID.FOURTH);
 		} catch (UnsupportedCompanyID e) {
 		}
 	}
 	
 	public int checkCompanyShares(CompanyID companyID){
-		return this.shares.get(companyID).size();
+		return this.shares.get(companyID);
 	}
 
 	public String getName() {

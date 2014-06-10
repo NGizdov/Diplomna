@@ -1,10 +1,11 @@
 package com.nedelingg.companies;
 
-import com.nedelingg.stock.FourthCompanyStock;
-
 public class FourthCompany extends Company {
 
-	public FourthCompany() {
+	/*public FourthCompany() {
 		super(CompanyID.FIRST, new FourthCompanyStock());
+	}*/
+	public FourthCompany() {
+		super(CompanyID.FIRST);
 	}
 }

@@ -1,7 +1,5 @@
 package com.nedelingg.companies;
 
-import java.util.List;
-
 import com.nedelingg.actions.Actioner;
 import com.nedelingg.actions.Additioner;
 import com.nedelingg.actions.Divider;
@@ -9,18 +7,22 @@ import com.nedelingg.actions.Multiplier;
 import com.nedelingg.actions.Substractor;
 import com.nedelingg.exceptions.NotEnoughShares;
 import com.nedelingg.model.Board;
-import com.nedelingg.stock.CompanyStock;
-import com.nedelingg.stock.Share;
 
 public abstract class Company {
 	private CompanyID id;
 	private int currentValue;
-	protected CompanyStock stock;
+//	protected CompanyStock stock;
+	private int shares;
 	
-	public Company(CompanyID id, CompanyStock stock) {
+//	public Company(CompanyID id, CompanyStock stock) {
+//		this.id = id;
+//		this.currentValue = 100;
+//		this.stock = stock;
+//	}
+	public Company(CompanyID id) {
 		this.id = id;
 		this.currentValue = 100;
-		this.stock = stock;
+		this.shares = 40;
 	}
 
 	public int getCurrentValue() {
@@ -32,7 +34,8 @@ public abstract class Company {
 	}
 	
 	public int availableShares() {
-		return stock.getShares().size();
+//		return stock.getShares().size();
+		return shares;
 	}
 
 	public int changeCurrentValue(Actioner action) {
@@ -61,11 +64,21 @@ public abstract class Company {
 		return reminder;
 	}
 
-	public List<Share> getShare(int value) throws NotEnoughShares {
+	/*public List<Share> getShare(int value) throws NotEnoughShares {
 		return this.stock.getShares(value);
 	}
 	
 	public boolean putShare(List<Share> shares) {
 		return this.stock.putShares(shares);
+	}*/
+	
+	public int getShare(int value) throws NotEnoughShares {
+		if (value > this.shares) throw new NotEnoughShares();
+		this.shares -= value;
+		return value;
+	}
+	
+	public void putShare(int shares) {
+		this.shares += shares;
 	}
 }
