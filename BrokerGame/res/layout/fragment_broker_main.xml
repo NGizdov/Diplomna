@@ -25,7 +25,8 @@
         android:layout_alignLeft="@+id/newGameButton"
         android:layout_below="@+id/newGameButton"
         android:layout_marginTop="30dp"
-        android:text="@string/options" />
+        android:text="@string/options"
+        android:onClick="showOptions" />
 
     <Button
         android:id="@+id/gameInfoButton"

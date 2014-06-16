@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <!-- Game options tab -->
+    <string name="game_level">Game Level</string>
+    <string-array name="levels_array">
+        <item>Begginer</item>
+        <item>Advance</item>
+        <item>Profesional</item>
+    </string-array>
+    
+    <!-- Players options Tab  -->
+    <string name="player_one_label">Player One</string>
+    <string name="player_two_label">Player Two</string>
+    <string name="player_tree_label">Player Tree</string>
+    <string name="player_four_label">Player Four</string>
+    <string name="player_five_label">Player Five</string>
+    <string name="player_six_label">Player Six</string>
+    <string name="player_name_label">Name</string>
+    <string name="player_type_label">Type</string>
+    <string-array name="player_type">
+        <item>Human</item>
+        <item>CPU</item>
+    </string-array>
+    
+</resources>

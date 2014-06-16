@@ -27,12 +27,28 @@
             android:label="@string/title_activity_info_message" >
         </activity>
         <activity
-            android:name="com.nedelingg.design.OptionsActivity"
-            android:label="@string/title_activity_options" >
-        </activity>
-        <activity
             android:name="com.nedelingg.design.OptionActivity"
             android:label="@string/title_activity_option" >
+        </activity>
+        <activity
+            android:name="com.nedelingg.design.options.tabs.GameOptionsTabActivity"
+            android:label="@string/title_activity_game_options_tab" >
+        </activity>
+        <activity
+            android:name="com.nedelingg.design.options.tabs.PlayersOptionsTabActivity"
+            android:label="@string/title_activity_players_options_tab" >
+        </activity>
+        <activity
+            android:name="com.nedelingg.design.options.tabs.CompaniesOptionsTabActivity"
+            android:label="@string/title_activity_companies_options_tab" >
+        </activity>
+        <activity
+            android:name="com.nedelingg.design.LoadingActivity"
+            android:label="@string/title_activity_loading" >
+        </activity>
+        <activity
+            android:name="com.nedelingg.design.DemoFirstPageActivity"
+            android:label="@string/title_activity_demo_first_page" >
         </activity>
     </application>
 

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/green" >
+
+    <GridLayout
+        android:layout_width="fill_parent"
+        android:layout_height="35dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:columnCount="2" >
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="15dp"
+            android:layout_row="0"
+            android:text="@string/game_level" />
+
+        <Spinner
+            android:id="@+id/spinnerGameLevel"
+            android:layout_width="100dp"
+            android:layout_height="35dp"
+            android:layout_column="1"
+            android:layout_gravity="fill_horizontal|top"
+            android:layout_row="0" />
+
+    </GridLayout>
+
+</RelativeLayout>
