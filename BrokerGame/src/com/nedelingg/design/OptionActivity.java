@@ -12,10 +12,12 @@ import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnFocusChangeListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
 
 public class OptionActivity extends FragmentActivity {
@@ -29,6 +31,12 @@ public class OptionActivity extends FragmentActivity {
 	private static Spinner playerFourType;
 	private static Spinner playerFiveType;
 	private static Spinner playerSixType;
+	private static EditText playerOneName;
+	private static EditText playerTwoName;
+	private static EditText playerTreeName;
+	private static EditText playerFourName;
+	private static EditText playerFiveName;
+	private static EditText playerSixName;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -86,10 +94,10 @@ public class OptionActivity extends FragmentActivity {
 		public Fragment getItem(int elem) {
 			switch (elem) {
 				case 0:
-					return new DemoFirstPage();
+					return new GameOptions();
 				case 1:
-					return new DemoSecondPage();
-				default: return new DemoThirdPage();			
+					return new PlayerOptions();
+				default: return new CompanyOptions();			
 			}
 		}
 
@@ -99,7 +107,7 @@ public class OptionActivity extends FragmentActivity {
 		}
 	}
 	
-	public static class DemoFirstPage extends Fragment {
+	public static class GameOptions extends Fragment {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
@@ -128,7 +136,7 @@ public class OptionActivity extends FragmentActivity {
 		}
 	}
 	
-	public static class DemoSecondPage extends Fragment {
+	public static class PlayerOptions extends Fragment {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
@@ -142,51 +150,111 @@ public class OptionActivity extends FragmentActivity {
 				@Override
 				public void onItemSelected(AdapterView<?> parent, View view,
 						int pos, long id) {
-					
-					Log.i("Spinner", (String) parent.getItemAtPosition(pos));
-					Log.i("Spinnrt", parent.getId() + "; ||| ID: " + id + "; ||| Vpinner: " + view.toString());
+					if (pos == 0) {
+						setPlayerToHuman(parent.getId());
+					}
 				}
-
+				
 				@Override
 				public void onNothingSelected(AdapterView<?> parent) {
 					Log.i("Spinner", (String) parent.getSelectedItem());
 				}
 			};
 			
+			OnFocusChangeListener focusChanger = new OnFocusChangeListener() {
+				
+				@Override
+				public void onFocusChange(View v, boolean hasFocus) {
+					if (!hasFocus) {
+						EditText textView = (EditText) v;
+						if (textView.getText().length() > 0) {
+							changePlayerName(textView.getId(), textView.getText().toString());
+						} else {
+							changePlayerName(textView.getId(), textView.getHint());
+						}
+					}
+				}
+			};
+			
 			playerOneType = (Spinner) rootView.findViewById(R.id.playerOneType);
 			playerOneType.setAdapter(adapter);
 			playerOneType.setOnItemSelectedListener(listener);
+			playerOneName = (EditText) rootView.findViewById(R.id.playerOneName);
+			playerOneName.setOnFocusChangeListener(focusChanger);
 			
 			playerTwoType = (Spinner) rootView.findViewById(R.id.playerTwoType);
 			playerTwoType.setAdapter(adapter);
 			playerTwoType.setOnItemSelectedListener(listener);
 			playerTwoType.setSelection(1);
+			playerTwoName = (EditText) rootView.findViewById(R.id.playerTwoName);
+			playerTwoName.setOnFocusChangeListener(focusChanger);
 			
 			playerTreeType = (Spinner) rootView.findViewById(R.id.playerTreeType);
 			playerTreeType.setAdapter(adapter);
 			playerTreeType.setOnItemSelectedListener(listener);
 			playerTreeType.setSelection(1);
+			playerTreeName = (EditText) rootView.findViewById(R.id.playerTreeName);
+			playerTreeName.setOnFocusChangeListener(focusChanger);
 			
 			playerFourType = (Spinner) rootView.findViewById(R.id.playerFourType);
 			playerFourType.setAdapter(adapter);
 			playerFourType.setOnItemSelectedListener(listener);
 			playerFourType.setSelection(1);
+			playerFourName = (EditText) rootView.findViewById(R.id.playerFourName);
+			playerFourName.setOnFocusChangeListener(focusChanger);
 			
 			playerFiveType = (Spinner) rootView.findViewById(R.id.playerFiveType);
 			playerFiveType.setAdapter(adapter);
 			playerFiveType.setOnItemSelectedListener(listener);
 			playerFiveType.setSelection(1);
+			playerFiveName = (EditText) rootView.findViewById(R.id.playerFiveName);
+			playerFiveName.setOnFocusChangeListener(focusChanger);
 			
 			playerSixType = (Spinner) rootView.findViewById(R.id.playerSixType);
 			playerSixType.setAdapter(adapter);
 			playerSixType.setOnItemSelectedListener(listener);
 			playerSixType.setSelection(1);
+			playerSixName = (EditText) rootView.findViewById(R.id.playerSixName);
+			playerSixName.setOnFocusChangeListener(focusChanger);
 			
 			return rootView;
 		}
+
+		protected void changePlayerName(int id, CharSequence text) {
+			Log.i("Player Name", (String) text);
+		}
+
+		protected void setPlayerToHuman(int playerId) {
+			playerOneType.setSelection(1);
+			playerTwoType.setSelection(1);
+			playerTreeType.setSelection(1);
+			playerFourType.setSelection(1);
+			playerFiveType.setSelection(1);
+			playerSixType.setSelection(1);
+			switch (playerId){
+			case R.id.playerOneType: 
+				playerOneType.setSelection(0);
+				break;
+			case R.id.playerTwoType:
+				playerTwoType.setSelection(0);
+				break;
+			case R.id.playerTreeType:
+				playerTreeType.setSelection(0);
+				break;
+			case R.id.playerFourType:
+				playerFourType.setSelection(0);
+				break;
+			case R.id.playerFiveType:
+				playerFiveType.setSelection(0);
+				break;
+			case R.id.playerSixType:
+				playerSixType.setSelection(0);
+				break;
+			}			
+		}
 	}
 	
-	public static class DemoThirdPage extends Fragment {
+	public static class CompanyOptions extends Fragment {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
