@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentTop="true" >
+
+    <LinearLayout
+        android:id="@+id/playersOptions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/green"
+        android:orientation="vertical" >
+
+        <GridLayout
+            android:id="@+id/CompanyOneOptionsLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/players_border"
+            android:columnCount="2"
+            android:orientation="horizontal"
+            android:rowCount="3" >
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_column="0"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="15dp"
+                android:layout_row="0"
+                android:text="@string/player_one_label"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_column="0"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="15dp"
+                android:layout_row="1"
+                android:text="@string/player_name_label" />
+
+            <EditText
+                android:id="@+id/playerOneName"
+                android:layout_width="200dp"
+                android:layout_gravity="left"
+                android:ems="10"
+                android:hint="@string/player_one_label"
+                android:inputType="textPersonName" >
+
+                <requestFocus />
+            </EditText>
+        </GridLayout>
+
+        <GridLayout
+            android:id="@+id/CompanyTwoOptionsLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/players_border"
+            android:columnCount="2"
+            android:orientation="horizontal"
+            android:rowCount="3" >
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_column="0"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="15dp"
+                android:layout_row="0"
+                android:text="@string/player_two_label"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_column="0"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="15dp"
+                android:layout_row="1"
+                android:text="@string/player_name_label" />
+
+            <EditText
+                android:id="@+id/playerTwoName"
+                android:layout_width="200dp"
+                android:layout_gravity="left"
+                android:ems="10"
+                android:hint="@string/player_two_label"
+                android:inputType="textPersonName" >
+
+                <!-- <requestFocus /> -->
+            </EditText>
+        </GridLayout>
+
+        <GridLayout
+            android:id="@+id/CompanyTreeOptionsLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/players_border"
+            android:columnCount="2"
+            android:orientation="horizontal"
+            android:rowCount="3" >
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_column="0"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="15dp"
+                android:layout_row="0"
+                android:text="@string/player_tree_label"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_column="0"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="15dp"
+                android:layout_row="1"
+                android:text="@string/player_name_label" />
+
+            <EditText
+                android:id="@+id/playerTreeName"
+                android:layout_width="200dp"
+                android:layout_gravity="left"
+                android:ems="10"
+                android:hint="@string/player_tree_label"
+                android:inputType="textPersonName" >
+
+               <!--  <requestFocus /> -->
+            </EditText>
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_column="0"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="15dp"
+                android:layout_row="2"
+                android:text="@string/player_type_label" />
+
+            <Spinner
+                android:id="@+id/playerTreeType"
+                android:layout_width="130dp"
+                android:layout_height="35dp"
+                android:layout_column="1"
+                android:layout_gravity="top"
+                android:layout_row="2" />
+        </GridLayout>
+
+        <GridLayout
+            android:id="@+id/PlayerFourOptionsLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/players_border"
+            android:columnCount="2"
+            android:orientation="horizontal"
+            android:rowCount="3" >
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_column="0"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="15dp"
+                android:layout_row="0"
+                android:text="@string/player_four_label"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_column="0"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="15dp"
+                android:layout_row="1"
+                android:text="@string/player_name_label" />
+
+            <EditText
+                android:id="@+id/playerFourName"
+                android:layout_width="200dp"
+                android:layout_gravity="left"
+                android:ems="10"
+                android:hint="@string/player_four_label"
+                android:inputType="textPersonName" >
+
+               <!--  <requestFocus /> -->
+            </EditText>
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_column="0"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="15dp"
+                android:layout_row="2"
+                android:text="@string/player_type_label" />
+
+            <Spinner
+                android:id="@+id/playerFourType"
+                android:layout_width="130dp"
+                android:layout_height="35dp"
+                android:layout_column="1"
+                android:layout_gravity="top"
+                android:layout_row="2" />
+        </GridLayout>
+
+        <GridLayout
+            android:id="@+id/PlayerFiveOptionsLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/players_border"
+            android:columnCount="2"
+            android:orientation="horizontal"
+            android:rowCount="3" >
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_column="0"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="15dp"
+                android:layout_row="0"
+                android:text="@string/player_five_label"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_column="0"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="15dp"
+                android:layout_row="1"
+                android:text="@string/player_name_label" />
+
+            <EditText
+                android:id="@+id/playerFiveName"
+                android:layout_width="200dp"
+                android:layout_gravity="left"
+                android:ems="10"
+                android:hint="@string/player_five_label"
+                android:inputType="textPersonName" >
+
+                <!-- <requestFocus /> -->
+            </EditText>
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_column="0"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="15dp"
+                android:layout_row="2"
+                android:text="@string/player_type_label" />
+
+            <Spinner
+                android:id="@+id/playerFiveType"
+                android:layout_width="130dp"
+                android:layout_height="35dp"
+                android:layout_column="1"
+                android:layout_gravity="top"
+                android:layout_row="2" />
+        </GridLayout>
+
+        <GridLayout
+            android:id="@+id/PlayerSixOptionsLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/players_border"
+            android:columnCount="2"
+            android:orientation="horizontal"
+            android:rowCount="3" >
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_column="0"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="15dp"
+                android:layout_row="0"
+                android:text="@string/player_six_label"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_column="0"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="15dp"
+                android:layout_row="1"
+                android:text="@string/player_name_label" />
+
+            <EditText
+                android:id="@+id/playerSixName"
+                android:layout_width="200dp"
+                android:layout_gravity="left"
+                android:ems="10"
+                android:hint="@string/player_six_label"
+                android:inputType="textPersonName" >
+
+                <!-- <requestFocus /> -->
+            </EditText>
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_column="0"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="15dp"
+                android:layout_row="2"
+                android:text="@string/player_type_label" />
+
+            <Spinner
+                android:id="@+id/playerSixType"
+                android:layout_width="130dp"
+                android:layout_height="35dp"
+                android:layout_column="1"
+                android:layout_gravity="top"
+                android:layout_row="2" />
+        </GridLayout>
+    </LinearLayout>
+
+</ScrollView>

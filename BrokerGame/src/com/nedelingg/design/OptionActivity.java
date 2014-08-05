@@ -112,7 +112,7 @@ public class OptionActivity extends FragmentActivity {
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
 			
-			View rootView = inflater.inflate(R.layout.fragment_demo_first_page, container, false);			
+			View rootView = inflater.inflate(R.layout.fragment_game_opitons_page, container, false);			
 			Spinner spinner = (Spinner) rootView.findViewById(R.id.spinnerGameLevel);
 			ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(current,
 			        R.array.levels_array, android.R.layout.simple_spinner_item);
@@ -144,7 +144,7 @@ public class OptionActivity extends FragmentActivity {
 					R.array.player_type, android.R.layout.simple_spinner_item);			
 			adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-			View rootView = inflater.inflate(R.layout.fragment_demo_second_page, container, false);
+			View rootView = inflater.inflate(R.layout.fragment_player_options_page, container, false);
 			
 			OnItemSelectedListener listener = new OnItemSelectedListener() {
 				@Override
@@ -259,7 +259,7 @@ public class OptionActivity extends FragmentActivity {
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
 			
-			View rootView = inflater.inflate(R.layout.fragment_demo_third_page, container, false);			
+			View rootView = inflater.inflate(R.layout.fragment_company_options_page, container, false);			
 			
 			return rootView;
 		}

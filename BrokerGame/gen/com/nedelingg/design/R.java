@@ -33,37 +33,40 @@ public final class R {
         public static final int players_border=0x7f020001;
     }
     public static final class id {
-        public static final int PlayerFiveOptionsLayout=0x7f0a0014;
-        public static final int PlayerFourOptionsLayout=0x7f0a0011;
-        public static final int PlayerOneOptionsLayout=0x7f0a0008;
-        public static final int PlayerSixOptionsLayout=0x7f0a0017;
-        public static final int PlayerTreeOptionsLayout=0x7f0a000e;
-        public static final int PlayerTwoOptionsLayout=0x7f0a000b;
-        public static final int RelativeLayout1=0x7f0a001a;
-        public static final int action_settings=0x7f0a001e;
+        public static final int CompanyOneOptionsLayout=0x7f0a0007;
+        public static final int CompanyTreeOptionsLayout=0x7f0a000b;
+        public static final int CompanyTwoOptionsLayout=0x7f0a0009;
+        public static final int PlayerFiveOptionsLayout=0x7f0a0011;
+        public static final int PlayerFourOptionsLayout=0x7f0a000e;
+        public static final int PlayerOneOptionsLayout=0x7f0a001c;
+        public static final int PlayerSixOptionsLayout=0x7f0a0014;
+        public static final int PlayerTreeOptionsLayout=0x7f0a0020;
+        public static final int PlayerTwoOptionsLayout=0x7f0a001e;
+        public static final int RelativeLayout1=0x7f0a0018;
+        public static final int action_settings=0x7f0a0021;
         public static final int container=0x7f0a0000;
-        public static final int exitInfo=0x7f0a001b;
+        public static final int exitInfo=0x7f0a0019;
         public static final int gameInfoButton=0x7f0a0004;
         public static final int gameOptionsButton=0x7f0a0003;
         public static final int gameTitle=0x7f0a0005;
-        public static final int infoContent=0x7f0a001c;
+        public static final int infoContent=0x7f0a001a;
         public static final int newGameButton=0x7f0a0002;
         public static final int pager=0x7f0a0001;
-        public static final int playerFiveName=0x7f0a0015;
-        public static final int playerFiveType=0x7f0a0016;
-        public static final int playerFourName=0x7f0a0012;
-        public static final int playerFourType=0x7f0a0013;
-        public static final int playerOneName=0x7f0a0009;
-        public static final int playerOneType=0x7f0a000a;
-        public static final int playerSixName=0x7f0a0018;
-        public static final int playerSixType=0x7f0a0019;
-        public static final int playerTreeName=0x7f0a000f;
-        public static final int playerTreeType=0x7f0a0010;
-        public static final int playerTwoName=0x7f0a000c;
-        public static final int playerTwoType=0x7f0a000d;
-        public static final int playersOptions=0x7f0a0007;
-        public static final int spinnerGameLevel=0x7f0a0006;
-        public static final int textView1=0x7f0a001d;
+        public static final int playerFiveName=0x7f0a0012;
+        public static final int playerFiveType=0x7f0a0013;
+        public static final int playerFourName=0x7f0a000f;
+        public static final int playerFourType=0x7f0a0010;
+        public static final int playerOneName=0x7f0a0008;
+        public static final int playerOneType=0x7f0a001d;
+        public static final int playerSixName=0x7f0a0015;
+        public static final int playerSixType=0x7f0a0016;
+        public static final int playerTreeName=0x7f0a000c;
+        public static final int playerTreeType=0x7f0a000d;
+        public static final int playerTwoName=0x7f0a000a;
+        public static final int playerTwoType=0x7f0a001f;
+        public static final int playersOptions=0x7f0a0006;
+        public static final int spinnerGameLevel=0x7f0a0017;
+        public static final int textView1=0x7f0a001b;
     }
     public static final class layout {
         public static final int activity_broker_main=0x7f030000;
@@ -71,12 +74,12 @@ public final class R {
         public static final int activity_option=0x7f030002;
         public static final int activity_options=0x7f030003;
         public static final int fragment_broker_main=0x7f030004;
-        public static final int fragment_demo_first_page=0x7f030005;
-        public static final int fragment_demo_second_page=0x7f030006;
-        public static final int fragment_demo_third_page=0x7f030007;
-        public static final int fragment_info_message=0x7f030008;
-        public static final int fragment_option=0x7f030009;
-        public static final int fragment_options=0x7f03000a;
+        public static final int fragment_company_options_page=0x7f030005;
+        public static final int fragment_game_opitons_page=0x7f030006;
+        public static final int fragment_info_message=0x7f030007;
+        public static final int fragment_option=0x7f030008;
+        public static final int fragment_options=0x7f030009;
+        public static final int fragment_player_options_page=0x7f03000a;
     }
     public static final class menu {
         public static final int broker_main=0x7f090000;

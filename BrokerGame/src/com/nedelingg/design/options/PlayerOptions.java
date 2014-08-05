@@ -39,7 +39,7 @@ public class PlayerOptions extends Fragment {
 				R.array.player_type, android.R.layout.simple_spinner_item);			
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-		View rootView = inflater.inflate(R.layout.fragment_demo_second_page, container, false);
+		View rootView = inflater.inflate(R.layout.fragment_player_options_page, container, false);
 		
 		OnItemSelectedListener listener = new OnItemSelectedListener() {
 			@Override
