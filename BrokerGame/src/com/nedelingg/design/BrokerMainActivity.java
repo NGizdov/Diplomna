@@ -1,5 +1,7 @@
 package com.nedelingg.design;
 
+import com.nedelingg.design.game.GameMainActivity;
+
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
@@ -29,6 +31,13 @@ public class BrokerMainActivity extends Activity {
 	
 	public void showOptions(View view){
 		Intent intent = new Intent(this, OptionActivity.class);
+		startActivity(intent);
+// 		finish();
+	}
+	
+
+	public void startGame(View view){
+		Intent intent = new Intent(this, GameMainActivity.class);
 		startActivity(intent);
 // 		finish();
 	}

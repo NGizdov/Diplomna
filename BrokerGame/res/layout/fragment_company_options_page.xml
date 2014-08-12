@@ -1,12 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/RelativeLayout1"
     android:layout_width="match_parent"
-    android:layout_height="fill_parent"
+    android:layout_height="match_parent"
+    android:background="@color/green"
+    android:gravity="fill_horizontal"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:scrollbars="vertical"
+    tools:context="com.nedelingg.design.OptionActivity$CompanyOptions" >
+<ScrollView
+        android:id="@+id/companyOptionsScroll"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"    
+    android:layout_above="@+id/resetCompanyButton"
     android:layout_alignParentLeft="true"
-    android:layout_alignParentTop="true" >
+    android:layout_alignParentTop="true"
+        android:fillViewport="true"  >
 
     <LinearLayout
-        android:id="@+id/playersOptions"
+        android:id="@+id/companiesOptions"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/green"
@@ -16,10 +33,10 @@
             android:id="@+id/CompanyOneOptionsLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/players_border"
+            android:background="@drawable/companies_border"
             android:columnCount="2"
             android:orientation="horizontal"
-            android:rowCount="3" >
+            android:rowCount="2" >
 
             <TextView
                 android:layout_width="100dp"
@@ -28,7 +45,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="15dp"
                 android:layout_row="0"
-                android:text="@string/player_one_label"
+                android:text="@string/company_one_label"
                 android:textSize="18sp" />
 
             <TextView
@@ -38,15 +55,15 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="15dp"
                 android:layout_row="1"
-                android:text="@string/player_name_label" />
+                android:text="@string/company_name_label" />
 
             <EditText
-                android:id="@+id/playerOneName"
+                android:id="@+id/companyOneName"
                 android:layout_width="200dp"
                 android:layout_gravity="left"
                 android:ems="10"
-                android:hint="@string/player_one_label"
-                android:inputType="textPersonName" >
+                android:hint="@string/company_one_label"
+                android:inputType="text" >
 
                 <requestFocus />
             </EditText>
@@ -56,10 +73,10 @@
             android:id="@+id/CompanyTwoOptionsLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/players_border"
+            android:background="@drawable/companies_border"
             android:columnCount="2"
             android:orientation="horizontal"
-            android:rowCount="3" >
+            android:rowCount="2" >
 
             <TextView
                 android:layout_width="100dp"
@@ -68,7 +85,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="15dp"
                 android:layout_row="0"
-                android:text="@string/player_two_label"
+                android:text="@string/company_two_label"
                 android:textSize="18sp" />
 
             <TextView
@@ -78,15 +95,15 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="15dp"
                 android:layout_row="1"
-                android:text="@string/player_name_label" />
+                android:text="@string/company_name_label" />
 
             <EditText
-                android:id="@+id/playerTwoName"
+                android:id="@+id/companyTwoName"
                 android:layout_width="200dp"
                 android:layout_gravity="left"
                 android:ems="10"
-                android:hint="@string/player_two_label"
-                android:inputType="textPersonName" >
+                android:hint="@string/company_two_label"
+                android:inputType="text" >
 
                 <!-- <requestFocus /> -->
             </EditText>
@@ -96,10 +113,10 @@
             android:id="@+id/CompanyTreeOptionsLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/players_border"
+            android:background="@drawable/companies_border"
             android:columnCount="2"
             android:orientation="horizontal"
-            android:rowCount="3" >
+            android:rowCount="2" >
 
             <TextView
                 android:layout_width="100dp"
@@ -108,7 +125,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="15dp"
                 android:layout_row="0"
-                android:text="@string/player_tree_label"
+                android:text="@string/company_tree_label"
                 android:textSize="18sp" />
 
             <TextView
@@ -118,45 +135,28 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="15dp"
                 android:layout_row="1"
-                android:text="@string/player_name_label" />
+                android:text="@string/company_name_label" />
 
             <EditText
-                android:id="@+id/playerTreeName"
+                android:id="@+id/companyTreeName"
                 android:layout_width="200dp"
                 android:layout_gravity="left"
                 android:ems="10"
-                android:hint="@string/player_tree_label"
+                android:hint="@string/company_tree_label"
                 android:inputType="textPersonName" >
 
                <!--  <requestFocus /> -->
             </EditText>
-
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:layout_column="0"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="15dp"
-                android:layout_row="2"
-                android:text="@string/player_type_label" />
-
-            <Spinner
-                android:id="@+id/playerTreeType"
-                android:layout_width="130dp"
-                android:layout_height="35dp"
-                android:layout_column="1"
-                android:layout_gravity="top"
-                android:layout_row="2" />
         </GridLayout>
 
         <GridLayout
-            android:id="@+id/PlayerFourOptionsLayout"
+            android:id="@+id/CompanyFourOptionsLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/players_border"
+            android:background="@drawable/companies_border"
             android:columnCount="2"
             android:orientation="horizontal"
-            android:rowCount="3" >
+            android:rowCount="2" >
 
             <TextView
                 android:layout_width="100dp"
@@ -165,7 +165,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="15dp"
                 android:layout_row="0"
-                android:text="@string/player_four_label"
+                android:text="@string/company_four_label"
                 android:textSize="18sp" />
 
             <TextView
@@ -175,150 +175,29 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="15dp"
                 android:layout_row="1"
-                android:text="@string/player_name_label" />
+                android:text="@string/company_name_label" />
 
             <EditText
-                android:id="@+id/playerFourName"
+                android:id="@+id/companyFourName"
                 android:layout_width="200dp"
                 android:layout_gravity="left"
                 android:ems="10"
-                android:hint="@string/player_four_label"
-                android:inputType="textPersonName" >
+                android:hint="@string/company_four_label"
+                android:inputType="text" >
 
                <!--  <requestFocus /> -->
             </EditText>
-
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:layout_column="0"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="15dp"
-                android:layout_row="2"
-                android:text="@string/player_type_label" />
-
-            <Spinner
-                android:id="@+id/playerFourType"
-                android:layout_width="130dp"
-                android:layout_height="35dp"
-                android:layout_column="1"
-                android:layout_gravity="top"
-                android:layout_row="2" />
-        </GridLayout>
-
-        <GridLayout
-            android:id="@+id/PlayerFiveOptionsLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/players_border"
-            android:columnCount="2"
-            android:orientation="horizontal"
-            android:rowCount="3" >
-
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:layout_column="0"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="15dp"
-                android:layout_row="0"
-                android:text="@string/player_five_label"
-                android:textSize="18sp" />
-
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:layout_column="0"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="15dp"
-                android:layout_row="1"
-                android:text="@string/player_name_label" />
-
-            <EditText
-                android:id="@+id/playerFiveName"
-                android:layout_width="200dp"
-                android:layout_gravity="left"
-                android:ems="10"
-                android:hint="@string/player_five_label"
-                android:inputType="textPersonName" >
-
-                <!-- <requestFocus /> -->
-            </EditText>
-
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:layout_column="0"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="15dp"
-                android:layout_row="2"
-                android:text="@string/player_type_label" />
-
-            <Spinner
-                android:id="@+id/playerFiveType"
-                android:layout_width="130dp"
-                android:layout_height="35dp"
-                android:layout_column="1"
-                android:layout_gravity="top"
-                android:layout_row="2" />
-        </GridLayout>
-
-        <GridLayout
-            android:id="@+id/PlayerSixOptionsLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/players_border"
-            android:columnCount="2"
-            android:orientation="horizontal"
-            android:rowCount="3" >
-
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:layout_column="0"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="15dp"
-                android:layout_row="0"
-                android:text="@string/player_six_label"
-                android:textSize="18sp" />
-
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:layout_column="0"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="15dp"
-                android:layout_row="1"
-                android:text="@string/player_name_label" />
-
-            <EditText
-                android:id="@+id/playerSixName"
-                android:layout_width="200dp"
-                android:layout_gravity="left"
-                android:ems="10"
-                android:hint="@string/player_six_label"
-                android:inputType="textPersonName" >
-
-                <!-- <requestFocus /> -->
-            </EditText>
-
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:layout_column="0"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="15dp"
-                android:layout_row="2"
-                android:text="@string/player_type_label" />
-
-            <Spinner
-                android:id="@+id/playerSixType"
-                android:layout_width="130dp"
-                android:layout_height="35dp"
-                android:layout_column="1"
-                android:layout_gravity="top"
-                android:layout_row="2" />
         </GridLayout>
     </LinearLayout>
-
 </ScrollView>
+
+<Button
+    android:id="@+id/resetCompanyButton"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:layout_alignRight="@+id/companyOptionsScroll"
+    android:text="Reset to default"        
+    android:onClick="resetCompaniesOptionsToDefault" />
+
+</RelativeLayout>

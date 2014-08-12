@@ -13,12 +13,12 @@
     <string name="title">Broker</string>
     <string name="title_activity_info">Info</string>
     <string name="title_activity_info_message">Info</string>
-    
     <string name="title_activity_option">Option</string>
     <string name="title_activity_game_options_tab">GameOptions</string>
     <string name="title_activity_players_options_tab">PlayersOptions</string>
     <string name="title_activity_companies_options_tab">CompaniesOptions</string>
     <string name="title_activity_loading">LoadingActivity</string>
     <string name="title_activity_demo_first_page">DemoFirstPageActivity</string>
+    <string name="title_activity_game_main">GameMainActivity</string>
 
 </resources>

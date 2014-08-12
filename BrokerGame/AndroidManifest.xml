@@ -50,6 +50,10 @@
             android:name="com.nedelingg.design.DemoFirstPageActivity"
             android:label="@string/title_activity_demo_first_page" >
         </activity>
+        <activity
+            android:name="com.nedelingg.design.game.GameMainActivity"
+            android:label="@string/title_activity_game_main" >
+        </activity>
     </application>
 
 </manifest>
