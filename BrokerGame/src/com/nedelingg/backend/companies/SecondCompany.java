@@ -7,6 +7,6 @@ public class SecondCompany extends Company {
 	}*/
 	
 	public SecondCompany() {
-		super(CompanyID.FIRST);
+		super(CompanyID.SECOND);
 	}
 }

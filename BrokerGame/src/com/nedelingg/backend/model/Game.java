@@ -17,6 +17,7 @@ import com.nedelingg.backend.decks.PercentageDeck;
 import com.nedelingg.backend.exceptions.NotEnoughMoney;
 import com.nedelingg.backend.exceptions.NotEnoughShares;
 import com.nedelingg.backend.exceptions.UnsupportedCompanyID;
+import com.nedelingg.backend.utils.Options;
 
 public class Game {
 	private List<Player> players;
@@ -33,11 +34,12 @@ public class Game {
 		this.sc = new Scanner(System.in);
 		this.board = new Board();
 		
-		for (int i = 0; i < players - 1; i++) {
-			String name = "Player#" + (i + 1);
-			this.players.add(new Player(this.board, name));
+		for (int i = 0; i < players; i++) {
+			String name = Options.getPlayerName(i + 1);
+			boolean isHuman = Options.getPlayerType(i + 1);
+			this.players.add(new Player(this.board, name, isHuman));
 		}
-		this.players.add(new Player(this.board, "Human", true));
+//		this.players.add(new Player(this.board, "Human", true));
 		this.byTwoDeck = new ByTwoDeck();
 		this.hundredDeck = new HundredDeck();
 		this.percentageDeck =  new PercentageDeck();

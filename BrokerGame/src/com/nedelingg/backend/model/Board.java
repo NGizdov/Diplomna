@@ -8,7 +8,6 @@ import com.nedelingg.backend.companies.SecondCompany;
 import com.nedelingg.backend.companies.ThirdCompany;
 import com.nedelingg.backend.exceptions.NotEnoughShares;
 import com.nedelingg.backend.exceptions.UnsupportedCompanyID;
-import com.nedelingg.design.OptionActivity;
 
 public class Board {
 	public static int MAX_SHARE_PRIZE = 250;

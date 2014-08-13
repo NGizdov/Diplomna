@@ -1,12 +1,9 @@
 package com.nedelingg.design.game;
 
+import com.nedelingg.backend.model.Game;
 import com.nedelingg.design.R;
-import com.nedelingg.design.R.id;
-import com.nedelingg.design.R.layout;
-import com.nedelingg.design.R.menu;
 
 import android.app.Activity;
-import android.app.ActionBar;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,7 +11,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.os.Build;
 
 public class GameMainActivity extends Activity {
 
@@ -27,6 +23,8 @@ public class GameMainActivity extends Activity {
 			getFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}
+		
+		new Game(3);
 	}
 
 	@Override

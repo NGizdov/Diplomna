@@ -6,6 +6,6 @@ public class FourthCompany extends Company {
 		super(CompanyID.FIRST, new FourthCompanyStock());
 	}*/
 	public FourthCompany() {
-		super(CompanyID.FIRST);
+		super(CompanyID.FOURTH);
 	}
 }

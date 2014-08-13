@@ -1,10 +1,13 @@
 package com.nedelingg.design;
 
+import com.nedelingg.backend.utils.Options;
 import com.nedelingg.design.game.GameMainActivity;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +24,8 @@ public class BrokerMainActivity extends Activity {
 			getFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}
+		
+		loadResources();
 	}
 	
 	public void showInfo(View view){
@@ -42,6 +47,13 @@ public class BrokerMainActivity extends Activity {
 // 		finish();
 	}
 
+	private void loadResources() {
+//		SharedPreferences resources = getPreferences(Context.MODE_PRIVATE);
+
+		SharedPreferences resources = getSharedPreferences("options_data", Context.MODE_PRIVATE);
+		Options.loadResources(resources);
+	}
+	
 	/**
 	 * A placeholder fragment containing a simple view.
 	 */

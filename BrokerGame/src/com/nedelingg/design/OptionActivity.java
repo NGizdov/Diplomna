@@ -1,5 +1,8 @@
 package com.nedelingg.design;
 
+import com.nedelingg.backend.companies.CompanyID;
+import com.nedelingg.backend.utils.Options;
+
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.FragmentTransaction;
@@ -41,43 +44,17 @@ public class OptionActivity extends FragmentActivity {
 	private static EditText playerFourNameEditText;
 	private static EditText playerFiveNameEditText;
 	private static EditText playerSixNameEditText;
-	
-	public static final String PLAYER_ONE_DEFAULT_NAME_STRING = "Player One";
-	public static final String PLAYER_TWO_DEFAULT_NAME_STRING = "Player Two";
-	public static final String PLAYER_TREE_DEFAULT_NAME_STRING = "Player Tree";
-	public static final String PLAYER_FOUR_DEFAULT_NAME_STRING = "Player Four";
-	public static final String PLAYER_FIVE_DEFAULT_NAME_STRING = "Player Five";
-	public static final String PLAYER_SIX_DEFAULT_NAME_STRING = "Player Six";
-	
-	private static String playerOneNameString = "";
-	private static String playerTwoNameString = "";
-	private static String playerTreeNameString = "";
-	private static String playerFourNameString = "";
-	private static String playerFiveNameString = "";
-	private static String playerSixNameString = "";
 
 	private static EditText companyOneNameEditText;
 	private static EditText companyTwoNameEditText;
 	private static EditText companyTreeNameEditText;
 	private static EditText companyFourNameEditText;
-
-	private static String companyOneNameString = "";
-	private static String companyTwoNameString = "";
-	private static String companyTreeNameString = "";
-	private static String companyFourNameString = "";
-	
-	public static final String COMPANY_ONE_DEFAULT_NAME_STRING = "Company One";
-	public static final String COMPANY_TWO_DEFAULT_NAME_STRING = "Company Two";
-	public static final String COMPANY_TREE_DEFAULT_NAME_STRING = "Company Tree";
-	public static final String COMPANY_FOUR_DEFAULT_NAME_STRING = "Company Four";
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_option);
 		current = this;
-		
-		loadResources();
 		
 		adapt = new OptionsPagerAdapter(getSupportFragmentManager());
 		pager = (ViewPager) findViewById(R.id.pager);
@@ -118,7 +95,8 @@ public class OptionActivity extends FragmentActivity {
 	}
 	
 	public void resetPlayersOptionsToDefault(View view){
-		SharedPreferences resources = getPreferences(Context.MODE_PRIVATE);
+//		SharedPreferences resources = getPreferences(Context.MODE_PRIVATE);		
+		SharedPreferences resources = getSharedPreferences("options_data", Context.MODE_PRIVATE);
 		SharedPreferences.Editor nameEditor = resources.edit();
 		if(resources.contains("playerOneName")){
 			nameEditor.remove("playerOneName");
@@ -138,17 +116,11 @@ public class OptionActivity extends FragmentActivity {
 		if(resources.contains("playerSixName")){
 			nameEditor.remove("playerSixName");
 		}
-		nameEditor.commit();
 		
-		if(getString(R.string.company_one_label).equalsIgnoreCase(playerOneNameString)){
-			
+		if(resources.contains("humanPlayerId")){
+			nameEditor.remove("humanPlayerId");
 		}
-		playerOneNameString = "";
-		playerTwoNameString = "";
-		playerTreeNameString = "";
-		playerFourNameString = "";
-		playerFiveNameString = "";
-		playerSixNameString = "";
+		nameEditor.commit();
 		
 		playerOneNameEditText.setText("");
 		playerTwoNameEditText.setText("");
@@ -163,10 +135,13 @@ public class OptionActivity extends FragmentActivity {
 		playerFourType.setSelection(1);
 		playerFiveType.setSelection(1);
 		playerSixType.setSelection(1);
+		
+		Options.resetPlayersOptions();
 	}
 	
 	public void resetCompaniesOptionsToDefault(View view){
-		SharedPreferences resources = getPreferences(Context.MODE_PRIVATE);
+//		SharedPreferences resources = getPreferences(Context.MODE_PRIVATE);
+		SharedPreferences resources = getSharedPreferences("options_data", Context.MODE_PRIVATE);
 		SharedPreferences.Editor nameEditor = resources.edit();
 		if(resources.contains("companyOneName")){
 			nameEditor.remove("companyOneName");
@@ -188,52 +163,12 @@ public class OptionActivity extends FragmentActivity {
 		}
 		nameEditor.commit();
 		
-		if(getString(R.string.company_one_label).equalsIgnoreCase(companyOneNameString)){
-			
-		}
-		companyOneNameString = "";
-		companyTwoNameString = "";
-		companyTreeNameString = "";
-		companyFourNameString = "";
-		
 		companyOneNameEditText.setText("");
 		companyTwoNameEditText.setText("");
 		companyTreeNameEditText.setText("");
 		companyFourNameEditText.setText("");
-	}
-	
-	private void loadResources() {
-		SharedPreferences resources = getPreferences(Context.MODE_PRIVATE);
-		if(resources.contains("playerOneName")){
-			playerOneNameString = resources.getString("playerOneName", "");
-		}
-		if(resources.contains("playerTwoName")){
-			playerTwoNameString = resources.getString("playerTwoName", "");
-		}
-		if(resources.contains("playerTreeName")){
-			playerTreeNameString = resources.getString("playerTreeName", "");
-		}
-		if(resources.contains("playerFourName")){
-			playerFourNameString = resources.getString("playerFourName", "");
-		}
-		if(resources.contains("playerFiveName")){
-			playerFiveNameString = resources.getString("playerFiveName", "");
-		}
-		if(resources.contains("playerSixName")){
-			playerSixNameString = resources.getString("playerSixName", "");
-		}		
-		if(resources.contains("companyOneName")){
-			companyOneNameString = resources.getString("companyOneName", "");
-		}
-		if(resources.contains("companyTwoName")){
-			companyTwoNameString = resources.getString("companyTwoName", "");
-		}
-		if(resources.contains("companyTreeName")){
-			companyTreeNameString = resources.getString("companyTreeName", "");
-		}
-		if(resources.contains("companyFourName")){
-			companyFourNameString = resources.getString("companyFourName", "");
-		}
+		
+		Options.resetCompanyOptions();
 	}
 
 	public static class OptionsPagerAdapter extends FragmentPagerAdapter {
@@ -335,79 +270,103 @@ public class OptionActivity extends FragmentActivity {
 			playerOneType = (Spinner) rootView.findViewById(R.id.playerOneType);
 			playerOneType.setAdapter(adapter);
 			playerOneType.setOnItemSelectedListener(listener);
+//			playerOneType.setSelection(1);
 			playerOneNameEditText = (EditText) rootView.findViewById(R.id.playerOneName);
-			if (playerOneNameString.length() > 0) playerOneNameEditText.setText(playerOneNameString);
+			if (Options.getPlayerNameString(1).length() > 0) playerOneNameEditText.setText(Options.getPlayerNameString(1));
 			playerOneNameEditText.setOnFocusChangeListener(textFocusChanger);
 			
 			playerTwoType = (Spinner) rootView.findViewById(R.id.playerTwoType);
 			playerTwoType.setAdapter(adapter);
 			playerTwoType.setOnItemSelectedListener(listener);
-			playerTwoType.setSelection(1);
+//			playerTwoType.setSelection(1);
 			playerTwoNameEditText = (EditText) rootView.findViewById(R.id.playerTwoName);
-			if (playerTwoNameString.length() > 0) playerTwoNameEditText.setText(playerTwoNameString);
+			if (Options.getPlayerNameString(2).length() > 0) playerTwoNameEditText.setText(Options.getPlayerNameString(2));
 			playerTwoNameEditText.setOnFocusChangeListener(textFocusChanger);
 			
 			playerTreeType = (Spinner) rootView.findViewById(R.id.playerTreeType);
 			playerTreeType.setAdapter(adapter);
 			playerTreeType.setOnItemSelectedListener(listener);
-			playerTreeType.setSelection(1);
+//			playerTreeType.setSelection(1);
 			playerTreeNameEditText = (EditText) rootView.findViewById(R.id.playerTreeName);
-			if (playerTreeNameString.length() > 0) playerTreeNameEditText.setText(playerTreeNameString);
+			if (Options.getPlayerNameString(3).length() > 0) playerTreeNameEditText.setText(Options.getPlayerNameString(3));
 			playerTreeNameEditText.setOnFocusChangeListener(textFocusChanger);
 			
 			playerFourType = (Spinner) rootView.findViewById(R.id.playerFourType);
 			playerFourType.setAdapter(adapter);
 			playerFourType.setOnItemSelectedListener(listener);
-			playerFourType.setSelection(1);
+//			playerFourType.setSelection(1);
 			playerFourNameEditText = (EditText) rootView.findViewById(R.id.playerFourName);
-			if (playerFourNameString.length() > 0) playerFourNameEditText.setText(playerFourNameString);
+			if (Options.getPlayerNameString(4).length() > 0) playerFourNameEditText.setText(Options.getPlayerNameString(4));
 			playerFourNameEditText.setOnFocusChangeListener(textFocusChanger);
 			
 			playerFiveType = (Spinner) rootView.findViewById(R.id.playerFiveType);
 			playerFiveType.setAdapter(adapter);
 			playerFiveType.setOnItemSelectedListener(listener);
-			playerFiveType.setSelection(1);
+//			playerFiveType.setSelection(1);
 			playerFiveNameEditText = (EditText) rootView.findViewById(R.id.playerFiveName);
-			if (playerFiveNameString.length() > 0) playerFiveNameEditText.setText(playerFiveNameString);
+			if (Options.getPlayerNameString(5).length() > 0) playerFiveNameEditText.setText(Options.getPlayerNameString(5));
 			playerFiveNameEditText.setOnFocusChangeListener(textFocusChanger);
 			
 			playerSixType = (Spinner) rootView.findViewById(R.id.playerSixType);
 			playerSixType.setAdapter(adapter);
 			playerSixType.setOnItemSelectedListener(listener);
-			playerSixType.setSelection(1);
+//			playerSixType.setSelection(1);
 			playerSixNameEditText = (EditText) rootView.findViewById(R.id.playerSixName);
-			if (playerSixNameString.length() > 0) playerSixNameEditText.setText(playerSixNameString);
+			if (Options.getPlayerNameString(6).length() > 0) playerSixNameEditText.setText(Options.getPlayerNameString(6));
 			playerSixNameEditText.setOnFocusChangeListener(textFocusChanger);
+			
+			allPlayersToCPU();
+			switch (Options.getHumanPlayerIdInt()) {
+			case 1:
+				playerOneType.setSelection(0);
+				break;
+			case 2:
+				playerTwoType.setSelection(0);
+				break;
+			case 3:
+				playerTreeType.setSelection(0);
+				break;
+			case 4:
+				playerFourType.setSelection(0);
+				break;
+			case 5:
+				playerFiveType.setSelection(0);
+				break;
+			default:
+				playerSixType.setSelection(0);
+				break;
+			}
 			
 			return rootView;
 		}
 
 		private void changePlayerName(int id, String text) {
-			SharedPreferences names = getActivity().getPreferences(Context.MODE_PRIVATE);
+//			SharedPreferences names = getActivity().getPreferences(Context.MODE_PRIVATE);
+			SharedPreferences names = getActivity().getSharedPreferences("options_data", Context.MODE_PRIVATE);
 			SharedPreferences.Editor nameEditor = names.edit();
 			switch (id) {
 			case R.id.playerOneName: 
-				playerOneNameString = text;
+				Options.setPlayerNameString(1, text);
 				nameEditor.putString("playerOneName", text);
 				break;
 			case R.id.playerTwoName: 
-				playerTwoNameString = text;
+				Options.setPlayerNameString(2, text);
 				nameEditor.putString("playerTwoName", text);
 				break;
 			case R.id.playerTreeName: 
-				playerTreeNameString = text;
+				Options.setPlayerNameString(3, text);
 				nameEditor.putString("playerTreeName", text);
 				break;
 			case R.id.playerFourName: 
-				playerFourNameString = text;
+				Options.setPlayerNameString(4, text);
 				nameEditor.putString("playerFourName", text);
 				break;
 			case R.id.playerFiveName: 
-				playerFiveNameString = text;
+				Options.setPlayerNameString(5, text);
 				nameEditor.putString("playerFiveName", text);
 				break;
 			case R.id.playerSixName: 
-				playerSixNameString = text;
+				Options.setPlayerNameString(6, text);
 				nameEditor.putString("playerSixName", text);
 				break;
 			}
@@ -415,32 +374,52 @@ public class OptionActivity extends FragmentActivity {
 		}
 
 		private void setPlayerToHuman(int playerId) {
+//			SharedPreferences type = getActivity().getPreferences(Context.MODE_PRIVATE);
+			SharedPreferences type = getActivity().getSharedPreferences("options_data", Context.MODE_PRIVATE);
+			SharedPreferences.Editor typeEditor = type.edit();
+			allPlayersToCPU();
+			switch (playerId){
+			case R.id.playerOneType: 
+				playerOneType.setSelection(0);
+				Options.setHumanPlayerIdInt(1);
+				typeEditor.putInt("humanPlayerId", 1);
+				break;
+			case R.id.playerTwoType:
+				playerTwoType.setSelection(0);
+				Options.setHumanPlayerIdInt(2);
+				typeEditor.putInt("humanPlayerId", 2);
+				break;
+			case R.id.playerTreeType:
+				playerTreeType.setSelection(0);
+				Options.setHumanPlayerIdInt(3);
+				typeEditor.putInt("humanPlayerId", 3);
+				break;
+			case R.id.playerFourType:
+				playerFourType.setSelection(0);
+				Options.setHumanPlayerIdInt(4);
+				typeEditor.putInt("humanPlayerId", 4);
+				break;
+			case R.id.playerFiveType:
+				playerFiveType.setSelection(0);
+				Options.setHumanPlayerIdInt(5);
+				typeEditor.putInt("humanPlayerId", 5);
+				break;
+			case R.id.playerSixType:
+				playerSixType.setSelection(0);
+				Options.setHumanPlayerIdInt(6);
+				typeEditor.putInt("humanPlayerId", 6);
+				break;
+			}
+			typeEditor.commit();
+		}
+
+		private void allPlayersToCPU() {
 			playerOneType.setSelection(1);
 			playerTwoType.setSelection(1);
 			playerTreeType.setSelection(1);
 			playerFourType.setSelection(1);
 			playerFiveType.setSelection(1);
 			playerSixType.setSelection(1);
-			switch (playerId){
-			case R.id.playerOneType: 
-				playerOneType.setSelection(0);
-				break;
-			case R.id.playerTwoType:
-				playerTwoType.setSelection(0);
-				break;
-			case R.id.playerTreeType:
-				playerTreeType.setSelection(0);
-				break;
-			case R.id.playerFourType:
-				playerFourType.setSelection(0);
-				break;
-			case R.id.playerFiveType:
-				playerFiveType.setSelection(0);
-				break;
-			case R.id.playerSixType:
-				playerSixType.setSelection(0);
-				break;
-			}			
 		}
 	}
 	
@@ -459,50 +438,49 @@ public class OptionActivity extends FragmentActivity {
 						EditText textView = (EditText) v;
 						if (textView.getText().length() > 0) {
 							changeCompanyName(textView.getId(), textView.getText().toString());
-						} else {
-//							changeCompanyName(textView.getId(), textView.getHint().toString());
 						}
 					}
 				}
 			};
 			
 			companyOneNameEditText = (EditText) rootView.findViewById(R.id.companyOneName);
-			if (companyOneNameString.length() > 0) companyOneNameEditText.setText(companyOneNameString);
+			if (Options.getCompanyNameString(CompanyID.FIRST).length() > 0) companyOneNameEditText.setText(Options.getCompanyNameString(CompanyID.FIRST));
 			companyOneNameEditText.setOnFocusChangeListener(focusChanger);
 			
 			companyTwoNameEditText = (EditText) rootView.findViewById(R.id.companyTwoName);
-			if (companyTwoNameString.length() > 0) companyTwoNameEditText.setText(companyTwoNameString);
+			if (Options.getCompanyNameString(CompanyID.SECOND).length() > 0) companyTwoNameEditText.setText(Options.getCompanyNameString(CompanyID.SECOND));
 			companyTwoNameEditText.setOnFocusChangeListener(focusChanger);
 			
 			companyTreeNameEditText = (EditText) rootView.findViewById(R.id.companyTreeName);
-			if (companyTreeNameString.length() > 0) companyTreeNameEditText.setText(companyTreeNameString);
+			if (Options.getCompanyNameString(CompanyID.THIRD).length() > 0) companyTreeNameEditText.setText(Options.getCompanyNameString(CompanyID.THIRD));
 			companyTreeNameEditText.setOnFocusChangeListener(focusChanger);
 			
 			companyFourNameEditText = (EditText) rootView.findViewById(R.id.companyFourName);
-			if (companyFourNameString.length() > 0) companyFourNameEditText.setText(companyFourNameString);
+			if (Options.getCompanyNameString(CompanyID.FOURTH).length() > 0) companyFourNameEditText.setText(Options.getCompanyNameString(CompanyID.FOURTH));
 			companyFourNameEditText.setOnFocusChangeListener(focusChanger);
 			
 			return rootView;
 		}
 		
-		protected void changeCompanyName(int id, String text) {
-			SharedPreferences names = getActivity().getPreferences(Context.MODE_PRIVATE);
+		private void changeCompanyName(int id, String text) {
+//			SharedPreferences names = getActivity().getPreferences(Context.MODE_PRIVATE);
+			SharedPreferences names = getActivity().getSharedPreferences("options_data", Context.MODE_PRIVATE);
 			SharedPreferences.Editor nameEditor = names.edit();
 			switch (id) {
 			case R.id.companyOneName: 
-				companyOneNameString = text;
+				Options.setCompanyNameString(CompanyID.FIRST, text);
 				nameEditor.putString("companyOneName", text);
 				break;
 			case R.id.companyTwoName: 
-				companyTwoNameString = text;
+				Options.setCompanyNameString(CompanyID.SECOND, text);
 				nameEditor.putString("companyTwoName", text);
 				break;
 			case R.id.companyTreeName: 
-				companyTreeNameString = text;
+				Options.setCompanyNameString(CompanyID.THIRD, text);
 				nameEditor.putString("companyTreeName", text);
 				break;
 			case R.id.companyFourName: 
-				companyFourNameString = text;
+				Options.setCompanyNameString(CompanyID.FOURTH, text);
 				nameEditor.putString("companyFourName", text);
 				break;
 			}
