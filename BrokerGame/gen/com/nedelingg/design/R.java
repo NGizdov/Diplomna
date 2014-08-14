@@ -29,9 +29,31 @@ public final class R {
         public static final int activity_vertical_margin=0x7f040001;
     }
     public static final class drawable {
-        public static final int companies_border=0x7f020000;
-        public static final int ic_launcher=0x7f020001;
-        public static final int players_border=0x7f020002;
+        public static final int a100=0x7f020000;
+        public static final int a2div=0x7f020001;
+        public static final int a2x=0x7f020002;
+        public static final int a50=0x7f020003;
+        public static final int a60=0x7f020004;
+        public static final int b100=0x7f020005;
+        public static final int b2div=0x7f020006;
+        public static final int b2x=0x7f020007;
+        public static final int b50=0x7f020008;
+        public static final int b60=0x7f020009;
+        public static final int board=0x7f02000a;
+        public static final int c100=0x7f02000b;
+        public static final int c2div=0x7f02000c;
+        public static final int c2x=0x7f02000d;
+        public static final int c50=0x7f02000e;
+        public static final int c60=0x7f02000f;
+        public static final int companies_border=0x7f020010;
+        public static final int d100=0x7f020011;
+        public static final int d2div=0x7f020012;
+        public static final int d2x=0x7f020013;
+        public static final int d50=0x7f020014;
+        public static final int d60=0x7f020015;
+        public static final int ic_launcher=0x7f020016;
+        public static final int marker=0x7f020017;
+        public static final int players_border=0x7f020018;
     }
     public static final class id {
         public static final int CompanyFourOptionsLayout=0x7f0a0010;
