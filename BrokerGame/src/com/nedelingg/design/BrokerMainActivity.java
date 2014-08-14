@@ -1,5 +1,6 @@
 package com.nedelingg.design;
 
+import com.nedelingg.backend.model.Game;
 import com.nedelingg.backend.utils.Options;
 import com.nedelingg.design.game.GameMainActivity;
 
@@ -31,7 +32,7 @@ public class BrokerMainActivity extends Activity {
 	public void showInfo(View view){
 		Intent intent = new Intent(this, InfoMessageActivity.class);
 		startActivity(intent);
-		finish();
+//		finish();
 	}
 	
 	public void showOptions(View view){

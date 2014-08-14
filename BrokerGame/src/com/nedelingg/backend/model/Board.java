@@ -28,6 +28,25 @@ public class Board {
 	public void repaint(){
 		// TODO
 	}
+	
+	public String getCompanyName(CompanyID id) {
+		String name = "";
+		switch (id) {
+		case FIRST:
+			name = firstCompany.getName();
+			break;
+		case SECOND:
+			name = secondCompany.getName();
+			break;
+		case THIRD:
+			name = thirdCompany.getName();
+			break;
+		default:
+			name = fourthCompany.getName();
+			break;
+		}
+		return name;
+	}
 
 	public int putShares(int shares, CompanyID companyID) throws UnsupportedCompanyID {
 		int moneys = shares * this.getCompanyCurrentValue(companyID);

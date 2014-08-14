@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="cardOne">First Card</string>
+    <string name="cardTwo">Second Card</string>
+    <string name="cardTree">Third Card</string>
+    <string name="cardFour">Fourth Card</string>
+    <string name="cardFive">Fifth Card</string>
+    <string name="cardSix">Sixth Card</string>
+    <string name="cardSeven">Seventh Card</string>
+    <string name="cardEight">Eight Card</string>
+    <string name="cardNine">Ninth Card</string>
+    <string name="cardTen">Tenth Card</string>
+    <string name="board">Board</string>
+</resources>

@@ -6,7 +6,8 @@
     <string name="action_settings">Settings</string>
 
     <color name="green">#00FF00</color>
-
+	<color name="black">#000000</color>
+	
     <string name="new_game">New Game</string>
     <string name="options">Options</string>
     <string name="info">Info</string>

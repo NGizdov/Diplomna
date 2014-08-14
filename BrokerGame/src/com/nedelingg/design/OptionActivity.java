@@ -4,10 +4,12 @@ import com.nedelingg.backend.companies.CompanyID;
 import com.nedelingg.backend.utils.Options;
 
 import android.app.ActionBar;
+import android.app.ActionBar.Tab;
 import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.wifi.p2p.WifiP2pManager.ActionListener;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -27,7 +29,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-public class OptionActivity extends FragmentActivity {
+public class OptionActivity extends FragmentActivity implements ActionBar.TabListener {
 	
 	private OptionsPagerAdapter adapt;
 	private ViewPager pager;
@@ -75,22 +77,10 @@ public class OptionActivity extends FragmentActivity {
 		
 		// Specify that tabs should be displayed in the action bar.
 	    actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-
-	    // Create a tab listener that is called when the user changes tabs.
-	    ActionBar.TabListener tabListener = new ActionBar.TabListener() {
-	        public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
-	            // show the given tab
-	        	pager.setCurrentItem(tab.getPosition());
-	        }
-
-	        public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {}
-
-	        public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {}
-	    };
 	    
-	    actionBar.addTab(actionBar.newTab().setText("Game").setTabListener(tabListener));
-	    actionBar.addTab(actionBar.newTab().setText("Players").setTabListener(tabListener));
-	    actionBar.addTab(actionBar.newTab().setText("Companies").setTabListener(tabListener));
+	    actionBar.addTab(actionBar.newTab().setText("Game").setTabListener(this));
+	    actionBar.addTab(actionBar.newTab().setText("Players").setTabListener(this));
+	    actionBar.addTab(actionBar.newTab().setText("Companies").setTabListener(this));
 		
 	}
 	
@@ -486,5 +476,23 @@ public class OptionActivity extends FragmentActivity {
 			}
 			nameEditor.commit();
 		}
+	}
+
+	@Override
+	public void onTabReselected(Tab tab, FragmentTransaction ft) {
+		// TODO Auto-generated method stub
+		pager.setCurrentItem(tab.getPosition());
+	}
+
+	@Override
+	public void onTabSelected(Tab tab, FragmentTransaction ft) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onTabUnselected(Tab tab, FragmentTransaction ft) {
+		// TODO Auto-generated method stub
+		
 	}
 }
