@@ -55,8 +55,9 @@ public final class R {
         public static final int d60=0x7f020016;
         public static final int ic_launcher=0x7f020017;
         public static final int marker=0x7f020018;
-        public static final int players_border=0x7f020019;
-        public static final int table_border=0x7f02001a;
+        public static final int marker_2=0x7f020019;
+        public static final int players_border=0x7f02001a;
+        public static final int table_border=0x7f02001b;
     }
     public static final class id {
         public static final int CompanyFourOptionsLayout=0x7f0a0010;
