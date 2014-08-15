@@ -261,7 +261,7 @@ public class OptionActivity extends FragmentActivity implements ActionBar.TabLis
 			playerOneType.setAdapter(adapter);
 			playerOneType.setOnItemSelectedListener(listener);
 //			playerOneType.setSelection(1);
-			playerOneNameEditText = (EditText) rootView.findViewById(R.id.playerOneName);
+			playerOneNameEditText = (EditText) rootView.findViewById(R.id.playerOneGameName);
 			if (Options.getPlayerNameString(1).length() > 0) playerOneNameEditText.setText(Options.getPlayerNameString(1));
 			playerOneNameEditText.setOnFocusChangeListener(textFocusChanger);
 			
@@ -335,7 +335,7 @@ public class OptionActivity extends FragmentActivity implements ActionBar.TabLis
 			SharedPreferences names = getActivity().getSharedPreferences("options_data", Context.MODE_PRIVATE);
 			SharedPreferences.Editor nameEditor = names.edit();
 			switch (id) {
-			case R.id.playerOneName: 
+			case R.id.playerOneGameName: 
 				Options.setPlayerNameString(1, text);
 				nameEditor.putString("playerOneName", text);
 				break;

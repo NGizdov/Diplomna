@@ -1,231 +1,1234 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/GridLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/green"
+    android:columnCount="5"
+    android:orientation="horizontal"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:rowCount="15"
     tools:context="com.nedelingg.design.GameMainActivity$PlaceholderFragment" >
 
-    <ImageView
-        android:id="@+id/card01"
-        android:layout_width="40dp"
-        android:layout_height="53dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:maxHeight="70dp"
-        android:maxWidth="50dp"
-        android:paddingLeft="0dp"
-        android:paddingTop="0dp"
-        android:src="@drawable/a100"
-        android:contentDescription="@string/cardOne" />
+    <RelativeLayout
+        android:id="@+id/cardContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_column="0"
+        android:layout_row="0"
+        android:rowCount="10" >
 
-    <ImageView
-        android:id="@+id/card02"
-        android:layout_width="40dp"
-        android:layout_height="53dp"
-        android:layout_alignTop="@+id/card01"
-        android:layout_marginTop="18dp"
-        android:src="@drawable/a50"
-        android:contentDescription="@string/cardTwo" />
+        <ImageView
+            android:id="@+id/card01"
+            android:layout_width="40dp"
+            android:layout_height="53dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_gravity="left"
+            android:contentDescription="@string/cardOne"
+            android:maxHeight="70dp"
+            android:maxWidth="50dp"
+            android:paddingLeft="0dp"
+            android:paddingTop="0dp"
+            android:src="@drawable/a100" />
 
-    <ImageView
-        android:id="@+id/card03"
-        android:layout_width="40dp"
-        android:layout_height="53dp"
-        android:layout_alignLeft="@+id/card01"
-        android:layout_alignTop="@+id/card02"
-        android:layout_marginTop="16dp"
-        android:src="@drawable/c2div"
-        android:contentDescription="@string/cardTree" />
+        <ImageView
+            android:id="@+id/card02"
+            android:layout_width="40dp"
+            android:layout_height="53dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignTop="@+id/card01"
+            android:layout_marginTop="20dp"
+            android:contentDescription="@string/cardTwo"
+            android:src="@drawable/a50" />
 
-    <ImageView
-        android:id="@+id/card04"
-        android:layout_width="40dp"
-        android:layout_height="53dp"
-        android:layout_alignLeft="@+id/card02"
-        android:layout_below="@+id/card01"
-        android:src="@drawable/c2div"
-        android:contentDescription="@string/cardFour" />
+        <ImageView
+            android:id="@+id/card03"
+            android:layout_width="40dp"
+            android:layout_height="53dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignTop="@+id/card02"
+            android:layout_marginTop="20dp"
+            android:contentDescription="@string/cardTree"
+            android:src="@drawable/c2div" />
 
-    <ImageView
-        android:id="@+id/card05"
-        android:layout_width="40dp"
-        android:layout_height="53dp"
-        android:layout_alignLeft="@+id/card02"
-        android:layout_below="@+id/card02"
-        android:src="@drawable/c2div" 
-        android:contentDescription="@string/cardFive" />
+        <ImageView
+            android:id="@+id/card04"
+            android:layout_width="40dp"
+            android:layout_height="53dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignTop="@+id/card03"
+            android:layout_marginTop="20dp"
+            android:contentDescription="@string/cardFour"
+            android:src="@drawable/c2div" />
 
-    <ImageView
-        android:id="@+id/card06"
-        android:layout_width="40dp"
-        android:layout_height="53dp"
-        android:layout_alignLeft="@+id/card09"
-        android:layout_below="@+id/card03"
-        android:src="@drawable/c2div"
-        android:contentDescription="@string/cardSix" />
+        <ImageView
+            android:id="@+id/card05"
+            android:layout_width="40dp"
+            android:layout_height="53dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignTop="@+id/card04"
+            android:layout_marginTop="20dp"
+            android:contentDescription="@string/cardFive"
+            android:src="@drawable/c2div" />
 
-    <ImageView
-        android:id="@+id/card07"
-        android:layout_width="40dp"
-        android:layout_height="53dp"
-        android:layout_alignLeft="@+id/card09"
-        android:layout_below="@+id/card04"
-        android:src="@drawable/b2div"
-        android:contentDescription="@string/cardSeven" />
+        <ImageView
+            android:id="@+id/card06"
+            android:layout_width="40dp"
+            android:layout_height="53dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignTop="@+id/card05"
+            android:layout_marginTop="20dp"
+            android:contentDescription="@string/cardSix"
+            android:src="@drawable/c2div" />
 
-    <ImageView
-        android:id="@+id/card08"
-        android:layout_width="40dp"
-        android:layout_height="53dp"
-        android:layout_alignLeft="@+id/card06"
-        android:layout_below="@+id/card05"
-        android:src="@drawable/b2div"
-        android:contentDescription="@string/cardEight" />
+        <ImageView
+            android:id="@+id/card07"
+            android:layout_width="40dp"
+            android:layout_height="53dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignTop="@+id/card06"
+            android:layout_marginTop="20dp"
+            android:contentDescription="@string/cardSeven"
+            android:src="@drawable/b2div" />
 
-    <ImageView
-        android:id="@+id/card09"
-        android:layout_width="40dp"
-        android:layout_height="53dp"
-        android:layout_alignLeft="@+id/card05"
-        android:layout_below="@+id/card06"
-        android:src="@drawable/c2div"
-        android:contentDescription="@string/cardNine" />
+        <ImageView
+            android:id="@+id/card08"
+            android:layout_width="40dp"
+            android:layout_height="53dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignTop="@+id/card07"
+            android:layout_marginTop="20dp"
+            android:contentDescription="@string/cardEight"
+            android:src="@drawable/b2div" />
 
-    <ImageView
-        android:id="@+id/card10"
-        android:layout_width="40dp"
-        android:layout_height="53dp"
-        android:layout_alignLeft="@+id/card06"
-        android:layout_below="@+id/card06"
-        android:src="@drawable/d60"
-        android:contentDescription="@string/cardTen" />
+        <ImageView
+            android:id="@+id/card09"
+            android:layout_width="40dp"
+            android:layout_height="53dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignTop="@+id/card08"
+            android:layout_marginTop="20dp"
+            android:contentDescription="@string/cardNine"
+            android:src="@drawable/c2div" />
 
-    <ImageView
-        android:id="@+id/boardImage"
-        android:layout_width="310dp"
-        android:layout_height="150dp"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginRight="18dp"
-        android:src="@drawable/board"
-        android:contentDescription="@string/board" />
+        <ImageView
+            android:id="@+id/card10"
+            android:layout_width="40dp"
+            android:layout_height="53dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignTop="@+id/card09"
+            android:layout_marginTop="20dp"
+            android:contentDescription="@string/cardTen"
+            android:src="@drawable/d60" />
 
-    <TextView
-        android:id="@+id/firstCompanyName"
-        android:layout_width="100dp"
-        android:layout_height="30dp"
-        android:layout_alignTop="@+id/boardImage"
-        android:layout_marginRight="4dp"
-        android:layout_marginTop="4dp"
-        android:layout_toLeftOf="@+id/boardImage"
-        android:gravity="right|center_vertical" />
+    </RelativeLayout>
 
-    <TextView
-        android:id="@+id/secondCompanyName"
-        android:layout_width="100dp"
-        android:layout_height="30dp"
-        android:layout_alignLeft="@+id/firstCompanyName"
-        android:layout_alignTop="@+id/card03"
-        android:layout_marginTop="0dp"
-        android:gravity="right|center_vertical" />
+    <Space
+        android:layout_column="4"
+        android:layout_gravity="fill_vertical"
+        android:layout_row="10" />
 
-    <TextView
-        android:id="@+id/thirdCompanyName"
-        android:layout_width="100dp"
-        android:layout_height="30dp"
-        android:layout_alignLeft="@+id/secondCompanyName"
-        android:layout_below="@+id/secondCompanyName"
-        android:gravity="right|center_vertical"
-        android:textColor="@color/black" />
+    <GridLayout
+        android:id="@+id/boardMainContainer"
+        android:layout_width="441dp"
+        android:layout_height="wrap_content"
+        android:layout_column="1"
+        android:layout_gravity="fill_horizontal|top"
+        android:layout_row="0"
+        android:columnCount="2"
+        android:rowCount="1" >
 
-    <TextView
-        android:id="@+id/fourthCompanyName"
-        android:layout_width="100dp"
-        android:layout_height="30dp"
-        android:layout_above="@+id/card08"
-        android:layout_alignLeft="@+id/thirdCompanyName"
-        android:gravity="right|center_vertical"
-        android:textColor="@color/black" />
+        <GridLayout
+            android:id="@+id/companyNamesContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_gravity="left|top"
+            android:layout_row="0"
+            android:rowCount="4" >
 
-    <ImageView
-        android:id="@+id/imageView1"
-        android:layout_width="12dp"
-        android:layout_height="30dp"
-        android:layout_alignLeft="@+id/boardImage"
-        android:layout_alignTop="@+id/boardImage"
-        android:layout_marginLeft="0dp"
-        android:layout_marginTop="3dp"
-        android:src="@drawable/marker" />
+            <TextView
+                android:id="@+id/firstCompanyName"
+                android:layout_width="100dp"
+                android:layout_height="30dp"
+                android:layout_column="1"
+                android:layout_gravity="left"
+                android:layout_marginRight="4dp"
+                android:layout_marginTop="2dp"
+                android:layout_row="0"
+                android:gravity="right|center_vertical"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
 
-    <ImageView
-        android:id="@+id/ImageView01"
-        android:layout_width="12dp"
-        android:layout_height="30dp"
-        android:layout_alignTop="@+id/imageView1"
-        android:layout_marginLeft="1dp"
-        android:layout_toRightOf="@+id/imageView1"
-        android:src="@drawable/marker" />
+            <TextView
+                android:id="@+id/secondCompanyName"
+                android:layout_width="100dp"
+                android:layout_height="30dp"
+                android:layout_column="1"
+                android:layout_gravity="left"
+                android:layout_marginTop="3dp"
+                android:layout_row="1"
+                android:gravity="right|center_vertical"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
 
-    <ImageView
-        android:id="@+id/ImageView02"
-        android:layout_width="12dp"
-        android:layout_height="30dp"
-        android:layout_alignTop="@+id/ImageView01"
-        android:layout_toRightOf="@+id/ImageView01"
-        android:src="@drawable/marker" />
+            <TextView
+                android:id="@+id/thirdCompanyName"
+                android:layout_width="100dp"
+                android:layout_height="30dp"
+                android:layout_column="1"
+                android:layout_gravity="left"
+                android:layout_row="2"
+                android:gravity="right|center_vertical"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
 
-    <ImageView
-        android:id="@+id/ImageView03"
-        android:layout_width="12dp"
-        android:layout_height="30dp"
-        android:layout_alignTop="@+id/ImageView02"
-        android:layout_toRightOf="@+id/ImageView02"
-        android:src="@drawable/marker" />
+            <TextView
+                android:id="@+id/fourthCompanyName"
+                android:layout_width="100dp"
+                android:layout_height="30dp"
+                android:layout_column="1"
+                android:layout_gravity="left"
+                android:layout_marginTop="1dp"
+                android:layout_row="3"
+                android:gravity="right|center_vertical"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
 
-    <ImageView
-        android:id="@+id/ImageView04"
-        android:layout_width="12dp"
-        android:layout_height="30dp"
-        android:layout_alignTop="@+id/ImageView03"
-        android:layout_toRightOf="@+id/ImageView03"
-        android:src="@drawable/marker" />
+        </GridLayout>
 
-    <ImageView
-        android:id="@+id/ImageView05"
-        android:layout_width="12dp"
-        android:layout_height="30dp"
-        android:layout_alignTop="@+id/ImageView04"
-        android:layout_toRightOf="@+id/ImageView04"
-        android:src="@drawable/marker" />
+        <GridLayout
+            android:id="@+id/boardImagesContainer"
+            android:layout_width="335dp"
+            android:layout_height="151dp"
+            android:layout_column="1"
+            android:layout_marginRight="18dp"
+            android:background="@drawable/board"
+            android:columnCount="1"
+            android:rowCount="5" >
 
-    <ImageView
-        android:id="@+id/ImageView06"
-        android:layout_width="12dp"
-        android:layout_height="30dp"
-        android:layout_alignTop="@+id/ImageView05"
-        android:layout_marginLeft="1dp"
-        android:layout_toRightOf="@+id/ImageView05"
-        android:src="@drawable/marker" />
+            <GridLayout
+                android:id="@+id/companyOneMarkers"
+                android:layout_height="32dp"
+                android:layout_column="0"
+                android:layout_gravity="left|top"
+                android:layout_marginTop="1dp"
+                android:layout_row="0" >
 
-    <ImageView
-        android:id="@+id/ImageView07"
-        android:layout_width="12dp"
-        android:layout_height="30dp"
-        android:layout_alignTop="@+id/ImageView06"
-        android:layout_toRightOf="@+id/ImageView06"
-        android:src="@drawable/marker" />
+                <ImageView
+                    android:id="@+id/compOneMark10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginLeft="1dp"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
 
-    <ImageView
-        android:id="@+id/ImageView08"
-        android:layout_width="12dp"
-        android:layout_height="30dp"
-        android:layout_alignTop="@+id/ImageView07"
-        android:layout_marginLeft="1dp"
-        android:layout_toRightOf="@+id/ImageView07"
-        android:src="@drawable/marker" />
+                <ImageView
+                    android:id="@+id/compOneMark20"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
 
-</RelativeLayout>
+                <ImageView
+                    android:id="@+id/compOneMark30"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compOneMark40"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compOneMark50"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compOneMark60"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginLeft="1dp"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compOneMark70"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compOneMark80"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compOneMark90"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginLeft="1dp"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compOneMark100"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:src="@drawable/marker"
+                    android:visibility="visible" />
+
+                <ImageView
+                    android:id="@+id/compOneMark110"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginLeft="1dp"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compOneMark120"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compOneMark130"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compOneMark140"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compOneMark150"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginLeft="1dp"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compOneMark160"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compOneMark170"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compOneMark180"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compOneMark190"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginLeft="1dp"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compOneMark200"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compOneMark210"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compOneMark220"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compOneMark230"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginLeft="1dp"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compOneMark240"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compOneMark250"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+            </GridLayout>
+
+            <GridLayout
+                android:id="@+id/companyTwoMarkers"
+                android:layout_height="32dp"
+                android:layout_gravity="fill_horizontal" >
+
+                <ImageView
+                    android:id="@+id/compTwoMark10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginLeft="1dp"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compTwoMark20"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compTwoMark30"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compTwoMark40"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compTwoMark50"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compTwoMark60"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginLeft="1dp"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compTwoMark70"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compTwoMark80"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compTwoMark90"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginLeft="1dp"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compTwoMark100"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:src="@drawable/marker"
+                    android:visibility="visible" />
+
+                <ImageView
+                    android:id="@+id/compTwoMark110"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginLeft="1dp"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compTwoMark120"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compTwoMark130"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compTwoMark140"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compTwoMark150"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginLeft="1dp"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compTwoMark160"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compTwoMark170"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compTwoMark180"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compTwoMark190"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginLeft="1dp"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compTwoMark200"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compTwoMark210"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compTwoMark220"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compTwoMark230"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginLeft="1dp"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compTwoMark240"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compTwoMark250"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+            </GridLayout>
+
+            <GridLayout
+                android:id="@+id/companyTreeMarkers"
+                android:layout_height="32dp"
+                android:layout_gravity="fill_horizontal" >
+
+                <ImageView
+                    android:id="@+id/compTreeMark10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginLeft="1dp"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compTreeMark20"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compTreeMark30"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compTreeMark40"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compTreeMark50"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compTreeMark60"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginLeft="1dp"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compTreeMark70"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compTreeMark80"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compTreeMark90"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginLeft="1dp"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compTreeMark100"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:src="@drawable/marker"
+                    android:visibility="visible" />
+
+                <ImageView
+                    android:id="@+id/compTreeMark110"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginLeft="1dp"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compTreeMark120"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compTreeMark130"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compTreeMark140"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compTreeMark150"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginLeft="1dp"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compTreeMark160"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compTreeMark170"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compTreeMark180"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compTreeMark190"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginLeft="1dp"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compTreeMark200"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compTreeMark210"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compTreeMark220"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compTreeMark230"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginLeft="1dp"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compTreeMark240"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compTreeMark250"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+            </GridLayout>
+
+            <GridLayout
+                android:id="@+id/companyFourMarkers"
+                android:layout_height="32dp"
+                android:layout_gravity="fill_horizontal" >
+
+                <ImageView
+                    android:id="@+id/compFourMark10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginLeft="1dp"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compFourMark20"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compFourMark30"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compFourMark40"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compFourMark50"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compFourMark60"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginLeft="1dp"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compFourMark70"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compFourMark80"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compFourMark90"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginLeft="1dp"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compFourMark100"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:src="@drawable/marker"
+                    android:visibility="visible" />
+
+                <ImageView
+                    android:id="@+id/compFourMark110"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginLeft="1dp"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compFourMark120"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compFourMark130"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compFourMark140"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compFourMark150"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginLeft="1dp"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compFourMark160"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compFourMark170"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compFourMark180"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compFourMark190"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginLeft="1dp"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compFourMark200"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compFourMark210"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compFourMark220"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compFourMark230"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginLeft="1dp"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compFourMark240"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/compFourMark250"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:src="@drawable/marker"
+                    android:visibility="invisible" />
+            </GridLayout>
+        </GridLayout>
+
+    </GridLayout>
+
+    <GridLayout
+        android:id="@+id/infoContentContainer"
+        android:layout_width="300dp"
+        android:layout_height="match_parent"
+        android:layout_column="1"
+        android:layout_gravity="fill_horizontal|bottom"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="160dp"
+        android:layout_row="0"
+        android:columnCount="6"
+        android:rowCount="1" >
+
+        <GridLayout
+            android:id="@+id/playerOneInfo"
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
+            android:layout_column="0"
+            android:layout_gravity="fill_horizontal"
+            android:columnCount="1"
+            android:rowCount="2" >
+
+            <TextView
+                android:id="@+id/playerOneGameName"
+                android:layout_column="0"
+                android:layout_gravity="center_vertical|center_horizontal"
+                android:layout_row="0"
+                android:text="your:" />
+
+            <GridLayout
+                android:layout_height="108dp"
+                android:layout_gravity="fill_horizontal"
+                android:layout_row="1"
+                android:columnCount="3"
+                android:rowCount="6" >
+
+                <TextView
+                    android:id="@+id/companyAName"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_gravity="left|top"
+                    android:layout_row="0"
+                    android:gravity="left|center_vertical"
+                    android:text="A" />
+
+                <TextView
+                    android:id="@+id/companyAShares"
+                    android:layout_width="50dp"
+                    android:layout_column="1"
+                    android:layout_gravity="left"
+                    android:layout_row="0"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="0" />
+
+                <TextView
+                    android:id="@+id/companyACurrentValue"
+                    android:layout_width="50dp"
+                    android:layout_column="2"
+                    android:layout_gravity="left"
+                    android:layout_row="0"
+                    android:gravity="right|center_vertical"
+                    android:text="0" />
+
+                <TextView
+                    android:id="@+id/companyBName"
+                    android:layout_width="100dp"
+                    android:layout_row="1"
+                    android:gravity="left|center_vertical"
+                    android:text="B" />
+
+                <TextView
+                    android:id="@+id/companyBShares"
+                    android:layout_width="50dp"
+                    android:layout_gravity="left"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="0" />
+
+                <TextView
+                    android:id="@+id/companyBCurrentValue"
+                    android:layout_width="50dp"
+                    android:gravity="right|center_vertical"
+                    android:text="0" />
+
+                <TextView
+                    android:id="@+id/companyCName"
+                    android:layout_width="100dp"
+                    android:layout_gravity="left"
+                    android:gravity="left|center_vertical"
+                    android:text="B" />
+
+                <TextView
+                    android:id="@+id/companyCShares"
+                    android:layout_width="50dp"
+                    android:layout_gravity="left"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="0" />
+
+                <TextView
+                    android:id="@+id/companyCCurrentValue"
+                    android:layout_width="50dp"
+                    android:layout_gravity="left"
+                    android:gravity="right|center_vertical"
+                    android:text="0" />
+
+                <TextView
+                    android:id="@+id/companyDName"
+                    android:layout_width="100dp"
+                    android:layout_gravity="left"
+                    android:gravity="left|center_vertical"
+                    android:text="B" />
+
+                <TextView
+                    android:id="@+id/companyDShares"
+                    android:layout_width="50dp"
+                    android:layout_gravity="left"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="0" />
+
+                <TextView
+                    android:id="@+id/companyDCurrentValue"
+                    android:layout_width="50dp"
+                    android:layout_gravity="left"
+                    android:gravity="right|center_vertical"
+                    android:text="0" />
+
+                <TextView
+                    android:id="@+id/playersCashLabel"
+                    android:layout_width="100dp"
+                    android:layout_gravity="left"
+                    android:gravity="left|center_vertical"
+                    android:text="Cash:" />
+
+                <TextView
+                    android:id="@+id/playersCash"
+                    android:layout_width="50dp"
+                    android:layout_column="2"
+                    android:layout_gravity="left"
+                    android:gravity="right|center_vertical"
+                    android:text="0" />
+
+                <TextView
+                    android:id="@+id/playersTotalCashLabel"
+                    android:layout_width="100dp"
+                    android:layout_gravity="left"
+                    android:gravity="left|center_vertical"
+                    android:text="Total:" />
+
+                <TextView
+                    android:id="@+id/playersTotalCash"
+                    android:layout_width="50dp"
+                    android:layout_column="2"
+                    android:layout_gravity="left"
+                    android:gravity="right|center_vertical"
+                    android:text="0" />
+
+            </GridLayout>
+
+        </GridLayout>
+
+    </GridLayout>
+
+</GridLayout>

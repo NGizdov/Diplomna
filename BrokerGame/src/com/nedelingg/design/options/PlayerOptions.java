@@ -74,7 +74,7 @@ public class PlayerOptions extends Fragment {
 		playerOneType = (Spinner) rootView.findViewById(R.id.playerOneType);
 		playerOneType.setAdapter(adapter);
 		playerOneType.setOnItemSelectedListener(listener);
-		playerOneName = (EditText) rootView.findViewById(R.id.playerOneName);
+		playerOneName = (EditText) rootView.findViewById(R.id.playerOneGameName);
 		playerOneName.setOnFocusChangeListener(focusChanger);
 		
 		playerTwoType = (Spinner) rootView.findViewById(R.id.playerTwoType);
