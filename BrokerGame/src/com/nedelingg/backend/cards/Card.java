@@ -6,10 +6,12 @@ import com.nedelingg.backend.actions.Raiser;
 public abstract class Card {
 	private Raiser raiser;
 	private Lowerer lowerer;
-	
-	public Card(Raiser raiser, Lowerer lowerer){
+	private int imageID;
+
+	public Card(Raiser raiser, Lowerer lowerer, int imageID){
 		this.raiser = raiser;
 		this.lowerer = lowerer;
+		this.imageID = imageID;
 	}
 
 	public Raiser getRaiser() {
@@ -18,5 +20,9 @@ public abstract class Card {
 
 	public Lowerer getLowerer() {
 		return lowerer;
+	}
+	
+	public int getImageID() {
+		return imageID;
 	}
 }

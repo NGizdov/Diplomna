@@ -33,16 +33,37 @@ public class Game {
 		this.players = new LinkedList<Player>();
 		this.sc = new Scanner(System.in);
 		this.board = new Board();
+		boolean isHumanSet = false;
+		for (int i = 0; i < players; i++) {
+			isHumanSet = Options.getPlayerType(i + 1);
+			if(isHumanSet) break;
+		}
 		
 		for (int i = 0; i < players; i++) {
 			String name = Options.getPlayerName(i + 1);
 			boolean isHuman = Options.getPlayerType(i + 1);
+			if(!isHumanSet && (i == 0)){
+				isHuman = true;
+				Options.setHumanPlayerIdInt(1);
+			}
 			this.players.add(new Player(this.board, name, isHuman));
 		}
 //		this.players.add(new Player(this.board, "Human", true));
 		this.byTwoDeck = new ByTwoDeck();
 		this.hundredDeck = new HundredDeck();
 		this.percentageDeck =  new PercentageDeck();
+		prepare();
+	}
+	
+	public Player getHumanPlayer(){
+		Player humanPlayer = null;
+		for (Player player : players) {
+			if (player.isHuman()){
+				humanPlayer = player;
+				break;
+			}
+		}
+		return humanPlayer;
 	}
 	
 	public void prepare(){
@@ -134,7 +155,7 @@ public class Game {
 					}
 					break;
 				}
-				card = player.chooseCard(choosenDeck, (indexCard - 1));
+				card = player.chooseCard(indexCard);
 			}
 		} else {
 			int randomIndex = RANDOMISER.nextInt(availableDecks.size());

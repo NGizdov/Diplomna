@@ -5,7 +5,7 @@ import com.nedelingg.backend.actions.Multiplier;
 
 public class ByTwoCard extends Card {
 
-	public ByTwoCard(Multiplier raiser, Divider lowerer) {
-		super(raiser, lowerer);
+	public ByTwoCard(Multiplier raiser, Divider lowerer, int imageID) {
+		super(raiser, lowerer, imageID);
 	}	
 }

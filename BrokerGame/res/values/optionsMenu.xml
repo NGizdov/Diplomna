@@ -30,4 +30,5 @@
     <string name="company_four_label">Company Four</string>
     <string name="company_name_label">Name</string>
     
+    <string name="reset_to_default">Reset to default</string>
 </resources>

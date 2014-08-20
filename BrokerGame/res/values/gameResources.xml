@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="players_number_hint">Number of players (2&#8211;6):</string>
+    <string name="players_number_cancel_btn">Cancel</string>
+	<string name="players_number_start_btn">Start</string>
+	
+	<string name="you">You:</string>
+	<string name="zero_number">0</string>
+	<string name="cash">Cash:</string>
+	<string name="total">Total:</string>
+	<string name="play_card_button">Play Card</string>
+</resources>

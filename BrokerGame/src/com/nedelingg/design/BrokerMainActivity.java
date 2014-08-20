@@ -1,6 +1,5 @@
 package com.nedelingg.design;
 
-import com.nedelingg.backend.model.Game;
 import com.nedelingg.backend.utils.Options;
 import com.nedelingg.design.game.GameMainActivity;
 

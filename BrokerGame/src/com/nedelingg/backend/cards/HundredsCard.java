@@ -5,8 +5,8 @@ import com.nedelingg.backend.actions.Substractor;
 
 public class HundredsCard extends Card {
 
-	public HundredsCard(Additioner raiser, Substractor lowerer) {
-		super(raiser, lowerer);
+	public HundredsCard(Additioner raiser, Substractor lowerer, int imageID) {
+		super(raiser, lowerer, imageID);
 	}
 
 }

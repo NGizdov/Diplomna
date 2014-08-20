@@ -1,6 +1,6 @@
 <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/GridLayout1"
+    android:id="@+id/gameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/green"
@@ -13,7 +13,7 @@
     android:rowCount="15"
     tools:context="com.nedelingg.design.GameMainActivity$PlaceholderFragment" >
 
-    <RelativeLayout
+    <!-- <RelativeLayout
         android:id="@+id/cardContainer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -126,8 +126,117 @@
             android:contentDescription="@string/cardTen"
             android:src="@drawable/d60" />
 
-    </RelativeLayout>
+    </RelativeLayout> -->   
+    <ScrollView
+        android:id="@+id/playersCardsScroll"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_column="0"
+        android:layout_row="0"
+        android:rowCount="10" >   
+    <RelativeLayout
+        android:id="@+id/cardContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
 
+        <ImageView
+            android:id="@+id/card01"
+            android:layout_width="40dp"
+            android:layout_height="53dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_gravity="left"
+            android:layout_marginBottom="10dp"
+            android:contentDescription="@string/cardOne"
+            android:maxHeight="70dp"
+            android:maxWidth="50dp"
+            android:onClick="selectCard"
+            android:paddingLeft="0dp"
+            android:paddingTop="0dp" />
+
+        <ImageView
+            android:id="@+id/card02"
+            android:layout_width="40dp"
+            android:layout_height="53dp"
+            android:layout_below="@+id/card01"
+            android:layout_marginBottom="10dp"
+            android:contentDescription="@string/cardTwo"
+            android:onClick="selectCard" />
+
+        <ImageView
+            android:id="@+id/card03"
+            android:layout_width="40dp"
+            android:layout_height="53dp"
+            android:layout_below="@+id/card02"
+            android:layout_marginBottom="10dp"
+            android:contentDescription="@string/cardTree"
+            android:onClick="selectCard" />
+
+        <ImageView
+            android:id="@+id/card04"
+            android:layout_width="40dp"
+            android:layout_height="53dp"
+            android:layout_below="@+id/card03"
+            android:layout_marginBottom="10dp"
+            android:contentDescription="@string/cardFour"
+            android:onClick="selectCard" />
+
+        <ImageView
+            android:id="@+id/card05"
+            android:layout_width="40dp"
+            android:layout_height="53dp"
+            android:layout_below="@+id/card04"
+            android:layout_marginBottom="10dp"
+            android:contentDescription="@string/cardFive"
+            android:onClick="selectCard" />
+
+        <ImageView
+            android:id="@+id/card06"
+            android:layout_width="40dp"
+            android:layout_height="53dp"
+            android:layout_below="@+id/card05"
+            android:layout_marginBottom="10dp"
+            android:contentDescription="@string/cardSix"
+            android:onClick="selectCard" />
+
+        <ImageView
+            android:id="@+id/card07"
+            android:layout_width="40dp"
+            android:layout_height="53dp"
+            android:layout_below="@+id/card06"
+            android:layout_marginBottom="10dp"
+            android:contentDescription="@string/cardSeven"
+            android:onClick="selectCard" />
+
+        <ImageView
+            android:id="@+id/card08"
+            android:layout_width="40dp"
+            android:layout_height="53dp"
+            android:layout_below="@+id/card07"
+            android:layout_marginBottom="10dp"
+            android:contentDescription="@string/cardEight"
+            android:onClick="selectCard" />
+
+        <ImageView
+            android:id="@+id/card09"
+            android:layout_width="40dp"
+            android:layout_height="53dp"
+            android:layout_below="@+id/card08"
+            android:layout_marginBottom="10dp"
+            android:contentDescription="@string/cardNine"
+            android:onClick="selectCard" />
+
+        <ImageView
+            android:id="@+id/card10"
+            android:layout_width="40dp"
+            android:layout_height="53dp"
+            android:layout_below="@+id/card09"
+            android:layout_marginBottom="10dp"
+            android:contentDescription="@string/cardTen"
+            android:onClick="selectCard" />
+
+    </RelativeLayout>
+    </ScrollView>
     <Space
         android:layout_column="4"
         android:layout_gravity="fill_vertical"
@@ -1072,12 +1181,11 @@
 
     <GridLayout
         android:id="@+id/infoContentContainer"
-        android:layout_width="300dp"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_column="1"
-        android:layout_gravity="fill_horizontal|bottom"
-        android:layout_marginLeft="50dp"
-        android:layout_marginTop="160dp"
+        android:layout_gravity="top"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="155dp"
         android:layout_row="0"
         android:columnCount="6"
         android:rowCount="1" >
@@ -1085,7 +1193,7 @@
         <GridLayout
             android:id="@+id/playerOneInfo"
             android:layout_width="200dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_column="0"
             android:layout_gravity="fill_horizontal"
             android:columnCount="1"
@@ -1093,13 +1201,21 @@
 
             <TextView
                 android:id="@+id/playerOneGameName"
+                android:layout_height="15dp"
                 android:layout_column="0"
-                android:layout_gravity="center_vertical|center_horizontal"
+                android:layout_gravity="left|center_vertical"
                 android:layout_row="0"
-                android:text="your:" />
-
+                android:text="@string/you" />
+			
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dip"
+                android:layout_marginTop="2dp"
+                android:background="#000000" />
+            
             <GridLayout
-                android:layout_height="108dp"
+                android:id="@+id/playerOneStats"
+                android:layout_height="wrap_content"
                 android:layout_gravity="fill_horizontal"
                 android:layout_row="1"
                 android:columnCount="3"
@@ -1109,126 +1225,179 @@
                     android:id="@+id/companyAName"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:layout_column="0"
-                    android:layout_gravity="left|top"
-                    android:layout_row="0"
                     android:gravity="left|center_vertical"
-                    android:text="A" />
+                    android:text="" />
 
                 <TextView
                     android:id="@+id/companyAShares"
                     android:layout_width="50dp"
-                    android:layout_column="1"
-                    android:layout_gravity="left"
-                    android:layout_row="0"
+                    android:layout_height="15dp"
                     android:gravity="center_vertical|center_horizontal"
-                    android:text="0" />
+                    android:text="" />
 
                 <TextView
-                    android:id="@+id/companyACurrentValue"
+                    android:id="@+id/companyASharesValue"
                     android:layout_width="50dp"
-                    android:layout_column="2"
-                    android:layout_gravity="left"
-                    android:layout_row="0"
+                    android:layout_height="15dp"
                     android:gravity="right|center_vertical"
-                    android:text="0" />
+                    android:text="" />
 
                 <TextView
                     android:id="@+id/companyBName"
                     android:layout_width="100dp"
-                    android:layout_row="1"
+                    android:layout_height="wrap_content"
                     android:gravity="left|center_vertical"
-                    android:text="B" />
+                    android:text="" />
 
                 <TextView
                     android:id="@+id/companyBShares"
                     android:layout_width="50dp"
-                    android:layout_gravity="left"
+                    android:layout_height="15dp"
                     android:gravity="center_vertical|center_horizontal"
-                    android:text="0" />
+                    android:text="" />
 
                 <TextView
-                    android:id="@+id/companyBCurrentValue"
+                    android:id="@+id/companyBSharesValue"
                     android:layout_width="50dp"
+                    android:layout_height="15dp"
                     android:gravity="right|center_vertical"
-                    android:text="0" />
+                    android:text="" />
 
                 <TextView
                     android:id="@+id/companyCName"
                     android:layout_width="100dp"
-                    android:layout_gravity="left"
+                    android:layout_height="wrap_content"
                     android:gravity="left|center_vertical"
-                    android:text="B" />
+                    android:text="" />
 
                 <TextView
                     android:id="@+id/companyCShares"
                     android:layout_width="50dp"
-                    android:layout_gravity="left"
+                    android:layout_height="15dp"
                     android:gravity="center_vertical|center_horizontal"
-                    android:text="0" />
+                    android:text="" />
 
                 <TextView
-                    android:id="@+id/companyCCurrentValue"
+                    android:id="@+id/companyCSharesValue"
                     android:layout_width="50dp"
-                    android:layout_gravity="left"
+                    android:layout_height="15dp"
                     android:gravity="right|center_vertical"
-                    android:text="0" />
+                    android:text="" />
 
                 <TextView
                     android:id="@+id/companyDName"
                     android:layout_width="100dp"
-                    android:layout_gravity="left"
+                    android:layout_height="wrap_content"
                     android:gravity="left|center_vertical"
-                    android:text="B" />
+                    android:text="" />
 
                 <TextView
                     android:id="@+id/companyDShares"
                     android:layout_width="50dp"
-                    android:layout_gravity="left"
+                    android:layout_height="15dp"
                     android:gravity="center_vertical|center_horizontal"
-                    android:text="0" />
+                    android:text="" />
 
                 <TextView
-                    android:id="@+id/companyDCurrentValue"
+                    android:id="@+id/companyDSharesValue"
                     android:layout_width="50dp"
-                    android:layout_gravity="left"
+                    android:layout_height="15dp"
                     android:gravity="right|center_vertical"
-                    android:text="0" />
+                    android:text="" />
 
                 <TextView
                     android:id="@+id/playersCashLabel"
                     android:layout_width="100dp"
+                    android:layout_height="15dp"
                     android:layout_gravity="left"
                     android:gravity="left|center_vertical"
-                    android:text="Cash:" />
+                    android:text="@string/cash" />
 
                 <TextView
                     android:id="@+id/playersCash"
                     android:layout_width="50dp"
+                    android:layout_height="15dp"
                     android:layout_column="2"
                     android:layout_gravity="left"
                     android:gravity="right|center_vertical"
-                    android:text="0" />
+                    android:text="" />
+
+            </GridLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dip"
+                android:layout_marginTop="2dp"
+                android:background="#000000" />
+
+            <GridLayout
+                android:layout_gravity="fill_horizontal"
+                android:columnCount="3" >
 
                 <TextView
                     android:id="@+id/playersTotalCashLabel"
                     android:layout_width="100dp"
+                    android:layout_height="15dp"
                     android:layout_gravity="left"
                     android:gravity="left|center_vertical"
-                    android:text="Total:" />
+                    android:text="@string/total" />
 
                 <TextView
                     android:id="@+id/playersTotalCash"
                     android:layout_width="50dp"
+                    android:layout_height="15dp"
                     android:layout_column="2"
-                    android:layout_gravity="left"
+                    android:layout_gravity="right|top"
+                    android:layout_row="0"
                     android:gravity="right|center_vertical"
-                    android:text="0" />
-
+                    android:text="" />
             </GridLayout>
 
         </GridLayout>
 
     </GridLayout>
+
+    <RelativeLayout
+        android:layout_column="1"
+        android:layout_gravity="center"
+        android:layout_marginLeft="140dp"
+        android:layout_marginTop="150dp"
+        android:layout_row="0" >
+
+        <ImageView
+            android:id="@+id/cardPlace"
+            android:layout_width="40dp"
+            android:layout_height="53dp"
+            android:maxHeight="70dp"
+            android:maxWidth="50dp"
+            android:paddingLeft="0dp"
+            android:paddingTop="0dp"
+           	android:src="@drawable/card_place"
+           	android:onClick="returnCard" />
+        
+        <ImageView
+            android:id="@+id/cardBack"
+            android:layout_width="40dp"
+            android:layout_height="53dp"
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@+id/cardPlace"
+            android:maxHeight="70dp"
+            android:maxWidth="50dp"
+            android:paddingLeft="0dp"
+            android:paddingTop="0dp"
+            android:src="@drawable/card_back" />
+
+        <Button
+            android:id="@+id/btnPlayCard"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:layout_below="@+id/cardPlace"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:gravity="top"
+            android:text="@string/play_card_button"
+            android:textSize="12sp" />
+
+    </RelativeLayout>
 
 </GridLayout>

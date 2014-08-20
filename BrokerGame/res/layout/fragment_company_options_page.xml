@@ -197,7 +197,7 @@
     android:layout_height="wrap_content"
     android:layout_alignParentBottom="true"
     android:layout_alignRight="@+id/companyOptionsScroll"
-    android:text="Reset to default"        
+    android:text="@string/reset_to_default"        
     android:onClick="resetCompaniesOptionsToDefault" />
 
 </RelativeLayout>

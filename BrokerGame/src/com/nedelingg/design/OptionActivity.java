@@ -4,12 +4,10 @@ import com.nedelingg.backend.companies.CompanyID;
 import com.nedelingg.backend.utils.Options;
 
 import android.app.ActionBar;
-import android.app.ActionBar.Tab;
 import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.net.wifi.p2p.WifiP2pManager.ActionListener;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -21,7 +19,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnFocusChangeListener;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -29,7 +26,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-public class OptionActivity extends FragmentActivity implements ActionBar.TabListener {
+public class OptionActivity extends FragmentActivity {
 	
 	private OptionsPagerAdapter adapt;
 	private ViewPager pager;
@@ -54,6 +51,33 @@ public class OptionActivity extends FragmentActivity implements ActionBar.TabLis
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+//		super.onCreate(savedInstanceState);
+//		setContentView(R.layout.activity_option);
+//		current = this;
+//		
+//		adapt = new OptionsPagerAdapter(getSupportFragmentManager());
+//		pager = (ViewPager) findViewById(R.id.pager);
+//		pager.setAdapter(adapt);
+//		
+//		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+//		
+//		pager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+//			@Override
+//			public void onPageSelected(int position) {
+//				getActionBar().setSelectedNavigationItem(position);
+//			}
+//			
+//		});
+//		
+//		final ActionBar actionBar = getActionBar();
+//		
+//		// Specify that tabs should be displayed in the action bar.
+//	    actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+//	    
+//	    actionBar.addTab(actionBar.newTab().setText("Game").setTabListener(this));
+//	    actionBar.addTab(actionBar.newTab().setText("Players").setTabListener(this));
+//	    actionBar.addTab(actionBar.newTab().setText("Companies").setTabListener(this));
+		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_option);
 		current = this;
@@ -62,12 +86,9 @@ public class OptionActivity extends FragmentActivity implements ActionBar.TabLis
 		pager = (ViewPager) findViewById(R.id.pager);
 		pager.setAdapter(adapt);
 		
-		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-		
 		pager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
 			@Override
 			public void onPageSelected(int position) {
-				// TODO Auto-generated method stub
 				getActionBar().setSelectedNavigationItem(position);
 			}
 			
@@ -77,11 +98,26 @@ public class OptionActivity extends FragmentActivity implements ActionBar.TabLis
 		
 		// Specify that tabs should be displayed in the action bar.
 	    actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+
+	    // Create a tab listener that is called when the user changes tabs.
+	    ActionBar.TabListener tabListener = new ActionBar.TabListener() {
+	        public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
+	            // show the given tab
+	        	pager.setCurrentItem(tab.getPosition());
+	        }
+
+	        public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
+	            // hide the given tab
+	        }
+
+	        public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
+	            // probably ignore this event
+	        }
+	    };
 	    
-	    actionBar.addTab(actionBar.newTab().setText("Game").setTabListener(this));
-	    actionBar.addTab(actionBar.newTab().setText("Players").setTabListener(this));
-	    actionBar.addTab(actionBar.newTab().setText("Companies").setTabListener(this));
-		
+	    actionBar.addTab(actionBar.newTab().setText("Game").setTabListener(tabListener));
+	    actionBar.addTab(actionBar.newTab().setText("Players").setTabListener(tabListener));
+	    actionBar.addTab(actionBar.newTab().setText("Companies").setTabListener(tabListener));
 	}
 	
 	public void resetPlayersOptionsToDefault(View view){
@@ -476,23 +512,5 @@ public class OptionActivity extends FragmentActivity implements ActionBar.TabLis
 			}
 			nameEditor.commit();
 		}
-	}
-
-	@Override
-	public void onTabReselected(Tab tab, FragmentTransaction ft) {
-		// TODO Auto-generated method stub
-		pager.setCurrentItem(tab.getPosition());
-	}
-
-	@Override
-	public void onTabSelected(Tab tab, FragmentTransaction ft) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onTabUnselected(Tab tab, FragmentTransaction ft) {
-		// TODO Auto-generated method stub
-		
 	}
 }

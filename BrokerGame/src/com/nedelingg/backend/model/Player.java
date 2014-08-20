@@ -3,6 +3,7 @@ package com.nedelingg.backend.model;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import com.nedelingg.backend.cards.ByTwoCard;
@@ -21,6 +22,8 @@ public class Player {
 	private List<HundredsCard> hudredCards;
 	private List<PercentageCard> percentageCards;
 	private List<ByTwoCard> byTwoCards;
+	private List<Card> cards;
+	private Map<Integer, Card> cardsIDs;
 	private HashMap<CompanyID, Integer> shares;
 	private Board board;
 	private boolean isHuman;
@@ -34,6 +37,8 @@ public class Player {
 		this.percentageCards = new ArrayList<PercentageCard>();
 		this.hudredCards = new ArrayList<HundredsCard>();
 		this.shares = new HashMap<CompanyID, Integer>();
+		this.cards = new ArrayList<Card>(10);
+		this.cardsIDs = new HashMap<>(10);
 	}
 	
 	public Player(Board board, String name) {
@@ -47,6 +52,8 @@ public class Player {
 			this.percentageCards.add((PercentageCard) card);
 		else if (card instanceof ByTwoCard)
 			this.byTwoCards.add((ByTwoCard) card);
+		
+		cards.add(card);
 	}
 	
 	public Card chooseCard(DeckTypes type, int index) {
@@ -67,6 +74,10 @@ public class Player {
 			System.err.println("Sorry but there is no such card, choose other");
 		}
 		return card;
+	}
+	
+	public Card chooseCard(int cardID) {
+		return this.cardsIDs.get(cardID);
 	}
 	
 	public void buyCompanyShares(int intShares, CompanyID companyID) throws NotEnoughMoney, NotEnoughShares, UnsupportedCompanyID {		
@@ -138,5 +149,13 @@ public class Player {
 			return null;
 		}
 		return this.shares.keySet();
+	}
+
+	public List<Card> getCards() {
+		return cards;
+	}
+	
+	public void setCardID(int cardID, Card card){
+		this.cardsIDs.put(cardID, card);
 	}
 }

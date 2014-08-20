@@ -8,7 +8,6 @@ import com.nedelingg.backend.actions.Substractor;
 import com.nedelingg.backend.exceptions.NotEnoughShares;
 import com.nedelingg.backend.model.Board;
 import com.nedelingg.backend.utils.Options;
-import com.nedelingg.design.OptionActivity;
 
 public abstract class Company {
 	private CompanyID id;
