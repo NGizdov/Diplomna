@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/black"
+    android:orientation="vertical"
+    android:padding="10dp" >
+
+    <TextView
+        android:id="@+id/compChooseLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textColor="@color/white" />
+
+    <RadioGroup
+        android:id="@+id/companyChooseRadio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <RadioButton
+            android:id="@+id/compOneRadioBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text=""
+        	android:textColor="@color/white" />
+
+        <RadioButton
+            android:id="@+id/compTwoRadioBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+        	android:textColor="@color/white" />
+
+        <RadioButton
+            android:id="@+id/compTreeRadioBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+        	android:textColor="@color/white" />
+
+        <RadioButton
+            android:id="@+id/compFourRadioBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+        	android:textColor="@color/white" />
+
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/compChooseBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/ok_button" />
+
+</LinearLayout>

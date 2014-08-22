@@ -141,8 +141,8 @@
 
         <ImageView
             android:id="@+id/card01"
-            android:layout_width="40dp"
-            android:layout_height="53dp"
+            android:layout_width="60dp"
+            android:layout_height="80dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_gravity="left"
@@ -156,8 +156,8 @@
 
         <ImageView
             android:id="@+id/card02"
-            android:layout_width="40dp"
-            android:layout_height="53dp"
+            android:layout_width="60dp"
+            android:layout_height="80dp"
             android:layout_below="@+id/card01"
             android:layout_marginBottom="10dp"
             android:contentDescription="@string/cardTwo"
@@ -165,8 +165,8 @@
 
         <ImageView
             android:id="@+id/card03"
-            android:layout_width="40dp"
-            android:layout_height="53dp"
+            android:layout_width="60dp"
+            android:layout_height="80dp"
             android:layout_below="@+id/card02"
             android:layout_marginBottom="10dp"
             android:contentDescription="@string/cardTree"
@@ -174,8 +174,8 @@
 
         <ImageView
             android:id="@+id/card04"
-            android:layout_width="40dp"
-            android:layout_height="53dp"
+            android:layout_width="60dp"
+            android:layout_height="80dp"
             android:layout_below="@+id/card03"
             android:layout_marginBottom="10dp"
             android:contentDescription="@string/cardFour"
@@ -183,8 +183,8 @@
 
         <ImageView
             android:id="@+id/card05"
-            android:layout_width="40dp"
-            android:layout_height="53dp"
+            android:layout_width="60dp"
+            android:layout_height="80dp"
             android:layout_below="@+id/card04"
             android:layout_marginBottom="10dp"
             android:contentDescription="@string/cardFive"
@@ -192,8 +192,8 @@
 
         <ImageView
             android:id="@+id/card06"
-            android:layout_width="40dp"
-            android:layout_height="53dp"
+            android:layout_width="60dp"
+            android:layout_height="80dp"
             android:layout_below="@+id/card05"
             android:layout_marginBottom="10dp"
             android:contentDescription="@string/cardSix"
@@ -201,8 +201,8 @@
 
         <ImageView
             android:id="@+id/card07"
-            android:layout_width="40dp"
-            android:layout_height="53dp"
+            android:layout_width="60dp"
+            android:layout_height="80dp"
             android:layout_below="@+id/card06"
             android:layout_marginBottom="10dp"
             android:contentDescription="@string/cardSeven"
@@ -210,8 +210,8 @@
 
         <ImageView
             android:id="@+id/card08"
-            android:layout_width="40dp"
-            android:layout_height="53dp"
+            android:layout_width="60dp"
+            android:layout_height="80dp"
             android:layout_below="@+id/card07"
             android:layout_marginBottom="10dp"
             android:contentDescription="@string/cardEight"
@@ -219,8 +219,8 @@
 
         <ImageView
             android:id="@+id/card09"
-            android:layout_width="40dp"
-            android:layout_height="53dp"
+            android:layout_width="60dp"
+            android:layout_height="80dp"
             android:layout_below="@+id/card08"
             android:layout_marginBottom="10dp"
             android:contentDescription="@string/cardNine"
@@ -228,8 +228,8 @@
 
         <ImageView
             android:id="@+id/card10"
-            android:layout_width="40dp"
-            android:layout_height="53dp"
+            android:layout_width="60dp"
+            android:layout_height="80dp"
             android:layout_below="@+id/card09"
             android:layout_marginBottom="10dp"
             android:contentDescription="@string/cardTen"
@@ -336,7 +336,8 @@
                     android:layout_gravity="left"
                     android:layout_marginLeft="1dp"
                     android:src="@drawable/marker"
-                    android:visibility="invisible" />
+                    android:visibility="invisible"
+                    android:tag="" />
 
                 <ImageView
                     android:id="@+id/compOneMark20"
@@ -1191,7 +1192,7 @@
         android:rowCount="1" >
 
         <GridLayout
-            android:id="@+id/playerOneInfo"
+            android:id="@+id/playerHumanInfo"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_column="0"
@@ -1200,7 +1201,7 @@
             android:rowCount="2" >
 
             <TextView
-                android:id="@+id/playerOneGameName"
+                android:id="@+id/playerHumanGameName"
                 android:layout_height="15dp"
                 android:layout_column="0"
                 android:layout_gravity="left|center_vertical"
@@ -1214,7 +1215,7 @@
                 android:background="#000000" />
             
             <GridLayout
-                android:id="@+id/playerOneStats"
+                android:id="@+id/playerHumanStats"
                 android:layout_height="wrap_content"
                 android:layout_gravity="fill_horizontal"
                 android:layout_row="1"
@@ -1306,7 +1307,7 @@
                     android:text="" />
 
                 <TextView
-                    android:id="@+id/playersCashLabel"
+                    android:id="@+id/playerHumanCashLabel"
                     android:layout_width="100dp"
                     android:layout_height="15dp"
                     android:layout_gravity="left"
@@ -1314,7 +1315,7 @@
                     android:text="@string/cash" />
 
                 <TextView
-                    android:id="@+id/playersCash"
+                    android:id="@+id/playerHumanCash"
                     android:layout_width="50dp"
                     android:layout_height="15dp"
                     android:layout_column="2"
@@ -1335,7 +1336,7 @@
                 android:columnCount="3" >
 
                 <TextView
-                    android:id="@+id/playersTotalCashLabel"
+                    android:id="@+id/playerHumanTotalCashLabel"
                     android:layout_width="100dp"
                     android:layout_height="15dp"
                     android:layout_gravity="left"
@@ -1343,7 +1344,7 @@
                     android:text="@string/total" />
 
                 <TextView
-                    android:id="@+id/playersTotalCash"
+                    android:id="@+id/playerHumanTotalCash"
                     android:layout_width="50dp"
                     android:layout_height="15dp"
                     android:layout_column="2"
@@ -1397,6 +1398,56 @@
             android:gravity="top"
             android:text="@string/play_card_button"
             android:textSize="12sp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="75dp"
+        android:layout_height="125dp"
+        android:layout_column="1"
+        android:layout_gravity="right|bottom"
+        android:layout_row="0" >
+
+        <Button
+            android:id="@+id/showInfoBtn"
+            android:layout_width="fill_parent"
+            android:layout_height="30dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:gravity="top|center_horizontal"
+            android:text="@string/show_info_bth"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/buySellBtn"
+            android:layout_width="fill_parent"
+            android:layout_height="30dp"
+            android:layout_below="@+id/showInfoBtn"
+            android:layout_centerHorizontal="true"
+            android:gravity="top|center_horizontal"
+            android:text="@string/buy_sell_btn"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/nextPhaseBtn"
+            android:layout_width="fill_parent"
+            android:layout_height="30dp"
+            android:layout_below="@+id/buySellBtn"
+            android:layout_centerHorizontal="true"
+            android:gravity="top|center_horizontal"
+            android:text="@string/next_phase_btn"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/dummyBtn"
+            android:layout_width="fill_parent"
+            android:layout_height="30dp"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/nextPhaseBtn"
+            android:gravity="top|center_horizontal"
+            android:text="@string/dummy_btn"
+            android:textSize="12sp"
+            android:clickable="false" />
 
     </RelativeLayout>
 

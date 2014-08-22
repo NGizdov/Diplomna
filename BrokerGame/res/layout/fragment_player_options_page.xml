@@ -59,7 +59,7 @@
                     android:text="@string/player_name_label" />
 
                 <EditText
-                    android:id="@+id/playerOneGameName"
+                    android:id="@+id/playerHumanGameName"
                     android:layout_width="200dp"
                     android:layout_gravity="left"
                     android:ems="10"

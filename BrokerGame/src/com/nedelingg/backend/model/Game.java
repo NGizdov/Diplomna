@@ -29,24 +29,24 @@ public class Game {
 	
 	public final static Random RANDOMISER = new Random();
 	
-	public Game(int players) {
+	public Game(int numberPlayers) {
 		this.players = new LinkedList<Player>();
 		this.sc = new Scanner(System.in);
 		this.board = new Board();
 		boolean isHumanSet = false;
-		for (int i = 0; i < players; i++) {
+		for (int i = 0; i < numberPlayers; i++) {
 			isHumanSet = Options.getPlayerType(i + 1);
 			if(isHumanSet) break;
 		}
 		
-		for (int i = 0; i < players; i++) {
+		for (int i = 0; i < numberPlayers; i++) {
 			String name = Options.getPlayerName(i + 1);
 			boolean isHuman = Options.getPlayerType(i + 1);
 			if(!isHumanSet && (i == 0)){
 				isHuman = true;
 				Options.setHumanPlayerIdInt(1);
 			}
-			this.players.add(new Player(this.board, name, isHuman));
+			this.players.add(i, new Player(this.board, name, isHuman));
 		}
 //		this.players.add(new Player(this.board, "Human", true));
 		this.byTwoDeck = new ByTwoDeck();
@@ -55,6 +55,10 @@ public class Game {
 		prepare();
 	}
 	
+	public List<Player> getPlayers() {
+		return players;
+	}
+
 	public Player getHumanPlayer(){
 		Player humanPlayer = null;
 		for (Player player : players) {
@@ -155,7 +159,7 @@ public class Game {
 					}
 					break;
 				}
-				card = player.chooseCard(indexCard);
+				card = player.getCardByID(indexCard);
 			}
 		} else {
 			int randomIndex = RANDOMISER.nextInt(availableDecks.size());
@@ -169,6 +173,62 @@ public class Game {
 	
 	private void phaseTwo(Player player) {
 		chooseBuyOrSell(player);				
+	}
+	
+	public Card getHumanCardByID(int cardID){
+		for (Player player : this.players) {
+			if (player.isHuman())
+				return player.getCardByID(cardID);				
+		}
+		return null;
+	}
+	
+	public void playCardWithChoose(Player player, Card card, CompanyID choosenCompany){
+		Raiser raiser = card.getRaiser();
+		Lowerer lower = card.getLowerer();
+		CompanyID raiserCompanyID = raiser.getCompany();
+		CompanyID lowerCompanyID = lower.getCompany();		
+		
+		if (raiserCompanyID.equals(CompanyID.BY_CHOICE)) {
+			try {
+				this.board.changeCompanyValue(choosenCompany, raiser);
+				this.board.changeCompanyValue(lowerCompanyID, lower);
+			} catch (UnsupportedCompanyID e) {
+				e.printStackTrace();
+			}
+		} else {
+			try {
+				this.board.changeCompanyValue(choosenCompany, lower);
+				this.board.changeCompanyValue(raiserCompanyID, raiser);
+			} catch (UnsupportedCompanyID e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+		
+	public void playCard(Player player, int cardID){
+		Card card = player.getCardByID(cardID);
+		Raiser raiser = card.getRaiser();
+		Lowerer lower = card.getLowerer();
+		CompanyID raiserCompanyID = raiser.getCompany();
+		CompanyID lowerCompanyID = lower.getCompany();
+		
+		if (raiserCompanyID.equals(CompanyID.ALL)) {
+				this.board.changeAllCompaniesValue(raiser);
+				try {
+					this.board.changeCompanyValue(lowerCompanyID, lower);
+				} catch (UnsupportedCompanyID e) {
+					e.printStackTrace();
+				}
+		} else {
+			this.board.changeAllCompaniesValue(lower);
+			try {
+				this.board.changeCompanyValue(raiserCompanyID, raiser);
+			} catch (UnsupportedCompanyID e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	private void phaseTree(Player player, Card card){

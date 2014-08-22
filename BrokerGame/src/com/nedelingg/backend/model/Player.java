@@ -25,6 +25,7 @@ public class Player {
 	private List<Card> cards;
 	private Map<Integer, Card> cardsIDs;
 	private HashMap<CompanyID, Integer> shares;
+
 	private Board board;
 	private boolean isHuman;
 	
@@ -76,8 +77,12 @@ public class Player {
 		return card;
 	}
 	
-	public Card chooseCard(int cardID) {
+	public Card getCardByID(int cardID) {
 		return this.cardsIDs.get(cardID);
+	}
+	
+	public HashMap<CompanyID, Integer> getShares() {
+		return shares;
 	}
 	
 	public void buyCompanyShares(int intShares, CompanyID companyID) throws NotEnoughMoney, NotEnoughShares, UnsupportedCompanyID {		

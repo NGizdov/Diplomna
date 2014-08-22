@@ -9,4 +9,9 @@
 	<string name="cash">Cash:</string>
 	<string name="total">Total:</string>
 	<string name="play_card_button">Play Card</string>
+	<string name="ok_button">OK</string>
+	<string name="show_info_bth">Show stats</string>
+	<string name="buy_sell_btn">Byu/Sell</string>
+	<string name="next_phase_btn">Next Phase</string>
+	<string name="dummy_btn">BUMMM</string>
 </resources>

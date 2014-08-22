@@ -1,5 +1,8 @@
 package com.nedelingg.backend.model;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.nedelingg.backend.actions.Actioner;
 import com.nedelingg.backend.companies.CompanyID;
 import com.nedelingg.backend.companies.FirstCompany;
@@ -27,6 +30,15 @@ public class Board {
 	
 	public void repaint(){
 		// TODO
+	}
+	
+	public Map<CompanyID, Integer> getAllCompaniesCurrentMarkers(){
+		HashMap<CompanyID, Integer> compValues = new HashMap<>();
+		compValues.put(CompanyID.FIRST, firstCompany.getCurrentMarkerID());
+		compValues.put(CompanyID.SECOND, secondCompany.getCurrentMarkerID());
+		compValues.put(CompanyID.THIRD, thirdCompany.getCurrentMarkerID());
+		compValues.put(CompanyID.FOURTH, fourthCompany.getCurrentMarkerID());
+		return compValues;
 	}
 	
 	public String getCompanyName(CompanyID id) {
@@ -89,6 +101,21 @@ public class Board {
 	}
 
 	public int getCompanyCurrentValue(CompanyID companyID) throws UnsupportedCompanyID {
+		switch(companyID.value()){
+			case 1: 
+				return this.firstCompany.getCurrentValue();
+			case 2: 
+				return this.secondCompany.getCurrentValue();
+			case 3: 
+				return this.thirdCompany.getCurrentValue();
+			case 4: 
+				return this.fourthCompany.getCurrentValue();
+			default: 
+				throw new UnsupportedCompanyID("Not supported company ID");
+		}
+	}
+	
+	public int getCompanyCurrentMarkerID(CompanyID companyID) throws UnsupportedCompanyID {
 		switch(companyID.value()){
 			case 1: 
 				return this.firstCompany.getCurrentValue();

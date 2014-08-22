@@ -1,5 +1,7 @@
 package com.nedelingg.backend.companies;
 
+import java.util.Map;
+
 import com.nedelingg.backend.actions.Actioner;
 import com.nedelingg.backend.actions.Additioner;
 import com.nedelingg.backend.actions.Divider;
@@ -15,6 +17,8 @@ public abstract class Company {
 //	protected CompanyStock stock;
 	private int shares;
 	private String name;
+	protected int currentMarkerID;
+	protected Map<Integer, Integer> markersIDs;
 //	public Company(CompanyID id, CompanyStock stock) {
 //		this.id = id;
 //		this.currentValue = 100;
@@ -59,6 +63,10 @@ public abstract class Company {
 	public int getCurrentValue() {
 		return currentValue;
 	}
+	
+	public int getCurrentMarkerID() {
+		return currentMarkerID;
+	}
 
 	public CompanyID getId() {
 		return id;
@@ -92,6 +100,7 @@ public abstract class Company {
 			this.currentValue = Board.MIN_SHARE_PRIZE;
 		}
 		
+		this.currentMarkerID = this.markersIDs.get(this.currentValue);
 		return reminder;
 	}
 

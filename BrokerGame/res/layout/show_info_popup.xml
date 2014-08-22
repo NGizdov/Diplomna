@@ -1,0 +1,1020 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white" >
+	
+    <HorizontalScrollView
+        android:id="@+id/infoContainerLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="10dp"
+        android:overScrollMode="ifContentScrolls"
+        android:rowCount="10" >
+   
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <GridLayout
+            android:id="@+id/playerOneInfo"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:columnCount="1"
+            android:rowCount="2"
+            android:visibility="gone" >
+
+            <TextView
+                android:id="@+id/playerOneGameName"
+                android:layout_height="15dp"
+                android:layout_column="0"
+                android:layout_gravity="left|center_vertical"
+                android:layout_row="0"
+                android:text="@string/you" />
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dip"
+                android:layout_gravity="left"
+                android:layout_marginTop="2dp"
+                android:background="#000000" />
+
+            <GridLayout
+                android:id="@+id/playerOneStats"
+                android:layout_height="wrap_content"
+                android:layout_gravity="fill_horizontal"
+                android:layout_row="1"
+                android:columnCount="3"
+                android:rowCount="6" >
+
+                <TextView
+                    android:id="@+id/playerOneCompanyAName"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="left|center_vertical"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/playerOneCompanyAShares"
+                    android:layout_width="50dp"
+                    android:layout_height="15dp"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/playerOneCompanyASharesValue"
+                    android:layout_width="50dp"
+                    android:layout_height="15dp"
+                    android:gravity="right|center_vertical"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/playerOneCompanyBName"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="left|center_vertical"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/playerOneCompanyBShares"
+                    android:layout_width="50dp"
+                    android:layout_height="15dp"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/playerOneCompanyBSharesValue"
+                    android:layout_width="50dp"
+                    android:layout_height="15dp"
+                    android:gravity="right|center_vertical"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/playerOneCompanyCName"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="left|center_vertical"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/playerOneCompanyCShares"
+                    android:layout_width="50dp"
+                    android:layout_height="15dp"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/playerOneCompanyCSharesValue"
+                    android:layout_width="50dp"
+                    android:layout_height="15dp"
+                    android:gravity="right|center_vertical"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/playerOneCompanyDName"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="left|center_vertical"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/playerOneCompanyDShares"
+                    android:layout_width="50dp"
+                    android:layout_height="15dp"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/playerOneCompanyDSharesValue"
+                    android:layout_width="50dp"
+                    android:layout_height="15dp"
+                    android:gravity="right|center_vertical"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/playerOneCashLabel"
+                    android:layout_width="100dp"
+                    android:layout_height="15dp"
+                    android:layout_gravity="left"
+                    android:gravity="left|center_vertical"
+                    android:text="@string/cash" />
+
+                <TextView
+                    android:id="@+id/playerOneCash"
+                    android:layout_width="50dp"
+                    android:layout_height="15dp"
+                    android:layout_column="2"
+                    android:layout_gravity="left"
+                    android:gravity="right|center_vertical"
+                    android:text="" />
+            </GridLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dip"
+                android:layout_gravity="left"
+                android:layout_marginTop="2dp"
+                android:background="#000000" />
+
+            <GridLayout
+                android:layout_gravity="fill_horizontal"
+                android:columnCount="3" >
+
+                <TextView
+                    android:id="@+id/playerOneTotalCashLabel"
+                    android:layout_width="100dp"
+                    android:layout_height="15dp"
+                    android:layout_gravity="left"
+                    android:gravity="left|center_vertical"
+                    android:text="@string/total" />
+
+                <TextView
+                    android:id="@+id/playerOneTotalCash"
+                    android:layout_width="50dp"
+                    android:layout_height="15dp"
+                    android:layout_column="2"
+                    android:layout_gravity="right|top"
+                    android:layout_row="0"
+                    android:gravity="right|center_vertical" />
+            </GridLayout>
+        </GridLayout>
+
+        <GridLayout
+            android:id="@+id/playerTwoInfo"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:columnCount="1"
+            android:rowCount="2"
+            android:visibility="gone" >
+
+           <TextView
+                android:id="@+id/playerTwoGameName"
+                android:layout_height="15dp"
+                android:layout_column="0"
+                android:layout_gravity="left|center_vertical"
+                android:layout_row="0"
+                android:text="@string/you" />
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dip"
+                android:layout_gravity="left"
+                android:layout_marginTop="2dp"
+                android:background="#000000" />
+
+            <GridLayout
+                android:id="@+id/playerTwoStats"
+                android:layout_height="wrap_content"
+                android:layout_gravity="fill_horizontal"
+                android:layout_row="1"
+                android:columnCount="3"
+                android:rowCount="6" >
+
+                <TextView
+                    android:id="@+id/playerTwoCompanyAName"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="left|center_vertical"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/playerTwoCompanyAShares"
+                    android:layout_width="50dp"
+                    android:layout_height="15dp"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/playerTwoCompanyASharesValue"
+                    android:layout_width="50dp"
+                    android:layout_height="15dp"
+                    android:gravity="right|center_vertical"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/playerTwoCompanyBName"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="left|center_vertical"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/playerTwoCompanyBShares"
+                    android:layout_width="50dp"
+                    android:layout_height="15dp"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/playerTwoCompanyBSharesValue"
+                    android:layout_width="50dp"
+                    android:layout_height="15dp"
+                    android:gravity="right|center_vertical"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/playerTwoCompanyCName"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="left|center_vertical"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/playerTwoCompanyCShares"
+                    android:layout_width="50dp"
+                    android:layout_height="15dp"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/playerTwoCompanyCSharesValue"
+                    android:layout_width="50dp"
+                    android:layout_height="15dp"
+                    android:gravity="right|center_vertical"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/playerTwoCompanyDName"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="left|center_vertical"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/playerTwoCompanyDShares"
+                    android:layout_width="50dp"
+                    android:layout_height="15dp"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/playerTwoCompanyDSharesValue"
+                    android:layout_width="50dp"
+                    android:layout_height="15dp"
+                    android:gravity="right|center_vertical"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/playerTwoCashLabel"
+                    android:layout_width="100dp"
+                    android:layout_height="15dp"
+                    android:layout_gravity="left"
+                    android:gravity="left|center_vertical"
+                    android:text="@string/cash" />
+
+                <TextView
+                    android:id="@+id/playerTwoCash"
+                    android:layout_width="50dp"
+                    android:layout_height="15dp"
+                    android:layout_column="2"
+                    android:layout_gravity="left"
+                    android:gravity="right|center_vertical"
+                    android:text="" />
+            </GridLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dip"
+                android:layout_gravity="left"
+                android:layout_marginTop="2dp"
+                android:background="#000000" />
+
+            <GridLayout
+                android:layout_gravity="fill_horizontal"
+                android:columnCount="3" >
+
+                <TextView
+                    android:id="@+id/playerTwoTotalCashLabel"
+                    android:layout_width="100dp"
+                    android:layout_height="15dp"
+                    android:layout_gravity="left"
+                    android:gravity="left|center_vertical"
+                    android:text="@string/total" />
+
+                <TextView
+                    android:id="@+id/playerTwoTotalCash"
+                    android:layout_width="50dp"
+                    android:layout_height="15dp"
+                    android:layout_column="2"
+                    android:layout_gravity="right|top"
+                    android:layout_row="0"
+                    android:gravity="right|center_vertical" />
+            </GridLayout>
+        </GridLayout>
+
+        <GridLayout
+            android:id="@+id/playerTreeInfo"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:columnCount="1"
+            android:rowCount="2"
+            android:visibility="gone" >
+
+           <TextView
+                android:id="@+id/playerTreeGameName"
+                android:layout_height="15dp"
+                android:layout_column="0"
+                android:layout_gravity="left|center_vertical"
+                android:layout_row="0"
+                android:text="@string/you" />
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dip"
+                android:layout_gravity="left"
+                android:layout_marginTop="2dp"
+                android:background="#000000" />
+
+            <GridLayout
+                android:id="@+id/playerTreeStats"
+                android:layout_height="wrap_content"
+                android:layout_gravity="fill_horizontal"
+                android:layout_row="1"
+                android:columnCount="3"
+                android:rowCount="6" >
+
+                <TextView
+                    android:id="@+id/playerTreeCompanyAName"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="left|center_vertical"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/playerTreeCompanyAShares"
+                    android:layout_width="50dp"
+                    android:layout_height="15dp"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/playerTreeCompanyASharesValue"
+                    android:layout_width="50dp"
+                    android:layout_height="15dp"
+                    android:gravity="right|center_vertical"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/playerTreeCompanyBName"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="left|center_vertical"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/playerTreeCompanyBShares"
+                    android:layout_width="50dp"
+                    android:layout_height="15dp"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/playerTreeCompanyBSharesValue"
+                    android:layout_width="50dp"
+                    android:layout_height="15dp"
+                    android:gravity="right|center_vertical"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/playerTreeCompanyCName"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="left|center_vertical"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/playerTreeCompanyCShares"
+                    android:layout_width="50dp"
+                    android:layout_height="15dp"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/playerTreeCompanyCSharesValue"
+                    android:layout_width="50dp"
+                    android:layout_height="15dp"
+                    android:gravity="right|center_vertical"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/playerTreeCompanyDName"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="left|center_vertical"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/playerTreeCompanyDShares"
+                    android:layout_width="50dp"
+                    android:layout_height="15dp"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/playerTreeCompanyDSharesValue"
+                    android:layout_width="50dp"
+                    android:layout_height="15dp"
+                    android:gravity="right|center_vertical"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/playerTreeCashLabel"
+                    android:layout_width="100dp"
+                    android:layout_height="15dp"
+                    android:layout_gravity="left"
+                    android:gravity="left|center_vertical"
+                    android:text="@string/cash" />
+
+                <TextView
+                    android:id="@+id/playerTreeCash"
+                    android:layout_width="50dp"
+                    android:layout_height="15dp"
+                    android:layout_column="2"
+                    android:layout_gravity="left"
+                    android:gravity="right|center_vertical"
+                    android:text="" />
+            </GridLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dip"
+                android:layout_gravity="left"
+                android:layout_marginTop="2dp"
+                android:background="#000000" />
+
+            <GridLayout
+                android:layout_gravity="fill_horizontal"
+                android:columnCount="3" >
+
+                <TextView
+                    android:id="@+id/playerTreeTotalCashLabel"
+                    android:layout_width="100dp"
+                    android:layout_height="15dp"
+                    android:layout_gravity="left"
+                    android:gravity="left|center_vertical"
+                    android:text="@string/total" />
+
+                <TextView
+                    android:id="@+id/playerTreeTotalCash"
+                    android:layout_width="50dp"
+                    android:layout_height="15dp"
+                    android:layout_column="2"
+                    android:layout_gravity="right|top"
+                    android:layout_row="0"
+                    android:gravity="right|center_vertical" />
+            </GridLayout>
+        </GridLayout>
+
+        <GridLayout
+            android:id="@+id/playerFourInfo"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:columnCount="1"
+            android:rowCount="2"
+            android:visibility="gone" >
+
+            <TextView
+                android:id="@+id/playerFourGameName"
+                android:layout_height="15dp"
+                android:layout_column="0"
+                android:layout_gravity="left|center_vertical"
+                android:layout_row="0"
+                android:text="@string/you" />
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dip"
+                android:layout_gravity="left"
+                android:layout_marginTop="2dp"
+                android:background="#000000" />
+
+            <GridLayout
+                android:id="@+id/playerFourStats"
+                android:layout_height="wrap_content"
+                android:layout_gravity="fill_horizontal"
+                android:layout_row="1"
+                android:columnCount="3"
+                android:rowCount="6" >
+
+                <TextView
+                    android:id="@+id/playerFourCompanyAName"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="left|center_vertical"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/playerFourCompanyAShares"
+                    android:layout_width="50dp"
+                    android:layout_height="15dp"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/playerFourCompanyASharesValue"
+                    android:layout_width="50dp"
+                    android:layout_height="15dp"
+                    android:gravity="right|center_vertical"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/playerFourCompanyBName"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="left|center_vertical"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/playerFourCompanyBShares"
+                    android:layout_width="50dp"
+                    android:layout_height="15dp"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/playerFourCompanyBSharesValue"
+                    android:layout_width="50dp"
+                    android:layout_height="15dp"
+                    android:gravity="right|center_vertical"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/playerFourCompanyCName"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="left|center_vertical"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/playerFourCompanyCShares"
+                    android:layout_width="50dp"
+                    android:layout_height="15dp"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/playerFourCompanyCSharesValue"
+                    android:layout_width="50dp"
+                    android:layout_height="15dp"
+                    android:gravity="right|center_vertical"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/playerFourCompanyDName"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="left|center_vertical"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/playerFourCompanyDShares"
+                    android:layout_width="50dp"
+                    android:layout_height="15dp"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/playerFourCompanyDSharesValue"
+                    android:layout_width="50dp"
+                    android:layout_height="15dp"
+                    android:gravity="right|center_vertical"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/playerFourCashLabel"
+                    android:layout_width="100dp"
+                    android:layout_height="15dp"
+                    android:layout_gravity="left"
+                    android:gravity="left|center_vertical"
+                    android:text="@string/cash" />
+
+                <TextView
+                    android:id="@+id/playerFourCash"
+                    android:layout_width="50dp"
+                    android:layout_height="15dp"
+                    android:layout_column="2"
+                    android:layout_gravity="left"
+                    android:gravity="right|center_vertical"
+                    android:text="" />
+            </GridLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dip"
+                android:layout_gravity="left"
+                android:layout_marginTop="2dp"
+                android:background="#000000" />
+
+            <GridLayout
+                android:layout_gravity="fill_horizontal"
+                android:columnCount="3" >
+
+                <TextView
+                    android:id="@+id/playerFourTotalCashLabel"
+                    android:layout_width="100dp"
+                    android:layout_height="15dp"
+                    android:layout_gravity="left"
+                    android:gravity="left|center_vertical"
+                    android:text="@string/total" />
+
+                <TextView
+                    android:id="@+id/playerFourTotalCash"
+                    android:layout_width="50dp"
+                    android:layout_height="15dp"
+                    android:layout_column="2"
+                    android:layout_gravity="right|top"
+                    android:layout_row="0"
+                    android:gravity="right|center_vertical" />
+            </GridLayout>
+        </GridLayout>
+
+        <GridLayout
+            android:id="@+id/playerFiveInfo"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:columnCount="1"
+            android:rowCount="2"
+            android:visibility="gone" >
+
+            <TextView
+                android:id="@+id/playerFiveGameName"
+                android:layout_height="15dp"
+                android:layout_column="0"
+                android:layout_gravity="left|center_vertical"
+                android:layout_row="0"
+                android:text="@string/you" />
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dip"
+                android:layout_gravity="left"
+                android:layout_marginTop="2dp"
+                android:background="#000000" />
+
+            <GridLayout
+                android:id="@+id/playerFiveStats"
+                android:layout_height="wrap_content"
+                android:layout_gravity="fill_horizontal"
+                android:layout_row="1"
+                android:columnCount="3"
+                android:rowCount="6" >
+
+                <TextView
+                    android:id="@+id/playerFiveCompanyAName"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="left|center_vertical"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/playerFiveCompanyAShares"
+                    android:layout_width="50dp"
+                    android:layout_height="15dp"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/playerFiveCompanyASharesValue"
+                    android:layout_width="50dp"
+                    android:layout_height="15dp"
+                    android:gravity="right|center_vertical"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/playerFiveCompanyBName"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="left|center_vertical"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/playerFiveCompanyBShares"
+                    android:layout_width="50dp"
+                    android:layout_height="15dp"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/playerFiveCompanyBSharesValue"
+                    android:layout_width="50dp"
+                    android:layout_height="15dp"
+                    android:gravity="right|center_vertical"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/playerFiveCompanyCName"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="left|center_vertical"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/playerFiveCompanyCShares"
+                    android:layout_width="50dp"
+                    android:layout_height="15dp"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/playerFiveCompanyCSharesValue"
+                    android:layout_width="50dp"
+                    android:layout_height="15dp"
+                    android:gravity="right|center_vertical"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/playerFiveCompanyDName"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="left|center_vertical"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/playerFiveCompanyDShares"
+                    android:layout_width="50dp"
+                    android:layout_height="15dp"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/playerFiveCompanyDSharesValue"
+                    android:layout_width="50dp"
+                    android:layout_height="15dp"
+                    android:gravity="right|center_vertical"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/playerFiveCashLabel"
+                    android:layout_width="100dp"
+                    android:layout_height="15dp"
+                    android:layout_gravity="left"
+                    android:gravity="left|center_vertical"
+                    android:text="@string/cash" />
+
+                <TextView
+                    android:id="@+id/playerFiveCash"
+                    android:layout_width="50dp"
+                    android:layout_height="15dp"
+                    android:layout_column="2"
+                    android:layout_gravity="left"
+                    android:gravity="right|center_vertical"
+                    android:text="" />
+            </GridLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dip"
+                android:layout_gravity="left"
+                android:layout_marginTop="2dp"
+                android:background="#000000" />
+
+            <GridLayout
+                android:layout_gravity="fill_horizontal"
+                android:columnCount="3" >
+
+                <TextView
+                    android:id="@+id/playerFiveTotalCashLabel"
+                    android:layout_width="100dp"
+                    android:layout_height="15dp"
+                    android:layout_gravity="left"
+                    android:gravity="left|center_vertical"
+                    android:text="@string/total" />
+
+                <TextView
+                    android:id="@+id/playerFiveTotalCash"
+                    android:layout_width="50dp"
+                    android:layout_height="15dp"
+                    android:layout_column="2"
+                    android:layout_gravity="right|top"
+                    android:layout_row="0"
+                    android:gravity="right|center_vertical" />
+            </GridLayout>
+        </GridLayout>
+
+        <GridLayout
+            android:id="@+id/playerSixInfo"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:columnCount="1"
+            android:rowCount="2"
+            android:visibility="gone" >
+
+            <TextView
+                android:id="@+id/playerSixGameName"
+                android:layout_height="15dp"
+                android:layout_column="0"
+                android:layout_gravity="left|center_vertical"
+                android:layout_row="0"
+                android:text="@string/you" />
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dip"
+                android:layout_gravity="left"
+                android:layout_marginTop="2dp"
+                android:background="#000000" />
+
+            <GridLayout
+                android:id="@+id/playerSixStats"
+                android:layout_height="wrap_content"
+                android:layout_gravity="fill_horizontal"
+                android:layout_row="1"
+                android:columnCount="3"
+                android:rowCount="6" >
+
+                <TextView
+                    android:id="@+id/playerSixCompanyAName"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="left|center_vertical"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/playerSixCompanyAShares"
+                    android:layout_width="50dp"
+                    android:layout_height="15dp"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/playerSixCompanyASharesValue"
+                    android:layout_width="50dp"
+                    android:layout_height="15dp"
+                    android:gravity="right|center_vertical"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/playerSixCompanyBName"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="left|center_vertical"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/playerSixCompanyBShares"
+                    android:layout_width="50dp"
+                    android:layout_height="15dp"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/playerSixCompanyBSharesValue"
+                    android:layout_width="50dp"
+                    android:layout_height="15dp"
+                    android:gravity="right|center_vertical"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/playerSixCompanyCName"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="left|center_vertical"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/playerSixCompanyCShares"
+                    android:layout_width="50dp"
+                    android:layout_height="15dp"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/playerSixCompanyCSharesValue"
+                    android:layout_width="50dp"
+                    android:layout_height="15dp"
+                    android:gravity="right|center_vertical"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/playerSixCompanyDName"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="left|center_vertical"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/playerSixCompanyDShares"
+                    android:layout_width="50dp"
+                    android:layout_height="15dp"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/playerSixCompanyDSharesValue"
+                    android:layout_width="50dp"
+                    android:layout_height="15dp"
+                    android:gravity="right|center_vertical"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/playerSixCashLabel"
+                    android:layout_width="100dp"
+                    android:layout_height="15dp"
+                    android:layout_gravity="left"
+                    android:gravity="left|center_vertical"
+                    android:text="@string/cash" />
+
+                <TextView
+                    android:id="@+id/playerSixCash"
+                    android:layout_width="50dp"
+                    android:layout_height="15dp"
+                    android:layout_column="2"
+                    android:layout_gravity="left"
+                    android:gravity="right|center_vertical"
+                    android:text="" />
+            </GridLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dip"
+                android:layout_gravity="left"
+                android:layout_marginTop="2dp"
+                android:background="#000000" />
+
+            <GridLayout
+                android:layout_gravity="fill_horizontal"
+                android:columnCount="3" >
+
+                <TextView
+                    android:id="@+id/playerSixTotalCashLabel"
+                    android:layout_width="100dp"
+                    android:layout_height="15dp"
+                    android:layout_gravity="left"
+                    android:gravity="left|center_vertical"
+                    android:text="@string/total" />
+
+                <TextView
+                    android:id="@+id/playerSixTotalCash"
+                    android:layout_width="50dp"
+                    android:layout_height="15dp"
+                    android:layout_column="2"
+                    android:layout_gravity="right|top"
+                    android:layout_row="0"
+                    android:gravity="right|center_vertical" />
+            </GridLayout>
+        </GridLayout>
+
+    </LinearLayout>
+	</HorizontalScrollView>
+
+    <Button
+        android:id="@+id/closeInfoBtn"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_below="@+id/infoContainerLayout"
+        android:layout_centerHorizontal="true"
+        android:text="@string/ok_button"
+        android:textSize="16sp" />
+
+</RelativeLayout>

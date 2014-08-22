@@ -297,7 +297,7 @@ public class OptionActivity extends FragmentActivity {
 			playerOneType.setAdapter(adapter);
 			playerOneType.setOnItemSelectedListener(listener);
 //			playerOneType.setSelection(1);
-			playerOneNameEditText = (EditText) rootView.findViewById(R.id.playerOneGameName);
+			playerOneNameEditText = (EditText) rootView.findViewById(R.id.playerHumanGameName);
 			if (Options.getPlayerNameString(1).length() > 0) playerOneNameEditText.setText(Options.getPlayerNameString(1));
 			playerOneNameEditText.setOnFocusChangeListener(textFocusChanger);
 			
@@ -371,7 +371,7 @@ public class OptionActivity extends FragmentActivity {
 			SharedPreferences names = getActivity().getSharedPreferences("options_data", Context.MODE_PRIVATE);
 			SharedPreferences.Editor nameEditor = names.edit();
 			switch (id) {
-			case R.id.playerOneGameName: 
+			case R.id.playerHumanGameName: 
 				Options.setPlayerNameString(1, text);
 				nameEditor.putString("playerOneName", text);
 				break;
