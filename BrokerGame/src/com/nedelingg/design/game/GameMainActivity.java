@@ -1,7 +1,9 @@
 package com.nedelingg.design.game;
 
-import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import com.nedelingg.backend.actions.Lowerer;
 import com.nedelingg.backend.actions.Raiser;
@@ -10,6 +12,7 @@ import com.nedelingg.backend.companies.CompanyID;
 import com.nedelingg.backend.exceptions.UnsupportedCompanyID;
 import com.nedelingg.backend.model.Game;
 import com.nedelingg.backend.model.Player;
+import com.nedelingg.backend.utils.Console;
 import com.nedelingg.design.BrokerMainActivity;
 import com.nedelingg.design.R;
 
@@ -18,7 +21,6 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -40,11 +42,13 @@ public class GameMainActivity extends Activity {
 	
 	private static Game newGame;
 	private static View rootView;
-		
+	private static boolean isHumanTurn = false;
+	private static int currentHumanPhase = 0;
+
 	public static View getRootView() {
 		return rootView;
 	}
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -59,12 +63,7 @@ public class GameMainActivity extends Activity {
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}
 	}
-
-	@Override
-	protected void onPause() {
-		super.onPause();
-		
-	}
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.game_main, menu);
@@ -139,21 +138,38 @@ public class GameMainActivity extends Activity {
 		ImageView card10 = (ImageView) rootView.findViewById(R.id.card10);
 		card10.setClickable(clickable);
 	}
-
+	
+	private static void setBuySellClickable(boolean clickable) {
+		Button button = (Button) rootView.findViewById(R.id.buySellBtn);
+		button.setClickable(clickable);
+	}
+	
+	private static void setNextPhaseClickable(boolean clickable) {
+		Button button = (Button) rootView.findViewById(R.id.nextPhaseBtn);
+		button.setClickable(clickable);
+	}	
+	
 	/**
 	 * A placeholder fragment containing a simple view.
 	 */
 	public static class PlaceholderFragment extends Fragment {
 		
-		public Map<CompanyID, Integer> currentMarkers;
+		public static Map<CompanyID, Integer> currentMarkers;
+				
+		@Override
+	    public void setUserVisibleHint(boolean isVisibleToUser) {
+	        super.setUserVisibleHint(isVisibleToUser);
+	        if (isVisibleToUser) {
+	            //The equivalent of Fragment onResume
+					Console.log("NOT PASSED");
+	        } else {
+	            //The equivalent of Fragment onPause
+	        }
+	    }
 		
-		public PlaceholderFragment() {
-		}
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
-//			final View rootView = inflater.inflate(R.layout.fragment_game_main,
-//					container, false);
 			rootView = inflater.inflate(R.layout.fragment_game_main,
 					container, false);
 			
@@ -176,8 +192,31 @@ public class GameMainActivity extends Activity {
 					} else if (players > 6) {
 						players = 6;
 					}
-					popupWindow.dismiss();					
 					init(rootView, players);
+					popupWindow.dismiss();
+					
+					ScheduledExecutorService worker = 
+							  Executors.newSingleThreadScheduledExecutor();
+					worker.schedule(new Runnable() {
+						@Override
+						public void run() {
+							playGame();
+						}
+					}, 2, TimeUnit.SECONDS);
+//					Thread newTask = new Thread(new Runnable() {
+//						@Override
+//						public void run() {
+//							playGame();
+//						}
+//					});
+//					
+//					try {
+//						newTask.sleep(2000);
+//						newTask.run();
+//					} catch (InterruptedException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					}
 				}
 			});
 			Button cancel = (Button) popView.findViewById(R.id.btnCancel);
@@ -195,7 +234,6 @@ public class GameMainActivity extends Activity {
 		        	popupWindow.showAtLocation(rootView ,Gravity.CENTER, 0, 0);
 		        }
 		    });
-			
 			return rootView;
 		}
 		
@@ -355,7 +393,6 @@ public class GameMainActivity extends Activity {
 					try {
 						showInfo();
 					} catch (UnsupportedCompanyID e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
@@ -369,14 +406,74 @@ public class GameMainActivity extends Activity {
 			
 			((Button) rootView.findViewById(R.id.nextPhaseBtn)).setOnClickListener(new OnClickListener() {				
 				@Override
-				public void onClick(View v) {					
+				public void onClick(View v) {
+					if (currentHumanPhase == 1){
+						currentHumanPhase = 2;
+						setCardsClickable(true);
+						setNextPhaseClickable(false);
+						setBuySellClickable(false);
+						showPlayCardBtn(false);
+					} else if (currentHumanPhase == 2){
+						currentHumanPhase = 3;
+						setCardsClickable(false);
+						setNextPhaseClickable(true);
+						setBuySellClickable(true);
+						showPlayCardBtn(false);
+					} else if (currentHumanPhase == 3){
+						currentHumanPhase = 0;
+						setCardsClickable(false);
+						setNextPhaseClickable(false);
+						setBuySellClickable(false);
+						showPlayCardBtn(false);
+					}
 				}
 			});
 			// Buttons
 			
 			currentMarkers = newGame.getBoard().getAllCompaniesCurrentMarkers();
+			setCardsClickable(false);
+			setNextPhaseClickable(false);
+			setBuySellClickable(false);
 		}
 		
+		private void playGame() {
+//			try {
+//				Thread.sleep(3000);
+//			} catch (InterruptedException e1) {
+//				e1.printStackTrace();
+//			}
+			for (int i = 0; i < 10; i++) {
+				for (Player player : newGame.getPlayers()) {
+					if (player.isHuman()) {
+						isHumanTurn = true;
+						setNextPhaseClickable(true);
+						setBuySellClickable(true);
+						currentHumanPhase = 1;
+						while(isHumanTurn){
+							try {
+								Thread.sleep(1000);
+								if (currentHumanPhase == 0)
+									isHumanTurn = false;
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							}
+						}
+					} else {
+						setCardsClickable(false);
+						setNextPhaseClickable(false);
+						setBuySellClickable(false);
+						showPlayCardBtn(false);
+						newGame.playPhaseCPU(player);
+						try {
+							repaintBoard(newGame.getBoard().getAllCompaniesCurrentMarkers());
+						} catch (Exception e) {
+							Console.log(e.getMessage());
+							System.out.println(e.getStackTrace());
+						}
+					}
+				}
+			}
+		}
 		private void showInfo() throws UnsupportedCompanyID{
 			final View popView = getActivity().getLayoutInflater().inflate(R.layout.show_info_popup, null);
 			
@@ -386,7 +483,7 @@ public class GameMainActivity extends Activity {
 			String fourthCompanyName = newGame.getBoard().getCompanyName(CompanyID.FOURTH);
 			
 			// Player One
-			int[][] playerIds = new int[6][13];
+			int[][] playerIds = new int[6][16];
 			playerIds[0][0] = R.id.playerOneCompanyAName;
 			playerIds[0][1] = R.id.playerOneCompanyAShares;
 			playerIds[0][2] = R.id.playerOneCompanyASharesValue;
@@ -400,6 +497,9 @@ public class GameMainActivity extends Activity {
 			playerIds[0][10] = R.id.playerOneCompanyDShares;
 			playerIds[0][11] = R.id.playerOneCompanyDSharesValue;	
 			playerIds[0][12] = R.id.playerOneInfo;
+			playerIds[0][13] = R.id.playerOneCash;
+			playerIds[0][14] = R.id.playerOneTotalCash;
+			playerIds[0][15] = R.id.playerOneGameName;
 			// Player One
 			
 			// Player Two
@@ -416,6 +516,9 @@ public class GameMainActivity extends Activity {
 			playerIds[1][10] = R.id.playerTwoCompanyDShares;
 			playerIds[1][11] = R.id.playerTwoCompanyDSharesValue;
 			playerIds[1][12] = R.id.playerTwoInfo;
+			playerIds[1][13] = R.id.playerTwoCash;
+			playerIds[1][14] = R.id.playerTwoTotalCash;
+			playerIds[1][15] = R.id.playerTwoGameName;
 			// Player Two
 			
 			// Player Tree
@@ -432,6 +535,9 @@ public class GameMainActivity extends Activity {
 			playerIds[2][10] = R.id.playerTreeCompanyDShares;
 			playerIds[2][11] = R.id.playerTreeCompanyDSharesValue;
 			playerIds[2][12] = R.id.playerTreeInfo;
+			playerIds[2][13] = R.id.playerTreeCash;
+			playerIds[2][14] = R.id.playerTreeTotalCash;
+			playerIds[2][15] = R.id.playerTreeGameName;
 			// Player Tree
 
 			// Player Four
@@ -448,6 +554,9 @@ public class GameMainActivity extends Activity {
 			playerIds[3][10] = R.id.playerFourCompanyDShares;
 			playerIds[3][11] = R.id.playerFourCompanyDSharesValue;
 			playerIds[3][12] = R.id.playerFourInfo;
+			playerIds[3][13] = R.id.playerFourCash;
+			playerIds[3][14] = R.id.playerFourTotalCash;
+			playerIds[3][15] = R.id.playerFourGameName;
 			// Player Four
 			
 			// Player Five
@@ -464,6 +573,9 @@ public class GameMainActivity extends Activity {
 			playerIds[4][10] = R.id.playerFiveCompanyDShares;
 			playerIds[4][11] = R.id.playerFiveCompanyDSharesValue;
 			playerIds[4][12] = R.id.playerFiveInfo;
+			playerIds[4][13] = R.id.playerFiveCash;
+			playerIds[4][14] = R.id.playerFiveTotalCash;
+			playerIds[4][15] = R.id.playerFiveGameName;
 			// Player Five
 			
 			// Player Six
@@ -480,44 +592,53 @@ public class GameMainActivity extends Activity {
 			playerIds[5][10] = R.id.playerSixCompanyDShares;
 			playerIds[5][11] = R.id.playerSixCompanyDSharesValue;
 			playerIds[5][12] = R.id.playerSixInfo;
+			playerIds[5][13] = R.id.playerSixCash;
+			playerIds[5][14] = R.id.playerSixTotalCash;
+			playerIds[5][15] = R.id.playerSixGameName;
 			// Player Six
 			
 			
 			int i = 0;
 			for (Player player : newGame.getPlayers()) {
-				TextView playerOneCompanyAName = (TextView) popView.findViewById(playerIds[i][0]);
-				playerOneCompanyAName.setText(firstCompanyName);
-				TextView playerOneCompanyAShares = (TextView) popView.findViewById(playerIds[i][1]);
-				playerOneCompanyAShares.setText((player.getShares().get(CompanyID.FIRST) == null) ? 0 : player.getShares().get(CompanyID.FIRST));
-				TextView playerOneCompanyASharesValue = (TextView) popView.findViewById(playerIds[i][2]);
-				playerOneCompanyASharesValue.setText((player.getShares().get(CompanyID.FIRST) * newGame.getBoard().getCompanyCurrentValue(CompanyID.FIRST)));
+				if (!player.isHuman()) {
+					TextView playerName = (TextView) popView.findViewById(playerIds[i][15]);
+					playerName.setText(player.getName());
+				}
 				
-				TextView playerOneCompanyBNameInfo = (TextView) popView.findViewById(playerIds[i][3]);
-				playerOneCompanyBNameInfo.setText(secondCompanyName);
-				TextView playerOneCompanyBShares = (TextView) popView.findViewById(playerIds[i][4]);
-				playerOneCompanyBShares.setText(player.getShares().get(CompanyID.SECOND));
-				TextView playerOneCompanyBSharesValue = (TextView) popView.findViewById(playerIds[i][5]);
-				playerOneCompanyBSharesValue.setText((player.getShares().get(CompanyID.SECOND) * newGame.getBoard().getCompanyCurrentValue(CompanyID.SECOND)));
+				TextView playerCompanyAName = (TextView) popView.findViewById(playerIds[i][0]);
+				playerCompanyAName.setText(firstCompanyName);
+				TextView playerCompanyAShares = (TextView) popView.findViewById(playerIds[i][1]);
+				playerCompanyAShares.setText((player.getShares().get(CompanyID.FIRST) == null) ? "0" : String.valueOf(player.getShares().get(CompanyID.FIRST)));
+				TextView playerCompanyASharesValue = (TextView) popView.findViewById(playerIds[i][2]);
+				playerCompanyASharesValue.setText(String.valueOf(Integer.parseInt(playerCompanyAShares.getText().toString()) * newGame.getBoard().getCompanyCurrentValue(CompanyID.FIRST)));
 				
-				TextView playerOneCompanyCNameInfo = (TextView) popView.findViewById(playerIds[i][6]);
-				playerOneCompanyCNameInfo.setText(thirdCompanyName);
-				TextView playerOneCompanyCShares = (TextView) popView.findViewById(playerIds[i][7]);
-				playerOneCompanyCShares.setText(player.getShares().get(CompanyID.THIRD));
-				TextView playerOneCompanyCSharesValue = (TextView) popView.findViewById(playerIds[i][8]);
-				playerOneCompanyCSharesValue.setText((player.getShares().get(CompanyID.THIRD) * newGame.getBoard().getCompanyCurrentValue(CompanyID.THIRD)));
+				TextView playerCompanyBNameInfo = (TextView) popView.findViewById(playerIds[i][3]);
+				playerCompanyBNameInfo.setText(secondCompanyName);
+				TextView playerCompanyBShares = (TextView) popView.findViewById(playerIds[i][4]);
+				playerCompanyBShares.setText((player.getShares().get(CompanyID.SECOND) == null) ? "0" : String.valueOf(player.getShares().get(CompanyID.SECOND)));
+				TextView playerCompanyBSharesValue = (TextView) popView.findViewById(playerIds[i][5]);
+				playerCompanyBSharesValue.setText(String.valueOf(Integer.parseInt(playerCompanyBShares.getText().toString()) * newGame.getBoard().getCompanyCurrentValue(CompanyID.SECOND)));
 				
-				TextView playerOneCompanyDNameInfo = (TextView) popView.findViewById(playerIds[i][9]);
-				playerOneCompanyDNameInfo.setText(fourthCompanyName);
-				TextView playerOneCompanyDShares = (TextView) popView.findViewById(playerIds[i][10]);
-				playerOneCompanyDShares.setText(player.getShares().get(CompanyID.FOURTH));
-				TextView playerOneCompanyDSharesValue = (TextView) popView.findViewById(playerIds[i][11]);
-				playerOneCompanyDSharesValue.setText((player.getShares().get(CompanyID.FOURTH) * newGame.getBoard().getCompanyCurrentValue(CompanyID.FOURTH)));				
+				TextView playerCompanyCNameInfo = (TextView) popView.findViewById(playerIds[i][6]);
+				playerCompanyCNameInfo.setText(thirdCompanyName);
+				TextView playerCompanyCShares = (TextView) popView.findViewById(playerIds[i][7]);
+				playerCompanyCShares.setText((player.getShares().get(CompanyID.THIRD) == null) ? "0" : String.valueOf(player.getShares().get(CompanyID.THIRD)));
+				TextView playerCompanyCSharesValue = (TextView) popView.findViewById(playerIds[i][8]);
+				playerCompanyCSharesValue.setText(String.valueOf(Integer.parseInt(playerCompanyCShares.getText().toString()) * newGame.getBoard().getCompanyCurrentValue(CompanyID.THIRD)));
+				
+				TextView playerCompanyDNameInfo = (TextView) popView.findViewById(playerIds[i][9]);
+				playerCompanyDNameInfo.setText(fourthCompanyName);
+				TextView playerCompanyDShares = (TextView) popView.findViewById(playerIds[i][10]);
+				playerCompanyDShares.setText((player.getShares().get(CompanyID.FOURTH) == null) ? "0" : String.valueOf(player.getShares().get(CompanyID.FOURTH)));
+				TextView playerCompanyDSharesValue = (TextView) popView.findViewById(playerIds[i][11]);
+				playerCompanyDSharesValue.setText(String.valueOf(Integer.parseInt(playerCompanyDShares.getText().toString()) * newGame.getBoard().getCompanyCurrentValue(CompanyID.FOURTH)));				
 
 				int playerCashInt = player.getMoneys();
-				TextView playersCash = (TextView) popView.findViewById(R.id.playerOneCash);
+				TextView playersCash = (TextView) popView.findViewById(playerIds[i][13]);
 				playersCash.setText(String.valueOf(playerCashInt));
-				TextView playersTotalCash = (TextView) popView.findViewById(R.id.playerOneTotalCash);
-				playersTotalCash.setText(String.valueOf(playerCashInt));
+				TextView playersTotalCash = (TextView) popView.findViewById(playerIds[i][14]);
+				int totalCash = Integer.parseInt(playerCompanyASharesValue.getText().toString()) + Integer.parseInt(playerCompanyBSharesValue.getText().toString()) + Integer.parseInt(playerCompanyCSharesValue.getText().toString()) + Integer.parseInt(playerCompanyDSharesValue.getText().toString()); 
+				playersTotalCash.setText(String.valueOf(totalCash));
 				
 				(popView.findViewById(playerIds[i][12])).setVisibility(View.VISIBLE);
 				i++;
@@ -551,14 +672,12 @@ public class GameMainActivity extends Activity {
 			Lowerer lower = card.getLowerer();
 			CompanyID raiserCompanyID = raiser.getCompany();
 			CompanyID lowerCompanyID = lower.getCompany();
-//			boolean isRaiser = false;
 			
 			if (raiserCompanyID.equals(CompanyID.BY_CHOICE) || lowerCompanyID.equals(CompanyID.BY_CHOICE)) {
 				String radioLabel = "Choose company to ";
 				CompanyID illieagalID = null;
 				if (raiserCompanyID.equals(CompanyID.BY_CHOICE)) {
 					radioLabel += "raise current shares value";
-//					isRaiser = true;
 					illieagalID = lowerCompanyID;
 				} else {
 					radioLabel += "raise current shares value";				
@@ -570,7 +689,6 @@ public class GameMainActivity extends Activity {
 				String fourthCompanyName = newGame.getBoard().getCompanyName(CompanyID.FOURTH);
 				
 				final View popView = getActivity().getLayoutInflater().inflate(R.layout.choose_company, null);
-//				View view = getActivity().getLayoutInflater().inflate(R.layout.choose_company, null);
 				TextView radioLabelText = (TextView) popView.findViewById(R.id.compChooseLabel);
 				radioLabelText.setText(radioLabel);
 				
@@ -606,13 +724,13 @@ public class GameMainActivity extends Activity {
 						int radioButtonID = radioButtonGroup.getCheckedRadioButtonId();
 						View radioButton = radioButtonGroup.findViewById(radioButtonID);
 						CompanyID id = (CompanyID) radioButton.getTag();
-//						choosenId = (CompanyID) radioButton.getTag();
 						newGame.playCardWithChoose(newGame.getHumanPlayer(), card, id);
 						Map<CompanyID, Integer> markers = newGame.getBoard().getAllCompaniesCurrentMarkers();
 						repaintBoard(markers);
 						cardPlace.setImageResource(R.drawable.card_place);			
 						setCardsClickable(false);
 						showPlayCardBtn(false);
+						setNextPhaseClickable(true);
 						popupWindow.dismiss();
 					}
 				});
@@ -634,14 +752,14 @@ public class GameMainActivity extends Activity {
 			}
 		}
 		
-		private void repaintBoard(Map<CompanyID, Integer> newMarkers) {			
-			ImageView firstCompMarker = (ImageView) rootView.findViewById(this.currentMarkers.get(CompanyID.FIRST));
+		private static void repaintBoard(Map<CompanyID, Integer> newMarkers) {			
+			ImageView firstCompMarker = (ImageView) rootView.findViewById(currentMarkers.get(CompanyID.FIRST));
 			firstCompMarker.setVisibility(View.INVISIBLE);
-			ImageView secondCompMarker = (ImageView) rootView.findViewById(this.currentMarkers.get(CompanyID.SECOND));
+			ImageView secondCompMarker = (ImageView) rootView.findViewById(currentMarkers.get(CompanyID.SECOND));
 			secondCompMarker.setVisibility(View.INVISIBLE);
-			ImageView thirdCompMarker = (ImageView) rootView.findViewById(this.currentMarkers.get(CompanyID.THIRD));
+			ImageView thirdCompMarker = (ImageView) rootView.findViewById(currentMarkers.get(CompanyID.THIRD));
 			thirdCompMarker.setVisibility(View.INVISIBLE);
-			ImageView fourthCompMarker = (ImageView) rootView.findViewById(this.currentMarkers.get(CompanyID.FOURTH));
+			ImageView fourthCompMarker = (ImageView) rootView.findViewById(currentMarkers.get(CompanyID.FOURTH));
 			fourthCompMarker.setVisibility(View.INVISIBLE);
 			
 			firstCompMarker = (ImageView) rootView.findViewById(newMarkers.get(CompanyID.FIRST));

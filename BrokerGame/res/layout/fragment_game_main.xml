@@ -1447,7 +1447,8 @@
             android:gravity="top|center_horizontal"
             android:text="@string/dummy_btn"
             android:textSize="12sp"
-            android:clickable="false" />
+            android:clickable="false" 
+            android:visibility="gone" />
 
     </RelativeLayout>
 

@@ -18,6 +18,7 @@ import com.nedelingg.backend.exceptions.NotEnoughMoney;
 import com.nedelingg.backend.exceptions.NotEnoughShares;
 import com.nedelingg.backend.exceptions.UnsupportedCompanyID;
 import com.nedelingg.backend.utils.Options;
+import com.nedelingg.design.game.GameMainActivity;
 
 public class Game {
 	private List<Player> players;
@@ -92,6 +93,22 @@ public class Game {
 				player.addCard(this.percentageDeck.popTopCard());
 			}			
 		}
+	}
+	
+	public void playPhaseCPU(Player player){
+		Card card = null;
+		List<DeckTypes> availableDecks = player.getDecksTypes();
+		int randomIndex = RANDOMISER.nextInt(availableDecks.size());
+		DeckTypes randomType = availableDecks.get(randomIndex);
+		int size = player.getDeckSize(randomType);
+		int randomCard = RANDOMISER.nextInt(size);
+		card = player.chooseCard(randomType, randomCard);
+		
+		chooseBuyOrSellCPU(player);
+		
+		playCPUCard(player, card);
+
+		chooseBuyOrSellCPU(player);
 	}
 	
 	public void playPhase(){
@@ -229,6 +246,71 @@ public class Game {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	private void playCPUCard(Player player, Card card){
+		Raiser raiser = card.getRaiser();
+		Lowerer lower = card.getLowerer();
+		CompanyID raiserCompanyID = raiser.getCompany();
+		CompanyID lowerCompanyID = lower.getCompany();
+		
+		
+		if (!raiserCompanyID.equals(CompanyID.BY_CHOICE)) {
+			if (raiserCompanyID.equals(CompanyID.ALL)) {
+				this.board.changeAllCompaniesValue(raiser);
+			} else {
+				try {
+					this.board.changeCompanyValue(raiserCompanyID, raiser);
+				} catch (UnsupportedCompanyID e) {
+				}
+			}
+		} else {
+			int companyID = RANDOMISER.nextInt(4);
+			CompanyID id = null;
+			switch(companyID) {
+				case 0 : id = CompanyID.FIRST;				
+					break;
+				case 1 : id = CompanyID.SECOND;	
+					break;
+				case 2 : id = CompanyID.THIRD;	
+					break;
+				case 3 : id = CompanyID.FOURTH;	
+					break;
+			}
+			try {
+				this.board.changeCompanyValue(id, raiser);
+			} catch (UnsupportedCompanyID e) {
+				System.out.println("Not supported company ID");
+			}
+		}
+		if (!lowerCompanyID.equals(CompanyID.BY_CHOICE)) {
+			if (lowerCompanyID.equals(CompanyID.ALL)) {
+				this.board.changeAllCompaniesValue(raiser);
+			} else {
+				try {
+					this.board.changeCompanyValue(raiserCompanyID, raiser);
+				} catch (UnsupportedCompanyID e) {
+				}
+			}
+		} else {
+			int companyID = RANDOMISER.nextInt(4);
+			CompanyID id = null;
+			switch(companyID) {
+				case 0 : id = CompanyID.FIRST;				
+					break;
+				case 1 : id = CompanyID.SECOND;	
+					break;
+				case 2 : id = CompanyID.THIRD;	
+					break;
+				case 3 : id = CompanyID.FOURTH;	
+					break;
+			}
+			try {
+				this.board.changeCompanyValue(id, lower);
+			} catch (UnsupportedCompanyID e) {
+				System.out.println("Not supported company ID");
+			}
+		}		
 	}
 	
 	private void phaseTree(Player player, Card card){
@@ -403,6 +485,20 @@ public class Game {
 			default:
 				return;
 			}
+		}
+	}
+	
+	private void chooseBuyOrSellCPU(Player player){
+		int option = RANDOMISER.nextInt(3);
+		switch (option) {
+		case 1:
+			buyShares(player);
+			break;
+		case 2:
+			sellShares(player);
+			break;
+		default:
+			return;
 		}
 	}
 	
