@@ -21,6 +21,8 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -195,28 +197,40 @@ public class GameMainActivity extends Activity {
 					init(rootView, players);
 					popupWindow.dismiss();
 					
+//					Handler hadler =  new Handler();
+//					hadler.postDelayed(new Runnable() {
+//						@Override
+//						public void run() {
+//							getActivity().runOnUiThread(new Runnable() {								
+//								@Override
+//								public void run() {
+//									playGame();
+//								}
+//							});
+//						}
+//					}, 2000);
+					
 					ScheduledExecutorService worker = 
 							  Executors.newSingleThreadScheduledExecutor();
+					
+//					worker.schedule(new Runnable() {
+//						@Override
+//						public void run() {
+//							getActivity().runOnUiThread(new Runnable() {								
+//								@Override
+//								public void run() {
+//									playGame();
+//								}
+//							});
+//						}
+//					}, 2, TimeUnit.SECONDS);
+					
 					worker.schedule(new Runnable() {
 						@Override
 						public void run() {
 							playGame();
 						}
 					}, 2, TimeUnit.SECONDS);
-//					Thread newTask = new Thread(new Runnable() {
-//						@Override
-//						public void run() {
-//							playGame();
-//						}
-//					});
-//					
-//					try {
-//						newTask.sleep(2000);
-//						newTask.run();
-//					} catch (InterruptedException e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					}
 				}
 			});
 			Button cancel = (Button) popView.findViewById(R.id.btnCancel);
@@ -437,11 +451,6 @@ public class GameMainActivity extends Activity {
 		}
 		
 		private void playGame() {
-//			try {
-//				Thread.sleep(3000);
-//			} catch (InterruptedException e1) {
-//				e1.printStackTrace();
-//			}
 			for (int i = 0; i < 10; i++) {
 				for (Player player : newGame.getPlayers()) {
 					if (player.isHuman()) {
@@ -459,15 +468,16 @@ public class GameMainActivity extends Activity {
 							}
 						}
 					} else {
-						setCardsClickable(false);
-						setNextPhaseClickable(false);
-						setBuySellClickable(false);
-						showPlayCardBtn(false);
-						newGame.playPhaseCPU(player);
 						try {
+							setCardsClickable(false);
+							setNextPhaseClickable(false);
+							setBuySellClickable(false);
+							showPlayCardBtn(false);
+							newGame.playPhaseCPU(player);
 							repaintBoard(newGame.getBoard().getAllCompaniesCurrentMarkers());
 						} catch (Exception e) {
 							Console.log(e.getMessage());
+							Log.e("play Error", e.getMessage(), e);
 							System.out.println(e.getStackTrace());
 						}
 					}
