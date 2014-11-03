@@ -75,12 +75,13 @@ public final class R {
         public static final int PlayerTreeOptionsLayout=0x7f0a00bb;
         public static final int PlayerTwoOptionsLayout=0x7f0a00b8;
         public static final int RelativeLayout1=0x7f0a000d;
-        public static final int action_settings=0x7f0a013e;
+        public static final int action_settings=0x7f0a013f;
         public static final int boardImagesContainer=0x7f0a002c;
         public static final int boardMainContainer=0x7f0a0026;
         public static final int btnCancel=0x7f0a00c8;
         public static final int btnPlayCard=0x7f0a00ab;
         public static final int btnStart=0x7f0a00c9;
+        public static final int btnStartGame=0x7f0a013e;
         public static final int buySellBtn=0x7f0a00ad;
         public static final int card01=0x7f0a001c;
         public static final int card02=0x7f0a001d;
@@ -401,6 +402,7 @@ public final class R {
         public static final int fragment_player_options_page=0x7f03000d;
         public static final int player_count_window=0x7f03000e;
         public static final int show_info_popup=0x7f03000f;
+        public static final int start_game_window=0x7f030010;
     }
     public static final class menu {
         public static final int broker_main=0x7f090000;

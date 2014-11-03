@@ -159,18 +159,7 @@ public class GameMainActivity extends Activity {
 		public static Map<CompanyID, Integer> currentMarkers;
 				
 		@Override
-	    public void setUserVisibleHint(boolean isVisibleToUser) {
-	        super.setUserVisibleHint(isVisibleToUser);
-	        if (isVisibleToUser) {
-	            //The equivalent of Fragment onResume
-					Console.log("NOT PASSED");
-	        } else {
-	            //The equivalent of Fragment onPause
-	        }
-	    }
-		
-		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container,
+		public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
 				Bundle savedInstanceState) {
 			rootView = inflater.inflate(R.layout.fragment_game_main,
 					container, false);
@@ -197,22 +186,9 @@ public class GameMainActivity extends Activity {
 					init(rootView, players);
 					popupWindow.dismiss();
 					
-//					Handler hadler =  new Handler();
-//					hadler.postDelayed(new Runnable() {
-//						@Override
-//						public void run() {
-//							getActivity().runOnUiThread(new Runnable() {								
-//								@Override
-//								public void run() {
-//									playGame();
-//								}
-//							});
-//						}
-//					}, 2000);
-					
-					ScheduledExecutorService worker = 
-							  Executors.newSingleThreadScheduledExecutor();
-					
+//					ScheduledExecutorService worker = 
+//							  Executors.newSingleThreadScheduledExecutor();
+//					
 //					worker.schedule(new Runnable() {
 //						@Override
 //						public void run() {
@@ -223,14 +199,7 @@ public class GameMainActivity extends Activity {
 //								}
 //							});
 //						}
-//					}, 2, TimeUnit.SECONDS);
-					
-					worker.schedule(new Runnable() {
-						@Override
-						public void run() {
-							playGame();
-						}
-					}, 2, TimeUnit.SECONDS);
+//					},5, TimeUnit.SECONDS);
 				}
 			});
 			Button cancel = (Button) popView.findViewById(R.id.btnCancel);
@@ -248,6 +217,26 @@ public class GameMainActivity extends Activity {
 		        	popupWindow.showAtLocation(rootView ,Gravity.CENTER, 0, 0);
 		        }
 		    });
+			
+
+//			ScheduledExecutorService worker = 
+//					  Executors.newSingleThreadScheduledExecutor();
+//			
+//			worker.schedule(new Runnable() {
+//				@Override
+//				public void run() {
+//					getActivity().runOnUiThread(new Runnable() {								
+//						@Override
+//						public void run() {
+//							init(rootView, 4);
+//							playGame();
+//						}
+//					});
+//				}
+//			}, 5, TimeUnit.SECONDS);
+//			this.uiTask = new UiTask();
+//			getActivity().runOnUiThread(uiTask);
+//			init(rootView, 4);
 			return rootView;
 		}
 		
@@ -258,7 +247,7 @@ public class GameMainActivity extends Activity {
 		}
 		
 		
-		private void init(View rootView, int playerNumber) {
+		private void init(final View rootView, int playerNumber) {
 			newGame = new Game(playerNumber);
 			
 			String firstCompanyName = newGame.getBoard().getCompanyName(CompanyID.FIRST); 
@@ -392,7 +381,7 @@ public class GameMainActivity extends Activity {
 			// play card button
 			showPlayCardBtn(false);
 			Button playCardBtn = ((Button) rootView.findViewById(R.id.btnPlayCard));
-			playCardBtn.setOnClickListener(new OnClickListener() {				
+			playCardBtn.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
 					playCard();
@@ -445,12 +434,40 @@ public class GameMainActivity extends Activity {
 			// Buttons
 			
 			currentMarkers = newGame.getBoard().getAllCompaniesCurrentMarkers();
-			setCardsClickable(false);
+			setCardsClickable(true);
 			setNextPhaseClickable(false);
 			setBuySellClickable(false);
+			
+			/*
+			final View popView = getActivity().getLayoutInflater().inflate(R.layout.start_game_window, null);
+			final PopupWindow popupWindow = new PopupWindow(popView, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+			Button start = (Button) popView.findViewById(R.id.btnStartGame);
+			start.setOnClickListener(new OnClickListener() {				
+				@Override
+				public void onClick(View v) {
+					getActivity().runOnUiThread(new Runnable() {								
+						@Override
+						public void run() {
+							playGame(popupWindow);
+						}
+					});
+//					playGame(popupWindow);
+				}
+			});
+			popupWindow.setFocusable(true);
+			popupWindow.setTouchable(true); 
+			popupWindow.setOutsideTouchable(false);
+			rootView.post(new Runnable() {
+		        public void run() {
+		        	popupWindow.showAtLocation(rootView ,Gravity.CENTER, 0, 0);
+		        }
+		    });
+		    */
 		}
 		
-		private void playGame() {
+		private void playGame(PopupWindow popupWindow) {
+
+			popupWindow.dismiss();
 			for (int i = 0; i < 10; i++) {
 				for (Player player : newGame.getPlayers()) {
 					if (player.isHuman()) {
@@ -484,6 +501,7 @@ public class GameMainActivity extends Activity {
 				}
 			}
 		}
+		
 		private void showInfo() throws UnsupportedCompanyID{
 			final View popView = getActivity().getLayoutInflater().inflate(R.layout.show_info_popup, null);
 			
@@ -705,25 +723,27 @@ public class GameMainActivity extends Activity {
 				RadioButton firstCompanyRadio = (RadioButton) popView.findViewById(R.id.compOneRadioBtn);
 				firstCompanyRadio.setText(firstCompanyName);
 				firstCompanyRadio.setTag(CompanyID.FIRST);
-				if(illieagalID.equals(CompanyID.FIRST)) {
-					firstCompanyRadio.setClickable(false);
-					firstCompanyRadio.setChecked(false);
-				}
 				RadioButton secondCompanyRadio = (RadioButton) popView.findViewById(R.id.compTwoRadioBtn);
 				secondCompanyRadio.setText(secondCompanyName);				
 				secondCompanyRadio.setTag(CompanyID.SECOND);
-				if(illieagalID.equals(CompanyID.SECOND))
-					secondCompanyRadio.setClickable(false);
 				RadioButton thirdCompanyRadio = (RadioButton) popView.findViewById(R.id.compTreeRadioBtn);
 				thirdCompanyRadio.setText(thirdCompanyName);				
 				thirdCompanyRadio.setTag(CompanyID.THIRD);
-				if(illieagalID.equals(CompanyID.THIRD))
-					thirdCompanyRadio.setClickable(false);
 				RadioButton fourthCompanyRadio = (RadioButton) popView.findViewById(R.id.compFourRadioBtn);
 				fourthCompanyRadio.setText(fourthCompanyName);
 				fourthCompanyRadio.setTag(CompanyID.FOURTH);
-				if(illieagalID.equals(CompanyID.FOURTH))
+				
+				if(illieagalID.equals(CompanyID.FIRST)) {
+					firstCompanyRadio.setClickable(false);
+					firstCompanyRadio.setChecked(false);
+					secondCompanyRadio.setChecked(true);
+				} else if(illieagalID.equals(CompanyID.SECOND)) {
+					secondCompanyRadio.setClickable(false);
+				} else if(illieagalID.equals(CompanyID.THIRD)) {
+					thirdCompanyRadio.setClickable(false);
+				} else if(illieagalID.equals(CompanyID.FOURTH)) {
 					fourthCompanyRadio.setClickable(false);
+				}
 				
 				final PopupWindow popupWindow = new PopupWindow(popView, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 				Button btnOK = (Button) popView.findViewById(R.id.compChooseBtn);
