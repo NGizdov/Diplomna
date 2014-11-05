@@ -677,6 +677,7 @@ public class Game {
 			}
 		} else {
 			while (true) {
+//				System.out.println("");
 				int intCompanyID = RANDOMISER.nextInt(5);
 				CompanyID id = null;
 				switch (intCompanyID) {

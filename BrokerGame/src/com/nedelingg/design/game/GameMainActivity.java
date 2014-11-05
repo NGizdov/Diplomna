@@ -1,9 +1,6 @@
 package com.nedelingg.design.game;
 
 import java.util.Map;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 import com.nedelingg.backend.actions.Lowerer;
 import com.nedelingg.backend.actions.Raiser;
@@ -22,10 +19,11 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -64,12 +62,6 @@ public class GameMainActivity extends Activity {
 			getFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}
-	}
-	
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.game_main, menu);
-		return true;
 	}
 
 	@Override
@@ -110,35 +102,16 @@ public class GameMainActivity extends Activity {
 	}
 	
 	private static void setCardsClickable(boolean clickable) {
-		ImageView card01 = (ImageView) rootView.findViewById(R.id.card01);
-		card01.setClickable(clickable);
-		
-		ImageView card02 = (ImageView) rootView.findViewById(R.id.card02);
-		card02.setClickable(clickable);
-		
-		ImageView card03 = (ImageView) rootView.findViewById(R.id.card03);
-		card03.setClickable(clickable);
-		
-		ImageView card04 = (ImageView) rootView.findViewById(R.id.card04);
-		card04.setClickable(clickable);
-		
-		ImageView card05 = (ImageView) rootView.findViewById(R.id.card05);
-		card05.setClickable(clickable);
-		
-		ImageView card06 = (ImageView) rootView.findViewById(R.id.card06);
-		card06.setClickable(clickable);
-		
-		ImageView card07 = (ImageView) rootView.findViewById(R.id.card07);
-		card07.setClickable(clickable);
-		
-		ImageView card08 = (ImageView) rootView.findViewById(R.id.card08);
-		card08.setClickable(clickable);
-		
-		ImageView card09 = (ImageView) rootView.findViewById(R.id.card09);
-		card09.setClickable(clickable);
-		
-		ImageView card10 = (ImageView) rootView.findViewById(R.id.card10);
-		card10.setClickable(clickable);
+		((ImageView) rootView.findViewById(R.id.card01)).setClickable(clickable);
+		((ImageView) rootView.findViewById(R.id.card02)).setClickable(clickable);		
+		((ImageView) rootView.findViewById(R.id.card03)).setClickable(clickable);
+		((ImageView) rootView.findViewById(R.id.card04)).setClickable(clickable);
+		((ImageView) rootView.findViewById(R.id.card05)).setClickable(clickable);
+		((ImageView) rootView.findViewById(R.id.card06)).setClickable(clickable);
+		((ImageView) rootView.findViewById(R.id.card07)).setClickable(clickable);
+		((ImageView) rootView.findViewById(R.id.card08)).setClickable(clickable);
+		((ImageView) rootView.findViewById(R.id.card09)).setClickable(clickable);
+		((ImageView) rootView.findViewById(R.id.card10)).setClickable(clickable);
 	}
 	
 	private static void setBuySellClickable(boolean clickable) {
@@ -157,13 +130,12 @@ public class GameMainActivity extends Activity {
 	public static class PlaceholderFragment extends Fragment {
 		
 		public static Map<CompanyID, Integer> currentMarkers;
-				
+		private MainThreadHandler mainThreadHandler;
 		@Override
 		public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
 				Bundle savedInstanceState) {
 			rootView = inflater.inflate(R.layout.fragment_game_main,
 					container, false);
-			
 			final View popView = inflater.inflate(R.layout.player_count_window, null);
 			final PopupWindow popupWindow = new PopupWindow(popView, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 			Button start = (Button) popView.findViewById(R.id.btnStart);
@@ -183,23 +155,9 @@ public class GameMainActivity extends Activity {
 					} else if (players > 6) {
 						players = 6;
 					}
-					init(rootView, players);
+//					init(rootView, players);
+					init(players);
 					popupWindow.dismiss();
-					
-//					ScheduledExecutorService worker = 
-//							  Executors.newSingleThreadScheduledExecutor();
-//					
-//					worker.schedule(new Runnable() {
-//						@Override
-//						public void run() {
-//							getActivity().runOnUiThread(new Runnable() {								
-//								@Override
-//								public void run() {
-//									playGame();
-//								}
-//							});
-//						}
-//					},5, TimeUnit.SECONDS);
 				}
 			});
 			Button cancel = (Button) popView.findViewById(R.id.btnCancel);
@@ -217,26 +175,6 @@ public class GameMainActivity extends Activity {
 		        	popupWindow.showAtLocation(rootView ,Gravity.CENTER, 0, 0);
 		        }
 		    });
-			
-
-//			ScheduledExecutorService worker = 
-//					  Executors.newSingleThreadScheduledExecutor();
-//			
-//			worker.schedule(new Runnable() {
-//				@Override
-//				public void run() {
-//					getActivity().runOnUiThread(new Runnable() {								
-//						@Override
-//						public void run() {
-//							init(rootView, 4);
-//							playGame();
-//						}
-//					});
-//				}
-//			}, 5, TimeUnit.SECONDS);
-//			this.uiTask = new UiTask();
-//			getActivity().runOnUiThread(uiTask);
-//			init(rootView, 4);
 			return rootView;
 		}
 		
@@ -247,8 +185,10 @@ public class GameMainActivity extends Activity {
 		}
 		
 		
-		private void init(final View rootView, int playerNumber) {
+//		private void init(final View rootView, int playerNumber) {
+		private void init(int playerNumber) {
 			newGame = new Game(playerNumber);
+			mainThreadHandler = new MainThreadHandler();
 			
 			String firstCompanyName = newGame.getBoard().getCompanyName(CompanyID.FIRST); 
 			String secondCompanyName = newGame.getBoard().getCompanyName(CompanyID.SECOND); 
@@ -428,78 +368,21 @@ public class GameMainActivity extends Activity {
 						setNextPhaseClickable(false);
 						setBuySellClickable(false);
 						showPlayCardBtn(false);
+						isHumanTurn = false;
 					}
 				}
 			});
 			// Buttons
 			
 			currentMarkers = newGame.getBoard().getAllCompaniesCurrentMarkers();
-			setCardsClickable(true);
+				
+			setCardsClickable(false);
 			setNextPhaseClickable(false);
 			setBuySellClickable(false);
 			
-			/*
-			final View popView = getActivity().getLayoutInflater().inflate(R.layout.start_game_window, null);
-			final PopupWindow popupWindow = new PopupWindow(popView, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-			Button start = (Button) popView.findViewById(R.id.btnStartGame);
-			start.setOnClickListener(new OnClickListener() {				
-				@Override
-				public void onClick(View v) {
-					getActivity().runOnUiThread(new Runnable() {								
-						@Override
-						public void run() {
-							playGame(popupWindow);
-						}
-					});
-//					playGame(popupWindow);
-				}
-			});
-			popupWindow.setFocusable(true);
-			popupWindow.setTouchable(true); 
-			popupWindow.setOutsideTouchable(false);
-			rootView.post(new Runnable() {
-		        public void run() {
-		        	popupWindow.showAtLocation(rootView ,Gravity.CENTER, 0, 0);
-		        }
-		    });
-		    */
-		}
-		
-		private void playGame(PopupWindow popupWindow) {
-
-			popupWindow.dismiss();
-			for (int i = 0; i < 10; i++) {
-				for (Player player : newGame.getPlayers()) {
-					if (player.isHuman()) {
-						isHumanTurn = true;
-						setNextPhaseClickable(true);
-						setBuySellClickable(true);
-						currentHumanPhase = 1;
-						while(isHumanTurn){
-							try {
-								Thread.sleep(1000);
-								if (currentHumanPhase == 0)
-									isHumanTurn = false;
-							} catch (InterruptedException e) {
-								e.printStackTrace();
-							}
-						}
-					} else {
-						try {
-							setCardsClickable(false);
-							setNextPhaseClickable(false);
-							setBuySellClickable(false);
-							showPlayCardBtn(false);
-							newGame.playPhaseCPU(player);
-							repaintBoard(newGame.getBoard().getAllCompaniesCurrentMarkers());
-						} catch (Exception e) {
-							Console.log(e.getMessage());
-							Log.e("play Error", e.getMessage(), e);
-							System.out.println(e.getStackTrace());
-						}
-					}
-				}
-			}
+			GameThread gameThread = new GameThread();
+			
+			gameThread.start();
 		}
 		
 		private void showInfo() throws UnsupportedCompanyID{
@@ -773,16 +656,17 @@ public class GameMainActivity extends Activity {
 			        }
 			    });
 			} else {
-				newGame.playCard(newGame.getHumanPlayer(), cardID);	
+				newGame.playCard(newGame.getHumanPlayer(), cardID);
 				Map<CompanyID, Integer> markers = newGame.getBoard().getAllCompaniesCurrentMarkers();
 				repaintBoard(markers);
-				cardPlace.setImageResource(R.drawable.card_place);			
+				cardPlace.setImageResource(R.drawable.card_place);
+				setNextPhaseClickable(true);
 				setCardsClickable(false);
 				showPlayCardBtn(false);
 			}
 		}
 		
-		private static void repaintBoard(Map<CompanyID, Integer> newMarkers) {			
+		private static void repaintBoard(Map<CompanyID, Integer> newMarkers) {
 			ImageView firstCompMarker = (ImageView) rootView.findViewById(currentMarkers.get(CompanyID.FIRST));
 			firstCompMarker.setVisibility(View.INVISIBLE);
 			ImageView secondCompMarker = (ImageView) rootView.findViewById(currentMarkers.get(CompanyID.SECOND));
@@ -801,6 +685,69 @@ public class GameMainActivity extends Activity {
 			fourthCompMarker = (ImageView) rootView.findViewById(newMarkers.get(CompanyID.FOURTH));
 			fourthCompMarker.setVisibility(View.VISIBLE);			
 		}
+				
+		private class GameThread extends Thread {
+			@Override
+			public void run() {
+				try {
+					Looper.prepare();
+					Message msg = Message.obtain();
+					for (int i = 0; i < 10; i++) {
+						for (Player player : newGame.getPlayers()) {
+							if (player.isHuman()) {
+								isHumanTurn = true;
+								currentHumanPhase = 1;
+								msg.arg1 = GameCodes.HUMAN_PLAY.value();
+								mainThreadHandler.sendMessage(msg);
+								try {
+									while(isHumanTurn) {
+										Thread.sleep(1000);
+									}
+								} catch (InterruptedException e1) {
+									e1.printStackTrace();
+								}							
+							} else {							
+								try {
+									newGame.playPhaseCPU(player);
+								} catch (Exception e) {
+									Console.log(e.getMessage());
+									Log.e("play Error", e.getMessage(), e);
+									System.out.println(e.getStackTrace());
+								}
+							}
+						}
+					}
+					
+					Looper.loop();
+				} catch (Exception e) {
+					System.out.println(e.getStackTrace());
+				}
+			}
+		}
+		
+		private static class MainThreadHandler extends Handler {
+			@Override
+			public void handleMessage(Message msg) {
+				this.obtainMessage();
+				if (msg.arg1 == GameCodes.HUMAN_PLAY.value()) {
+					repaintBoard(newGame.getBoard().getAllCompaniesCurrentMarkers());
+					setNextPhaseClickable(true);
+					setBuySellClickable(true);
+				}
+			}
+		}
 	}
-
+	
+	private enum GameCodes {
+		HUMAN_PLAY(1), CPU_PLAY(2), END_HUMAN_TURN(3);
+		
+		private int value;
+		 
+		GameCodes(int id){
+			this.value = id;
+		}
+		public int value() {
+			return value;
+		}
+	}
 }
