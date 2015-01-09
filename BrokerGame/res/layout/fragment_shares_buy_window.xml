@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/RelativeLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    android:orientation="vertical"
+    android:padding="7dp" >
+
+    <GridLayout
+        android:id="@+id/gridLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="35dp"
+        android:columnCount="2" >
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_gravity="center_vertical"
+            android:layout_row="0"
+            android:text="@string/company_market_label" />
+
+        <NumberPicker
+            android:id="@+id/pickerNumberOfShares"
+            android:layout_column="1"
+            android:layout_gravity="right|top"
+            android:layout_row="0" />
+
+        <Spinner
+            android:id="@+id/spinnerCompanyToMarket"
+            android:layout_width="107dp"
+            android:layout_height="35dp"
+            android:layout_column="1"
+            android:layout_gravity="left|top"
+            android:layout_row="0" />
+
+    </GridLayout>
+
+    <Button
+        android:id="@+id/btnStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/gridLayout1"
+        android:layout_below="@+id/gridLayout1"
+        android:layout_marginLeft="62dp"
+        android:layout_marginTop="22dp"
+        android:text="@string/players_number_start_btn" />
+
+    <Button
+        android:id="@+id/btnCancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/btnStart"
+        android:layout_alignBottom="@+id/btnStart"
+        android:layout_alignRight="@+id/gridLayout1"
+        android:layout_marginRight="50dp"
+        android:text="@string/players_number_cancel_btn" />
+
+</RelativeLayout>

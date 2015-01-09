@@ -11,6 +11,7 @@ import com.nedelingg.backend.companies.SecondCompany;
 import com.nedelingg.backend.companies.ThirdCompany;
 import com.nedelingg.backend.exceptions.NotEnoughShares;
 import com.nedelingg.backend.exceptions.UnsupportedCompanyID;
+import com.nedelingg.backend.utils.Console;
 
 public class Board {
 	public static int MAX_SHARE_PRIZE = 250;
@@ -147,11 +148,34 @@ public class Board {
 		}
 	}
 	
-	public void changeAllCompaniesValue(Actioner action) {
-		this.firstCompany.changeCurrentValue(action);
-		this.secondCompany.changeCurrentValue(action);
-		this.thirdCompany.changeCurrentValue(action);
-		this.fourthCompany.changeCurrentValue(action);
+	public void changeAllCompaniesValue(Actioner action, CompanyID exceptionID) {
+		Console.log(action.getValue().getValue());
+		switch (exceptionID) {
+		case FIRST:
+			this.secondCompany.changeCurrentValue(action);
+			this.thirdCompany.changeCurrentValue(action);
+			this.fourthCompany.changeCurrentValue(action);
+			break;
+		case SECOND:
+			this.firstCompany.changeCurrentValue(action);
+			this.thirdCompany.changeCurrentValue(action);
+			this.fourthCompany.changeCurrentValue(action);
+			break;
+		case THIRD:
+			this.secondCompany.changeCurrentValue(action);
+			this.firstCompany.changeCurrentValue(action);
+			this.fourthCompany.changeCurrentValue(action);
+			break;
+		default:
+			this.firstCompany.changeCurrentValue(action);
+			this.secondCompany.changeCurrentValue(action);
+			this.thirdCompany.changeCurrentValue(action);
+			break;
+		}
+//		this.firstCompany.changeCurrentValue(action);
+//		this.secondCompany.changeCurrentValue(action);
+//		this.thirdCompany.changeCurrentValue(action);
+//		this.fourthCompany.changeCurrentValue(action);
 	}
 	
 	public int getAvailableSharesCount(CompanyID companyID) throws UnsupportedCompanyID{

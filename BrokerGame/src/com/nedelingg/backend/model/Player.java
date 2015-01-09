@@ -25,7 +25,8 @@ public class Player {
 	private List<Card> cards;
 	private Map<Integer, Card> cardsIDs;
 	private HashMap<CompanyID, Integer> shares;
-
+	private List<CompanyID> sellForbidden;
+	private List<CompanyID> buyForbidden;
 	private Board board;
 	private boolean isHuman;
 	
@@ -40,6 +41,8 @@ public class Player {
 		this.shares = new HashMap<CompanyID, Integer>();
 		this.cards = new ArrayList<Card>(10);
 		this.cardsIDs = new HashMap<>(10);
+		this.sellForbidden = new ArrayList<CompanyID>(4);
+		this.buyForbidden = new ArrayList<CompanyID>(4);
 	}
 	
 	public Player(Board board, String name) {
@@ -162,5 +165,21 @@ public class Player {
 	
 	public void setCardID(int cardID, Card card){
 		this.cardsIDs.put(cardID, card);
+	}
+	
+	public void addBuyForbidden(CompanyID companyID) {
+		this.buyForbidden.add(companyID);
+	}
+	
+	public void addSellForbidden(CompanyID companyID) {
+		this.sellForbidden.add(companyID);
+	}
+
+	public void resetBuyForbidden() {
+		this.sellForbidden.clear();
+	}
+
+	public void resetSellForbidden() {
+		this.sellForbidden.clear();
 	}
 }

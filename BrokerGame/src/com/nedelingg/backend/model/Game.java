@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.Set;
+import java.util.TreeSet;
 
 import com.nedelingg.backend.actions.Lowerer;
 import com.nedelingg.backend.actions.Raiser;
@@ -104,11 +105,11 @@ public class Game {
 		int randomCard = RANDOMISER.nextInt(size);
 		card = player.chooseCard(randomType, randomCard);
 		
-		chooseBuyOrSellCPU(player);
+	//	chooseBuyOrSellCPU(player);
 		
 		playCPUCard(player, card);
 
-		chooseBuyOrSellCPU(player);
+		//chooseBuyOrSellCPU(player);
 	}
 	
 	public void playPhase(){
@@ -232,14 +233,14 @@ public class Game {
 		CompanyID lowerCompanyID = lower.getCompany();
 		
 		if (raiserCompanyID.equals(CompanyID.ALL)) {
-				this.board.changeAllCompaniesValue(raiser);
+				this.board.changeAllCompaniesValue(raiser, lowerCompanyID);
 				try {
 					this.board.changeCompanyValue(lowerCompanyID, lower);
 				} catch (UnsupportedCompanyID e) {
 					e.printStackTrace();
 				}
 		} else {
-			this.board.changeAllCompaniesValue(lower);
+			this.board.changeAllCompaniesValue(lower, raiserCompanyID);
 			try {
 				this.board.changeCompanyValue(raiserCompanyID, raiser);
 			} catch (UnsupportedCompanyID e) {
@@ -253,11 +254,48 @@ public class Game {
 		Lowerer lower = card.getLowerer();
 		CompanyID raiserCompanyID = raiser.getCompany();
 		CompanyID lowerCompanyID = lower.getCompany();
+
+		CompanyID[] availableRaisers = null;
+		switch (lowerCompanyID) {
+		case FIRST:
+			availableRaisers = new CompanyID[]{CompanyID.SECOND, CompanyID.THIRD, CompanyID.FOURTH};
+			break;
+		case SECOND:
+			availableRaisers = new CompanyID[]{CompanyID.FIRST, CompanyID.THIRD, CompanyID.FOURTH};
+			break;
+		case THIRD:
+			availableRaisers = new CompanyID[]{CompanyID.SECOND, CompanyID.FIRST, CompanyID.FOURTH};
+			break;
+		case FOURTH:
+			availableRaisers = new CompanyID[]{CompanyID.SECOND, CompanyID.THIRD, CompanyID.FIRST};
+			break;
+		default:
+			availableRaisers = new CompanyID[]{CompanyID.SECOND, CompanyID.THIRD, CompanyID.FIRST, CompanyID.FOURTH};
+			break;
+		}
 		
+		CompanyID[] availableLowers = null;
+		switch (raiserCompanyID) {
+		case FIRST:
+			availableLowers = new CompanyID[]{CompanyID.SECOND, CompanyID.THIRD, CompanyID.FOURTH};
+			break;
+		case SECOND:
+			availableLowers = new CompanyID[]{CompanyID.FIRST, CompanyID.THIRD, CompanyID.FOURTH};
+			break;
+		case THIRD:
+			availableLowers = new CompanyID[]{CompanyID.SECOND, CompanyID.FIRST, CompanyID.FOURTH};
+			break;
+		case FOURTH:
+			availableLowers = new CompanyID[]{CompanyID.SECOND, CompanyID.THIRD, CompanyID.FIRST};
+			break;
+		default:
+			availableLowers = new CompanyID[]{CompanyID.SECOND, CompanyID.THIRD, CompanyID.FIRST, CompanyID.FOURTH};
+			break;
+		}
 		
 		if (!raiserCompanyID.equals(CompanyID.BY_CHOICE)) {
 			if (raiserCompanyID.equals(CompanyID.ALL)) {
-				this.board.changeAllCompaniesValue(raiser);
+				this.board.changeAllCompaniesValue(raiser, lowerCompanyID);
 			} else {
 				try {
 					this.board.changeCompanyValue(raiserCompanyID, raiser);
@@ -265,7 +303,12 @@ public class Game {
 				}
 			}
 		} else {
-			int companyID = RANDOMISER.nextInt(4);
+			int companyID = RANDOMISER.nextInt(availableRaisers.length);
+			
+			CompanyID id = availableRaisers[companyID];
+			
+			/*int companyID = RANDOMISER.nextInt(4);
+			
 			CompanyID id = null;
 			switch(companyID) {
 				case 0 : id = CompanyID.FIRST;				
@@ -276,7 +319,7 @@ public class Game {
 					break;
 				case 3 : id = CompanyID.FOURTH;	
 					break;
-			}
+			}*/
 			try {
 				this.board.changeCompanyValue(id, raiser);
 			} catch (UnsupportedCompanyID e) {
@@ -285,15 +328,19 @@ public class Game {
 		}
 		if (!lowerCompanyID.equals(CompanyID.BY_CHOICE)) {
 			if (lowerCompanyID.equals(CompanyID.ALL)) {
-				this.board.changeAllCompaniesValue(raiser);
+				this.board.changeAllCompaniesValue(lower, raiserCompanyID);
 			} else {
 				try {
-					this.board.changeCompanyValue(raiserCompanyID, raiser);
+					this.board.changeCompanyValue(lowerCompanyID, lower);
 				} catch (UnsupportedCompanyID e) {
 				}
 			}
 		} else {
-			int companyID = RANDOMISER.nextInt(4);
+			int companyID = RANDOMISER.nextInt(availableLowers.length);
+			
+			CompanyID id = availableLowers[companyID];
+			
+			/*int companyID = RANDOMISER.nextInt(4);
 			CompanyID id = null;
 			switch(companyID) {
 				case 0 : id = CompanyID.FIRST;				
@@ -304,7 +351,7 @@ public class Game {
 					break;
 				case 3 : id = CompanyID.FOURTH;	
 					break;
-			}
+			}*/
 			try {
 				this.board.changeCompanyValue(id, lower);
 			} catch (UnsupportedCompanyID e) {
@@ -322,7 +369,7 @@ public class Game {
 		
 		if (!raiserCompanyID.equals(CompanyID.BY_CHOICE)) {
 			if (raiserCompanyID.equals(CompanyID.ALL)) {
-				this.board.changeAllCompaniesValue(raiser);
+				this.board.changeAllCompaniesValue(raiser, lowerCompanyID);
 			} else {
 				try {
 					this.board.changeCompanyValue(raiserCompanyID, raiser);
@@ -382,10 +429,10 @@ public class Game {
 		}
 		if (!lowerCompanyID.equals(CompanyID.BY_CHOICE)) {
 			if (lowerCompanyID.equals(CompanyID.ALL)) {
-				this.board.changeAllCompaniesValue(raiser);
+				this.board.changeAllCompaniesValue(lower, raiserCompanyID);
 			} else {
 				try {
-					this.board.changeCompanyValue(raiserCompanyID, raiser);
+					this.board.changeCompanyValue(lowerCompanyID, lower);
 				} catch (UnsupportedCompanyID e) {
 				}
 			}

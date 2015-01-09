@@ -1419,36 +1419,35 @@
             android:textSize="12sp" />
 
         <Button
-            android:id="@+id/buySellBtn"
+            android:id="@+id/buyBtn"
             android:layout_width="fill_parent"
             android:layout_height="30dp"
             android:layout_below="@+id/showInfoBtn"
             android:layout_centerHorizontal="true"
             android:gravity="top|center_horizontal"
-            android:text="@string/buy_sell_btn"
+            android:text="@string/sell_btn"
             android:textSize="12sp" />
 
         <Button
             android:id="@+id/nextPhaseBtn"
             android:layout_width="fill_parent"
             android:layout_height="30dp"
-            android:layout_below="@+id/buySellBtn"
-            android:layout_centerHorizontal="true"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/sellBtn"
             android:gravity="top|center_horizontal"
             android:text="@string/next_phase_btn"
             android:textSize="12sp" />
 
         <Button
-            android:id="@+id/dummyBtn"
+            android:id="@+id/sellBtn"
             android:layout_width="fill_parent"
             android:layout_height="30dp"
             android:layout_alignParentLeft="true"
-            android:layout_below="@+id/nextPhaseBtn"
+            android:layout_below="@+id/buyBtn"
+            android:clickable="false"
             android:gravity="top|center_horizontal"
-            android:text="@string/dummy_btn"
-            android:textSize="12sp"
-            android:clickable="false" 
-            android:visibility="gone" />
+            android:text="@string/buy_btn"
+            android:textSize="12sp" />
 
     </RelativeLayout>
 

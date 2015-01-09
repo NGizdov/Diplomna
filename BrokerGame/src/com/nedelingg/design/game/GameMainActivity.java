@@ -115,8 +115,10 @@ public class GameMainActivity extends Activity {
 	}
 	
 	private static void setBuySellClickable(boolean clickable) {
-		Button button = (Button) rootView.findViewById(R.id.buySellBtn);
+		Button button = (Button) rootView.findViewById(R.id.sellBtn);
 		button.setClickable(clickable);
+		Button buttonSell = (Button) rootView.findViewById(R.id.buyBtn);
+		buttonSell.setClickable(clickable);
 	}
 	
 	private static void setNextPhaseClickable(boolean clickable) {
@@ -341,9 +343,19 @@ public class GameMainActivity extends Activity {
 				}
 			});
 			
-			((Button) rootView.findViewById(R.id.buySellBtn)).setOnClickListener(new OnClickListener() {				
+			((Button) rootView.findViewById(R.id.buyBtn)).setOnClickListener(new OnClickListener() {				
 				@Override
-				public void onClick(View v) {					
+				public void onClick(View v) {
+//					if (currentHumanPhase == 1) 
+//					showSharesWindow();
+				}
+			});
+			
+			((Button) rootView.findViewById(R.id.sellBtn)).setOnClickListener(new OnClickListener() {				
+				@Override
+				public void onClick(View v) {
+//					if (currentHumanPhase == 1) 
+//					showSharesWindow();
 				}
 			});
 			
@@ -666,6 +678,49 @@ public class GameMainActivity extends Activity {
 			}
 		}
 		
+		private void showSharesWindow() {
+			final View popView = getActivity().getLayoutInflater().inflate(R.layout.player_count_window, null);
+			final PopupWindow popupWindow = new PopupWindow(popView, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+			Button start = (Button) popView.findViewById(R.id.btnStart);
+			start.setOnClickListener(new OnClickListener() {				
+				@Override
+				public void onClick(View v) {
+					EditText playersNumber = (EditText) popView.findViewById(R.id.playersNumber);
+					String playersNumberText = playersNumber.getText().toString();
+					int players = 0;
+					try {
+						players = Integer.parseInt(playersNumberText);
+					} catch (NumberFormatException e){
+						players = 2;
+					}
+					if (players < 2) {
+						players = 2;
+					} else if (players > 6) {
+						players = 6;
+					}
+//					init(rootView, players);
+					init(players);
+					popupWindow.dismiss();
+				}
+			});
+			Button cancel = (Button) popView.findViewById(R.id.btnCancel);
+			cancel.setOnClickListener(new OnClickListener() {				
+				@Override
+				public void onClick(View v) {
+					goToMain(v);
+				}
+			});
+			popupWindow.setFocusable(true);
+			popupWindow.setTouchable(true); 
+			popupWindow.setOutsideTouchable(false);
+			rootView.post(new Runnable() {
+		        public void run() {
+		        	popupWindow.showAtLocation(rootView ,Gravity.CENTER, 0, 0);
+		        }
+		    });
+//			return rootView;
+		}
+		
 		private static void repaintBoard(Map<CompanyID, Integer> newMarkers) {
 			ImageView firstCompMarker = (ImageView) rootView.findViewById(currentMarkers.get(CompanyID.FIRST));
 			firstCompMarker.setVisibility(View.INVISIBLE);
@@ -675,6 +730,8 @@ public class GameMainActivity extends Activity {
 			thirdCompMarker.setVisibility(View.INVISIBLE);
 			ImageView fourthCompMarker = (ImageView) rootView.findViewById(currentMarkers.get(CompanyID.FOURTH));
 			fourthCompMarker.setVisibility(View.INVISIBLE);
+			
+			currentMarkers = newMarkers;
 			
 			firstCompMarker = (ImageView) rootView.findViewById(newMarkers.get(CompanyID.FIRST));
 			firstCompMarker.setVisibility(View.VISIBLE);
@@ -691,12 +748,14 @@ public class GameMainActivity extends Activity {
 			public void run() {
 				try {
 					Looper.prepare();
-					Message msg = Message.obtain();
+//					Message msg = Message.obtain();
 					for (int i = 0; i < 10; i++) {
 						for (Player player : newGame.getPlayers()) {
+							
 							if (player.isHuman()) {
 								isHumanTurn = true;
 								currentHumanPhase = 1;
+								Message msg = Message.obtain();
 								msg.arg1 = GameCodes.HUMAN_PLAY.value();
 								mainThreadHandler.sendMessage(msg);
 								try {
