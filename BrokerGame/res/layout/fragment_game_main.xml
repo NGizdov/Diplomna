@@ -1419,7 +1419,7 @@
             android:textSize="12sp" />
 
         <Button
-            android:id="@+id/buyBtn"
+            android:id="@+id/sellBtnNew"
             android:layout_width="fill_parent"
             android:layout_height="30dp"
             android:layout_below="@+id/showInfoBtn"
@@ -1433,18 +1433,17 @@
             android:layout_width="fill_parent"
             android:layout_height="30dp"
             android:layout_alignParentLeft="true"
-            android:layout_below="@+id/sellBtn"
+            android:layout_below="@+id/buyBtnNew"
             android:gravity="top|center_horizontal"
             android:text="@string/next_phase_btn"
             android:textSize="12sp" />
 
         <Button
-            android:id="@+id/sellBtn"
+            android:id="@+id/buyBtnNew"
             android:layout_width="fill_parent"
             android:layout_height="30dp"
             android:layout_alignParentLeft="true"
-            android:layout_below="@+id/buyBtn"
-            android:clickable="false"
+            android:layout_below="@+id/sellBtnNew"
             android:gravity="top|center_horizontal"
             android:text="@string/buy_btn"
             android:textSize="12sp" />

@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.nedelingg.backend.actions.Actioner;
+import com.nedelingg.backend.companies.Company;
 import com.nedelingg.backend.companies.CompanyID;
 import com.nedelingg.backend.companies.FirstCompany;
 import com.nedelingg.backend.companies.FourthCompany;
@@ -172,10 +173,6 @@ public class Board {
 			this.thirdCompany.changeCurrentValue(action);
 			break;
 		}
-//		this.firstCompany.changeCurrentValue(action);
-//		this.secondCompany.changeCurrentValue(action);
-//		this.thirdCompany.changeCurrentValue(action);
-//		this.fourthCompany.changeCurrentValue(action);
 	}
 	
 	public int getAvailableSharesCount(CompanyID companyID) throws UnsupportedCompanyID{
@@ -191,5 +188,14 @@ public class Board {
 			default: 
 				throw new UnsupportedCompanyID("Not supported company ID");
 		}	
+	}
+	
+	public Company[] getCompaniesArray() {
+		return new Company[] {
+			this.firstCompany,
+			this.secondCompany,
+			this.thirdCompany,
+			this.fourthCompany
+		};
 	}
 }

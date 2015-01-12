@@ -94,14 +94,23 @@ public class Player {
 			throw new NotEnoughMoney();
 		
 		int shares = this.board.getShares(intShares, companyID);
+		int oldShares = 0;
+		if (this.shares.get(companyID) != null) {
+			oldShares = this.shares.get(companyID);
+		}
+		shares += oldShares;
 		this.shares.put(companyID, shares);
 		
 		this.moneys -= countedMoney;
 	} 
 	
 	public void sellCompanyShares(int intShares, CompanyID companyID) throws NotEnoughShares, UnsupportedCompanyID {
-		if (intShares > this.shares.get(companyID))
-			throw new NotEnoughShares();		
+		if (this.shares.get(companyID) != null) {
+			if (intShares > this.shares.get(companyID))
+				throw new NotEnoughShares();		
+		} else {
+			throw new NotEnoughShares();
+		}
 	/*	List<Share> shares = new LinkedList<Share>();
 		for (int i = 0; i < intShares; i++) {
 			shares.add(this.shares.get(companyID).remove(0));			

@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/RelativeLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
+    android:background="@color/white"
     android:orientation="vertical"
     android:padding="7dp" >
 
@@ -24,37 +23,38 @@
         <NumberPicker
             android:id="@+id/pickerNumberOfShares"
             android:layout_column="1"
-            android:layout_gravity="right|top"
+            android:layout_gravity="end|top"
             android:layout_row="0" />
 
         <Spinner
-            android:id="@+id/spinnerCompanyToMarket"
+            android:id="@+id/spinnerBuySharesCompany"
             android:layout_width="107dp"
             android:layout_height="35dp"
             android:layout_column="1"
-            android:layout_gravity="left|top"
+            android:layout_gravity="start|top"
+            android:spinnerMode="dialog"
             android:layout_row="0" />
 
     </GridLayout>
 
     <Button
-        android:id="@+id/btnStart"
+        android:id="@+id/btnBuyCancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/gridLayout1"
         android:layout_below="@+id/gridLayout1"
-        android:layout_marginLeft="62dp"
-        android:layout_marginTop="22dp"
-        android:text="@string/players_number_start_btn" />
+        android:layout_marginLeft="60dp"
+        android:layout_marginTop="36dp"
+        android:text="@string/players_number_cancel_btn" />
 
     <Button
-        android:id="@+id/btnCancel"
+        android:id="@+id/btnBuySharesOK"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/btnStart"
-        android:layout_alignBottom="@+id/btnStart"
+        android:layout_alignBaseline="@+id/btnBuyCancel"
+        android:layout_alignBottom="@+id/btnBuyCancel"
         android:layout_alignRight="@+id/gridLayout1"
-        android:layout_marginRight="50dp"
-        android:text="@string/players_number_cancel_btn" />
+        android:layout_marginRight="37dp"
+        android:text="@string/ok_button" />
 
 </RelativeLayout>
