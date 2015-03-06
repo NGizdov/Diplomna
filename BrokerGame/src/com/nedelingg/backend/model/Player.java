@@ -167,6 +167,10 @@ public class Player {
 		}
 		return this.shares.keySet();
 	}
+	
+	public Integer getSharesByCompID(CompanyID companyID){
+		return this.shares.get(companyID);
+	}
 
 	public List<Card> getCards() {
 		return cards;
@@ -184,11 +188,71 @@ public class Player {
 		this.sellForbidden.add(companyID);
 	}
 
+	@SuppressWarnings("incomplete-switch")
+	public void addLeftTreeBuyForbidden(CompanyID companyID) {
+		switch (companyID) {
+		case FIRST: 
+			this.buyForbidden.add(CompanyID.SECOND);
+			this.buyForbidden.add(CompanyID.THIRD);
+			this.buyForbidden.add(CompanyID.FOURTH);
+			break;
+		case SECOND: 
+			this.buyForbidden.add(CompanyID.FIRST);
+			this.buyForbidden.add(CompanyID.THIRD);
+			this.buyForbidden.add(CompanyID.FOURTH);
+			break;
+		case THIRD: 
+			this.buyForbidden.add(CompanyID.SECOND);
+			this.buyForbidden.add(CompanyID.FIRST);
+			this.buyForbidden.add(CompanyID.FOURTH);
+			break;
+		case FOURTH: 
+			this.buyForbidden.add(CompanyID.SECOND);
+			this.buyForbidden.add(CompanyID.THIRD);
+			this.buyForbidden.add(CompanyID.FIRST);
+			break;
+		}
+	}
+	
+	@SuppressWarnings("incomplete-switch")
+	public void addLeftTreeSellForbidden(CompanyID companyID) {
+		switch (companyID) {
+		case FIRST: 
+			this.sellForbidden.add(CompanyID.SECOND);
+			this.sellForbidden.add(CompanyID.THIRD);
+			this.sellForbidden.add(CompanyID.FOURTH);
+			break;
+		case SECOND: 
+			this.sellForbidden.add(CompanyID.FIRST);
+			this.sellForbidden.add(CompanyID.THIRD);
+			this.sellForbidden.add(CompanyID.FOURTH);
+			break;
+		case THIRD: 
+			this.sellForbidden.add(CompanyID.SECOND);
+			this.sellForbidden.add(CompanyID.FIRST);
+			this.sellForbidden.add(CompanyID.FOURTH);
+			break;
+		case FOURTH: 
+			this.sellForbidden.add(CompanyID.SECOND);
+			this.sellForbidden.add(CompanyID.THIRD);
+			this.sellForbidden.add(CompanyID.FIRST);
+			break;
+		}
+	}
+	
 	public void resetBuyForbidden() {
-		this.sellForbidden.clear();
+		this.buyForbidden.clear();
 	}
 
 	public void resetSellForbidden() {
 		this.sellForbidden.clear();
+	}
+	
+	public List<CompanyID> getSellForbidden() {
+		return sellForbidden;
+	}
+
+	public List<CompanyID> getBuyForbidden() {
+		return buyForbidden;
 	}
 }

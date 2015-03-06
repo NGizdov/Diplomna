@@ -30,10 +30,6 @@ public class Board {
 		this.fourthCompany = new FourthCompany();
 	}
 	
-	public void repaint(){
-		// TODO
-	}
-	
 	public Map<CompanyID, Integer> getAllCompaniesCurrentMarkers(){
 		HashMap<CompanyID, Integer> compValues = new HashMap<>();
 		compValues.put(CompanyID.FIRST, firstCompany.getCurrentMarkerID());
@@ -60,6 +56,25 @@ public class Board {
 			break;
 		}
 		return name;
+	}
+	
+	public Company getCompanyByID(CompanyID id) {
+		Company company = null;
+		switch (id) {
+		case FIRST:
+			company = firstCompany;
+			break;
+		case SECOND:
+			company = secondCompany;
+			break;
+		case THIRD:
+			company = thirdCompany;
+			break;
+		default:
+			company = fourthCompany;
+			break;
+		}
+		return company;
 	}
 
 	public int putShares(int shares, CompanyID companyID) throws UnsupportedCompanyID {

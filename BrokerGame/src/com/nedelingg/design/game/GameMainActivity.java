@@ -55,8 +55,8 @@ public class GameMainActivity extends Activity {
 	
 	static Game newGame;
 	static View rootView;
-	static boolean isHumanTurn = false;
-	static int currentHumanPhase = 0;
+	public static boolean isHumanTurn = false;
+	public static int currentHumanPhase = 0;
 
 	public static View getRootView() {
 		return rootView;
@@ -106,7 +106,7 @@ public class GameMainActivity extends Activity {
 		showPlayCardBtn(false);
 	}
 
-	static void showPlayCardBtn(boolean showBtn) {
+	public static void showPlayCardBtn(boolean showBtn) {
 		Button btn = (Button) rootView.findViewById(R.id.btnPlayCard);
 		if (showBtn) 
 			btn.setVisibility(View.VISIBLE);
@@ -114,7 +114,7 @@ public class GameMainActivity extends Activity {
 			btn.setVisibility(View.INVISIBLE);
 	}
 	
-	static void setCardsClickable(boolean clickable) {
+	public static void setCardsClickable(boolean clickable) {
 		((ImageView) rootView.findViewById(R.id.card01)).setClickable(clickable);
 		((ImageView) rootView.findViewById(R.id.card02)).setClickable(clickable);		
 		((ImageView) rootView.findViewById(R.id.card03)).setClickable(clickable);
@@ -127,19 +127,23 @@ public class GameMainActivity extends Activity {
 		((ImageView) rootView.findViewById(R.id.card10)).setClickable(clickable);
 	}
 	
-	static void setBuySellClickable(boolean clickable) {
+	public static void setBuySellClickable(boolean clickable) {
 		Button button = (Button) rootView.findViewById(R.id.sellBtnNew);
 		button.setClickable(clickable);
 		Button buttonSell = (Button) rootView.findViewById(R.id.buyBtnNew);
 		buttonSell.setClickable(clickable);
 	}
 	
-	static void setNextPhaseClickable(boolean clickable) {
+	public static void setNextPhaseClickable(boolean clickable) {
 		Button button = (Button) rootView.findViewById(R.id.nextPhaseBtn);
 		button.setClickable(clickable);
 	}
 	
-
+	public static void resetForbidenHumanCompanies () {
+		newGame.getHumanPlayer().resetBuyForbidden();
+		newGame.getHumanPlayer().resetSellForbidden();
+	}
+	
 	
 	/**
 	 * A placeholder fragment containing a simple view.

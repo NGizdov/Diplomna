@@ -1,6 +1,11 @@
 package com.nedelingg.design.game;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.nedelingg.backend.actions.Lowerer;
 import com.nedelingg.backend.actions.Raiser;
@@ -15,6 +20,13 @@ import com.nedelingg.backend.model.Player;
 import com.nedelingg.backend.utils.Console;
 import com.nedelingg.design.BrokerMainActivity;
 import com.nedelingg.design.R;
+import com.nedelingg.design.game.clicklisteners.NextPhaseListener;
+import com.nedelingg.design.game.clicklisteners.PlayCardButtonListener;
+import com.nedelingg.design.game.clicklisteners.ShowBuyWindowListener;
+import com.nedelingg.design.game.clicklisteners.ShowInfoListener;
+import com.nedelingg.design.game.clicklisteners.ShowSellWindowListener;
+import com.nedelingg.design.game.clicklisteners.StartupPopCancelListener;
+import com.nedelingg.design.game.clicklisteners.StartupPopOkListener;
 
 import android.app.AlertDialog;
 import android.app.ActionBar.LayoutParams;
@@ -56,36 +68,30 @@ public class GameMainFragment extends Fragment {
 			GameMainActivity.rootView = inflater.inflate(R.layout.fragment_game_main,
 					container, false);
 			final View popView = inflater.inflate(R.layout.player_count_window, null);
+			showStartUpWindow(popView);
+			return GameMainActivity.rootView;
+		}
+		
+		public void goToMain(View view) {
+			Intent intent = new Intent(this.getActivity(), BrokerMainActivity.class);
+			startActivity(intent);
+			this.getActivity().finish();
+		}		
+		
+		public void init(int playerNumber) {
+			initGame(playerNumber);
+			initTextFields();
+			Player humanPlayer = initHumanPlayer();			
+			initHumanPlayerCards(humanPlayer);			
+			initButtons();			
+			GameThread gameThread = prepareGame();
+			gameThread.start();
+		}
+
+		private void showStartUpWindow(final View popView) {
 			final PopupWindow popupWindow = new PopupWindow(popView, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-			Button start = (Button) popView.findViewById(R.id.btnStart);
-			start.setOnClickListener(new OnClickListener() {				
-				@Override
-				public void onClick(View v) {
-					EditText playersNumber = (EditText) popView.findViewById(R.id.playersNumber);
-					String playersNumberText = playersNumber.getText().toString();
-					int players = 0;
-					try {
-						players = Integer.parseInt(playersNumberText);
-					} catch (NumberFormatException e){
-						players = 2;
-					}
-					if (players < 2) {
-						players = 2;
-					} else if (players > 6) {
-						players = 6;
-					}
-//					init(GameMainActivity.rootView, players);
-					init(players);
-					popupWindow.dismiss();
-				}
-			});
-			Button cancel = (Button) popView.findViewById(R.id.btnCancel);
-			cancel.setOnClickListener(new OnClickListener() {				
-				@Override
-				public void onClick(View v) {
-					goToMain(v);
-				}
-			});
+			((Button) popView.findViewById(R.id.btnStart)).setOnClickListener(new StartupPopOkListener(popView, this, popupWindow));
+			((Button) popView.findViewById(R.id.btnCancel)).setOnClickListener(new StartupPopCancelListener(popView, this, popupWindow));
 			popupWindow.setFocusable(true);
 			popupWindow.setTouchable(true); 
 			popupWindow.setOutsideTouchable(false);
@@ -94,21 +100,104 @@ public class GameMainFragment extends Fragment {
 		        	popupWindow.showAtLocation(GameMainActivity.rootView ,Gravity.CENTER, 0, 0);
 		        }
 		    });
-			return GameMainActivity.rootView;
 		}
-		
-		private void goToMain(View view) {
-			Intent intent = new Intent(this.getActivity(), BrokerMainActivity.class);
-			startActivity(intent);
-			this.getActivity().finish();
+
+		private GameThread prepareGame() {
+			currentMarkers = GameMainActivity.newGame.getBoard().getAllCompaniesCurrentMarkers();
+				
+			GameMainActivity.setCardsClickable(false);
+			GameMainActivity.setNextPhaseClickable(false);
+			GameMainActivity.setBuySellClickable(false);
+			
+			GameThread gameThread = new GameThread();
+			return gameThread;
 		}
-		
-		
-//		private void init(final View GameMainActivity.rootView, int playerNumber) {
-		private void init(int playerNumber) {
+
+		private void initButtons() {
+			// play card button
+			GameMainActivity.showPlayCardBtn(false);
+			((Button) GameMainActivity.rootView.findViewById(R.id.btnPlayCard)).setOnClickListener(new PlayCardButtonListener(null, this));
+			// play card button
+			
+			// Buttons
+			((Button) GameMainActivity.rootView.findViewById(R.id.showInfoBtn)).setOnClickListener(new ShowInfoListener(null, this));
+			((Button) GameMainActivity.rootView.findViewById(R.id.buyBtnNew)).setOnClickListener(new ShowBuyWindowListener(null, this));
+			((Button) GameMainActivity.rootView.findViewById(R.id.sellBtnNew)).setOnClickListener(new ShowSellWindowListener(null, this));
+			((Button) GameMainActivity.rootView.findViewById(R.id.nextPhaseBtn)).setOnClickListener(new NextPhaseListener(null, this));
+			// Buttons
+		}
+
+		private void initGame(int playerNumber) {
 			GameMainActivity.newGame = new Game(playerNumber);
 			mainThreadHandler = new MainThreadHandler();
+		}
+
+		private void initHumanPlayerCards(Player humanPlayer) {
+			//set cards
+			ImageView card01 = (ImageView) GameMainActivity.rootView.findViewById(R.id.card01);
+			card01.setImageResource(humanPlayer.getCards().get(0).getImageID());
+			card01.setTag(humanPlayer.getCards().get(0).getImageID());
+			humanPlayer.setCardID(R.id.card01, humanPlayer.getCards().get(0));
+
+			ImageView card02 = (ImageView) GameMainActivity.rootView.findViewById(R.id.card02);
+			card02.setImageResource(humanPlayer.getCards().get(1).getImageID());
+			card02.setTag(humanPlayer.getCards().get(1).getImageID());
+			humanPlayer.setCardID(R.id.card02, humanPlayer.getCards().get(1));
 			
+			ImageView card03 = (ImageView) GameMainActivity.rootView.findViewById(R.id.card03);
+			card03.setImageResource(humanPlayer.getCards().get(2).getImageID());
+			card03.setTag(humanPlayer.getCards().get(2).getImageID());
+			humanPlayer.setCardID(R.id.card03, humanPlayer.getCards().get(2));
+
+			ImageView card04 = (ImageView) GameMainActivity.rootView.findViewById(R.id.card04);
+			card04.setImageResource(humanPlayer.getCards().get(3).getImageID());
+			card04.setTag(humanPlayer.getCards().get(3).getImageID());
+			humanPlayer.setCardID(R.id.card04, humanPlayer.getCards().get(3));
+
+			ImageView card05 = (ImageView) GameMainActivity.rootView.findViewById(R.id.card05);
+			card05.setImageResource(humanPlayer.getCards().get(4).getImageID());
+			card05.setTag(humanPlayer.getCards().get(4).getImageID());
+			humanPlayer.setCardID(R.id.card05, humanPlayer.getCards().get(4));
+
+			ImageView card06 = (ImageView) GameMainActivity.rootView.findViewById(R.id.card06);
+			card06.setImageResource(humanPlayer.getCards().get(5).getImageID());
+			card06.setTag(humanPlayer.getCards().get(5).getImageID());
+			humanPlayer.setCardID(R.id.card06, humanPlayer.getCards().get(5));
+
+			ImageView card07 = (ImageView) GameMainActivity.rootView.findViewById(R.id.card07);
+			card07.setImageResource(humanPlayer.getCards().get(6).getImageID());
+			card07.setTag(humanPlayer.getCards().get(6).getImageID());
+			humanPlayer.setCardID(R.id.card07, humanPlayer.getCards().get(6));
+
+			ImageView card08 = (ImageView) GameMainActivity.rootView.findViewById(R.id.card08);
+			card08.setImageResource(humanPlayer.getCards().get(7).getImageID());
+			card08.setTag(humanPlayer.getCards().get(7).getImageID());
+			humanPlayer.setCardID(R.id.card08, humanPlayer.getCards().get(7));
+
+			ImageView card09 = (ImageView) GameMainActivity.rootView.findViewById(R.id.card09);
+			card09.setImageResource(humanPlayer.getCards().get(8).getImageID());
+			card09.setTag(humanPlayer.getCards().get(8).getImageID());
+			humanPlayer.setCardID(R.id.card09, humanPlayer.getCards().get(8));
+
+			ImageView card10 = (ImageView) GameMainActivity.rootView.findViewById(R.id.card10);
+			card10.setImageResource(humanPlayer.getCards().get(9).getImageID());
+			card10.setTag(humanPlayer.getCards().get(9).getImageID());
+			humanPlayer.setCardID(R.id.card10, humanPlayer.getCards().get(9));
+			//set cards
+		}
+
+		private Player initHumanPlayer() {
+			Player humanPlayer = 	GameMainActivity.newGame.getHumanPlayer();
+					int humanPlayersCash = humanPlayer.getMoneys();
+					TextView playersCash = (TextView) GameMainActivity.rootView.findViewById(R.id.playerHumanCash);
+					playersCash.setText(String.valueOf(humanPlayersCash));
+					TextView playersTotalCash = (TextView) GameMainActivity.rootView.findViewById(R.id.playerHumanTotalCash);
+					playersTotalCash.setText(String.valueOf(humanPlayersCash));	
+					//Info Text
+			return humanPlayer;
+		}
+
+		private void initTextFields() {
 			String firstCompanyName = GameMainActivity.newGame.getBoard().getCompanyName(CompanyID.FIRST); 
 			String secondCompanyName = GameMainActivity.newGame.getBoard().getCompanyName(CompanyID.SECOND); 
 			String thirdCompanyName = GameMainActivity.newGame.getBoard().getCompanyName(CompanyID.THIRD);
@@ -175,154 +264,10 @@ public class GameMainFragment extends Fragment {
 			TextView companyDShares = (TextView) GameMainActivity.rootView.findViewById(R.id.companyDShares);
 			companyDShares.setText(R.string.zero_number);
 			TextView companyDSharesValue = (TextView) GameMainActivity.rootView.findViewById(R.id.companyDSharesValue);
-			companyDSharesValue.setText(R.string.zero_number);				
-
-			Player humanPlayer = GameMainActivity.newGame.getHumanPlayer();
-			int humanPlayersCash = humanPlayer.getMoneys();
-			TextView playersCash = (TextView) GameMainActivity.rootView.findViewById(R.id.playerHumanCash);
-			playersCash.setText(String.valueOf(humanPlayersCash));
-			TextView playersTotalCash = (TextView) GameMainActivity.rootView.findViewById(R.id.playerHumanTotalCash);
-			playersTotalCash.setText(String.valueOf(humanPlayersCash));	
-			//Info Text
-			
-			//set cards
-			ImageView card01 = (ImageView) GameMainActivity.rootView.findViewById(R.id.card01);
-			card01.setImageResource(humanPlayer.getCards().get(0).getImageID());
-			card01.setTag(humanPlayer.getCards().get(0).getImageID());
-			humanPlayer.setCardID(R.id.card01, humanPlayer.getCards().get(0));
-
-			ImageView card02 = (ImageView) GameMainActivity.rootView.findViewById(R.id.card02);
-			card02.setImageResource(humanPlayer.getCards().get(1).getImageID());
-			card02.setTag(humanPlayer.getCards().get(1).getImageID());
-			humanPlayer.setCardID(R.id.card02, humanPlayer.getCards().get(1));
-			
-			ImageView card03 = (ImageView) GameMainActivity.rootView.findViewById(R.id.card03);
-			card03.setImageResource(humanPlayer.getCards().get(2).getImageID());
-			card03.setTag(humanPlayer.getCards().get(2).getImageID());
-			humanPlayer.setCardID(R.id.card03, humanPlayer.getCards().get(2));
-
-			ImageView card04 = (ImageView) GameMainActivity.rootView.findViewById(R.id.card04);
-			card04.setImageResource(humanPlayer.getCards().get(3).getImageID());
-			card04.setTag(humanPlayer.getCards().get(3).getImageID());
-			humanPlayer.setCardID(R.id.card04, humanPlayer.getCards().get(3));
-
-			ImageView card05 = (ImageView) GameMainActivity.rootView.findViewById(R.id.card05);
-			card05.setImageResource(humanPlayer.getCards().get(4).getImageID());
-			card05.setTag(humanPlayer.getCards().get(4).getImageID());
-			humanPlayer.setCardID(R.id.card05, humanPlayer.getCards().get(4));
-
-			ImageView card06 = (ImageView) GameMainActivity.rootView.findViewById(R.id.card06);
-			card06.setImageResource(humanPlayer.getCards().get(5).getImageID());
-			card06.setTag(humanPlayer.getCards().get(5).getImageID());
-			humanPlayer.setCardID(R.id.card06, humanPlayer.getCards().get(5));
-
-			ImageView card07 = (ImageView) GameMainActivity.rootView.findViewById(R.id.card07);
-			card07.setImageResource(humanPlayer.getCards().get(6).getImageID());
-			card07.setTag(humanPlayer.getCards().get(6).getImageID());
-			humanPlayer.setCardID(R.id.card07, humanPlayer.getCards().get(6));
-
-			ImageView card08 = (ImageView) GameMainActivity.rootView.findViewById(R.id.card08);
-			card08.setImageResource(humanPlayer.getCards().get(7).getImageID());
-			card08.setTag(humanPlayer.getCards().get(7).getImageID());
-			humanPlayer.setCardID(R.id.card08, humanPlayer.getCards().get(7));
-
-			ImageView card09 = (ImageView) GameMainActivity.rootView.findViewById(R.id.card09);
-			card09.setImageResource(humanPlayer.getCards().get(8).getImageID());
-			card09.setTag(humanPlayer.getCards().get(8).getImageID());
-			humanPlayer.setCardID(R.id.card09, humanPlayer.getCards().get(8));
-
-			ImageView card10 = (ImageView) GameMainActivity.rootView.findViewById(R.id.card10);
-			card10.setImageResource(humanPlayer.getCards().get(9).getImageID());
-			card10.setTag(humanPlayer.getCards().get(9).getImageID());
-			humanPlayer.setCardID(R.id.card10, humanPlayer.getCards().get(9));
-			//set cards
-			
-			// play card button
-			GameMainActivity.showPlayCardBtn(false);
-			Button playCardBtn = ((Button) GameMainActivity.rootView.findViewById(R.id.btnPlayCard));
-			playCardBtn.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					playCard();
-				}
-			});
-			// play card button
-			
-			// Buttons
-			((Button) GameMainActivity.rootView.findViewById(R.id.showInfoBtn)).setOnClickListener(new OnClickListener() {				
-				@Override
-				public void onClick(View v) {
-					try {
-						showInfo();
-					} catch (UnsupportedCompanyID e) {
-						e.printStackTrace();
-					}
-				}
-			});
-			
-			((Button) GameMainActivity.rootView.findViewById(R.id.buyBtnNew)).setOnClickListener(new OnClickListener() {				
-				@Override
-				public void onClick(View v) {
-					Log.i("buyBtn", "click");
-//					if (currentHumanPhase == 1)
-					showBuySharesWindow();					
-				}
-			});
-			
-			((Button) GameMainActivity.rootView.findViewById(R.id.sellBtnNew)).setOnClickListener(new OnClickListener() {				
-				@Override
-				public void onClick(View v) {
-					Log.i("SellBtn", "click");
-//					if (currentHumanPhase == 1) 
-					showSellSharesWindow();
-				}
-			});
-			
-			((Button) GameMainActivity.rootView.findViewById(R.id.nextPhaseBtn)).setOnClickListener(new OnClickListener() {				
-				@Override
-				public void onClick(View v) {
-					if (GameMainActivity.currentHumanPhase == 1){
-						GameMainActivity.currentHumanPhase = 2;
-						GameMainActivity.setCardsClickable(true);
-						GameMainActivity.setNextPhaseClickable(false);
-						GameMainActivity.setBuySellClickable(false);
-						GameMainActivity.showPlayCardBtn(false);
-					} else if (GameMainActivity.currentHumanPhase == 2){
-						GameMainActivity.currentHumanPhase = 3;
-						GameMainActivity.setCardsClickable(false);
-						GameMainActivity.setNextPhaseClickable(true);
-						GameMainActivity.setBuySellClickable(true);
-						GameMainActivity.showPlayCardBtn(false);
-					} else if (GameMainActivity.currentHumanPhase == 3){
-						GameMainActivity.currentHumanPhase = 0;
-						GameMainActivity.setCardsClickable(false);
-						GameMainActivity.setNextPhaseClickable(false);
-						GameMainActivity.setBuySellClickable(false);
-						GameMainActivity.showPlayCardBtn(false);
-						GameMainActivity.isHumanTurn = false;
-					} /*else {
-						currentHumanPhase = 1;
-						setCardsClickable(false);
-						setNextPhaseClickable(true);
-						setBuySellClickable(true);
-						showPlayCardBtn(false);
-					}*/
-				}
-			});
-			// Buttons
-			
-			currentMarkers = GameMainActivity.newGame.getBoard().getAllCompaniesCurrentMarkers();
-				
-			GameMainActivity.setCardsClickable(false);
-			GameMainActivity.setNextPhaseClickable(false);
-			GameMainActivity.setBuySellClickable(false);
-			
-			GameThread gameThread = new GameThread();
-			
-			gameThread.start();
+			companyDSharesValue.setText(R.string.zero_number);		
 		}
 		
-		private void showInfo() throws UnsupportedCompanyID{
+		public void showInfo() throws UnsupportedCompanyID{
 			final View popView = getActivity().getLayoutInflater().inflate(R.layout.show_info_popup, null);
 			
 			String firstCompanyName = GameMainActivity.newGame.getBoard().getCompanyName(CompanyID.FIRST); 
@@ -511,7 +456,7 @@ public class GameMainFragment extends Fragment {
 		    });
 		}
 		
-		private void playCard(){
+		public void playCard(){
 			final ImageView cardPlace = (ImageView) GameMainActivity.rootView.findViewById(R.id.cardPlace);
 			int cardID = (Integer) cardPlace.getTag();
 			final Card card = GameMainActivity.newGame.getHumanCardByID(cardID);
@@ -603,7 +548,7 @@ public class GameMainFragment extends Fragment {
 			}
 		}
 		
-		private void showBuySharesWindow() {
+		public void showBuySharesWindow() {
 			final View popView = getActivity().getLayoutInflater().inflate(R.layout.fragment_shares_buy_sell_window, null);
 			final PopupWindow popupWindow = new PopupWindow(popView, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 			Button okBtn = (Button) popView.findViewById(R.id.btnBuySharesOK);
@@ -612,9 +557,20 @@ public class GameMainFragment extends Fragment {
 			sharesNumber.setMaxValue(20);
 			sharesNumber.setMinValue(1);
 						
-			final Company[] companyArray = GameMainActivity.newGame.getBoard().getCompaniesArray();
+//			final Company[] companyArray = GameMainActivity.newGame.getBoard().getCompaniesArray();
+			ArrayList<Company> availableCompanies = new ArrayList<Company>();
+			List<CompanyID> forbiden = GameMainActivity.newGame.getHumanPlayer().getBuyForbidden();
+			if (!forbiden.contains(CompanyID.FIRST))
+				availableCompanies.add(GameMainActivity.newGame.getBoard().getCompanyByID(CompanyID.FIRST));
+			if (!forbiden.contains(CompanyID.SECOND))
+				availableCompanies.add(GameMainActivity.newGame.getBoard().getCompanyByID(CompanyID.SECOND));
+			if (!forbiden.contains(CompanyID.THIRD))
+				availableCompanies.add(GameMainActivity.newGame.getBoard().getCompanyByID(CompanyID.THIRD));
+			if (!forbiden.contains(CompanyID.FOURTH))
+				availableCompanies.add(GameMainActivity.newGame.getBoard().getCompanyByID(CompanyID.FOURTH));
+			final Company[] companyArray = availableCompanies.toArray(new Company[availableCompanies.size()]);
 			
-			final Spinner companyName = (Spinner)	popView.findViewById(R.id.spinnerBuySharesCompany);
+			final Spinner companyName = (Spinner) popView.findViewById(R.id.spinnerBuySharesCompany);
 			
 			ArrayAdapter<Company> adapter = new ArrayAdapter<Company>(this.getActivity().getWindow().getContext() , android.R.layout.simple_spinner_dropdown_item, companyArray);
 			adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -686,109 +642,154 @@ public class GameMainFragment extends Fragment {
 		    });
 		}
 		
-		private void showSellSharesWindow() {
+		public void showSellSharesWindow() {
 			final View popView = getActivity().getLayoutInflater().inflate(R.layout.fragment_shares_buy_sell_window, null);
 			final PopupWindow popupWindow = new PopupWindow(popView, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 			Button okBtn = (Button) popView.findViewById(R.id.btnBuySharesOK);
 			
 			final NumberPicker sharesNumber = (NumberPicker) popView.findViewById(R.id.pickerNumberOfShares);
-			sharesNumber.setMaxValue(20);
-			sharesNumber.setMinValue(1);
+//			sharesNumber.setMaxValue(20);
+//			sharesNumber.setMinValue(1);
 			
-			final String[] companyArray = new String[]{
-				GameMainActivity.newGame.getBoard().getCompanyName(CompanyID.FIRST),
-				GameMainActivity.newGame.getBoard().getCompanyName(CompanyID.SECOND),
-				GameMainActivity.newGame.getBoard().getCompanyName(CompanyID.THIRD),
-				GameMainActivity.newGame.getBoard().getCompanyName(CompanyID.FOURTH)					
-			};			
-						
-			final Spinner companyName = (Spinner)	popView.findViewById(R.id.spinnerBuySharesCompany);
+			ArrayList<CompanyID> companyIDsArray = new ArrayList<CompanyID>(Arrays.asList(GameMainActivity.newGame.getHumanPlayer().getShares().keySet().toArray(new CompanyID[GameMainActivity.newGame.getHumanPlayer().getShares().keySet().size()])));
+			List<CompanyID> forbiden = GameMainActivity.newGame.getHumanPlayer().getSellForbidden();
+			for (CompanyID companyID : forbiden) {
+				companyIDsArray.remove(companyID);
+			}
+			ArrayList<Company> availableCompanies = new ArrayList<Company>();
+			for (CompanyID companyID : companyIDsArray) {
+				availableCompanies.add(GameMainActivity.newGame.getBoard().getCompanyByID(companyID));
+			}
+			final Company[] companyArray;
+//			sharesNumber.setMinValue(1);
+//			sharesNumber.setMaxValue(GameMainActivity.newGame.getHumanPlayer().getSharesByCompID(companyArray[0].getId()));
+			if(availableCompanies.size() > 0) {
+				companyArray = availableCompanies.toArray(new Company[availableCompanies.size()]);
+				sharesNumber.setMinValue(1);
+				sharesNumber.setMaxValue(GameMainActivity.newGame.getHumanPlayer().getSharesByCompID(companyArray[0].getId()));
 			
-			ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.getActivity().getWindow().getContext() , android.R.layout.simple_spinner_dropdown_item, companyArray);
-			adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 			
-//			ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
-//					R.array.player_type, android.R.layout.simple_spinner_item);			
-//			adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-			companyName.setAdapter(adapter);
-			companyName.setOnItemSelectedListener(new OnItemSelectedListener() {
-				@Override
-				public void onItemSelected(AdapterView<?> parent, View view,
-						int pos, long id) {
-					companyName.setTag(pos);
-			        InputMethodManager imm =  (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-			        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-				}
+				/*
+				ArrayList<Company> availableCompanies = new ArrayList<Company>();
+				HashMap<CompanyID, Integer> availableCompaniesMap = GameMainActivity.newGame.getHumanPlayer().getShares();
+				Set<CompanyID> availableCompaniesSet = availableCompaniesMap.keySet();
+				List<CompanyID> forbiden = GameMainActivity.newGame.getHumanPlayer().getSellForbidden();
+				if (!forbiden.contains(CompanyID.FIRST))
+					availableCompanies.add(GameMainActivity.newGame.getBoard().getCompanyByID(CompanyID.FIRST));
+				if (!forbiden.contains(CompanyID.SECOND))
+					availableCompanies.add(GameMainActivity.newGame.getBoard().getCompanyByID(CompanyID.SECOND));
+				if (!forbiden.contains(CompanyID.THIRD))
+					availableCompanies.add(GameMainActivity.newGame.getBoard().getCompanyByID(CompanyID.THIRD));
+				if (!forbiden.contains(CompanyID.FOURTH))
+					availableCompanies.add(GameMainActivity.newGame.getBoard().getCompanyByID(CompanyID.FOURTH));
 				
-				@Override
-				public void onNothingSelected(AdapterView<?> parent) {
-					Log.i("Spinner", (String) parent.getSelectedItem());
-				}			
-			});
-			
-			okBtn.setOnClickListener(new OnClickListener() {				
-				@Override
-				public void onClick(View v) {
-					CompanyID id;
-					switch ((Integer) companyName.getTag()) {
-					case 0:
-						id = CompanyID.FIRST;
-						break;
-					case 1:
-						id = CompanyID.SECOND;
-						break;
-					case 2:
-						id = CompanyID.THIRD;
-						break;
-					default:
-						id = CompanyID.FOURTH;
-						break;
+				/*final String[] companyArray = new String[]{
+					GameMainActivity.newGame.getBoard().getCompanyName(CompanyID.FIRST),
+					GameMainActivity.newGame.getBoard().getCompanyName(CompanyID.SECOND),
+					GameMainActivity.newGame.getBoard().getCompanyName(CompanyID.THIRD),
+					GameMainActivity.newGame.getBoard().getCompanyName(CompanyID.FOURTH)					
+				};*/			
+				//final Company[] companyArray = availableCompanies.toArray(new Company[availableCompanies.size()]);
+				//final Company[] companyArray = availableCompaniesSet.toArray(new Company[availableCompaniesSet.size()]);
+							
+				final Spinner companyName = (Spinner) popView.findViewById(R.id.spinnerBuySharesCompany);
+				
+				ArrayAdapter<Company> adapter = new ArrayAdapter<Company>(this.getActivity().getWindow().getContext() , android.R.layout.simple_spinner_dropdown_item, companyArray);
+				adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+				
+	//			ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
+	//					R.array.player_type, android.R.layout.simple_spinner_item);			
+	//			adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+				companyName.setAdapter(adapter);
+				companyName.setOnItemSelectedListener(new OnItemSelectedListener() {
+					@Override
+					public void onItemSelected(AdapterView<?> parent, View view,
+							int pos, long id) {
+						companyName.setTag(pos);
+				        InputMethodManager imm =  (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+				        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
 					}
-					try {
-						GameMainActivity.newGame.getHumanPlayer().sellCompanyShares(sharesNumber.getValue(), id);
-						popupWindow.dismiss();
-					} catch (NotEnoughShares
-							| UnsupportedCompanyID e) {
-						String message = "Not such company";
-						if (e instanceof NotEnoughShares) {
-							message = "You don't have enough shares from that company";
+					
+					@Override
+					public void onNothingSelected(AdapterView<?> parent) {
+						Log.i("Spinner", (String) parent.getSelectedItem());
+					}			
+				});
+				
+				okBtn.setOnClickListener(new OnClickListener() {				
+					@Override
+					public void onClick(View v) {
+						CompanyID id;
+						switch ((Integer) companyName.getTag()) {
+						case 0:
+							id = CompanyID.FIRST;
+							break;
+						case 1:
+							id = CompanyID.SECOND;
+							break;
+						case 2:
+							id = CompanyID.THIRD;
+							break;
+						default:
+							id = CompanyID.FOURTH;
+							break;
 						}
-						
-						AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-								getActivity().getWindow().getContext());				 
-						// set title
-						alertDialogBuilder.setTitle("Sorry");			 
-						// set dialog message
-						alertDialogBuilder
-							.setMessage(message)
-							.setCancelable(false)
-							.setPositiveButton("OK",new DialogInterface.OnClickListener() {
-								public void onClick(DialogInterface dialog,int id) {
-									dialog.dismiss();
-								}
-							 });			 
-						// create alert dialog
-						AlertDialog alertDialog = alertDialogBuilder.create();		 
-						// show it
-						alertDialog.show();							
+						try {
+							GameMainActivity.newGame.getHumanPlayer().sellCompanyShares(sharesNumber.getValue(), id);
+							popupWindow.dismiss();
+						} catch (NotEnoughShares
+								| UnsupportedCompanyID e) {
+							String message = "Not such company";
+							if (e instanceof NotEnoughShares) {
+								message = "You don't have enough shares from that company";
+							}
+							
+							AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+									getActivity().getWindow().getContext());				 
+							// set title
+							alertDialogBuilder.setTitle("Sorry");			 
+							// set dialog message
+							alertDialogBuilder
+								.setMessage(message)
+								.setCancelable(false)
+								.setPositiveButton("OK",new DialogInterface.OnClickListener() {
+									public void onClick(DialogInterface dialog,int id) {
+										dialog.dismiss();
+									}
+								 });			 
+							// create alert dialog
+							AlertDialog alertDialog = alertDialogBuilder.create();		 
+							// show it
+							alertDialog.show();							
+						}
 					}
-				}
-			});
-			Button cancel = (Button) popView.findViewById(R.id.btnBuyCancel);
-			cancel.setOnClickListener(new OnClickListener() {				
-				@Override
-				public void onClick(View v) {
-					popupWindow.dismiss();
-				}
-			});
-			popupWindow.setFocusable(true);
-			popupWindow.setTouchable(true); 
-			popupWindow.setOutsideTouchable(false);
-			GameMainActivity.rootView.post(new Runnable() {
-		        public void run() {
-		        	popupWindow.showAtLocation(GameMainActivity.rootView ,Gravity.CENTER, 0, 0);
-		        }
-		    });
+				});
+				Button cancel = (Button) popView.findViewById(R.id.btnBuyCancel);
+				cancel.setOnClickListener(new OnClickListener() {				
+					@Override
+					public void onClick(View v) {
+						popupWindow.dismiss();
+					}
+				});
+				popupWindow.setFocusable(true);
+				popupWindow.setTouchable(true); 
+				popupWindow.setOutsideTouchable(false);
+				GameMainActivity.rootView.post(new Runnable() {
+			        public void run() {
+			        	popupWindow.showAtLocation(GameMainActivity.rootView ,Gravity.CENTER, 0, 0);
+			        }
+			    });
+			} else {
+				AlertDialog.Builder outerPrompt = new AlertDialog.Builder(this.getActivity());
+                outerPrompt.setMessage("You don't have shares to sell!")
+                        .setCancelable(false).setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                    }
+                });
+                AlertDialog alert = outerPrompt.create();
+                alert.show();
+			}
 		}
 		
 		private static void repaintBoard(Map<CompanyID, Integer> newMarkers) {

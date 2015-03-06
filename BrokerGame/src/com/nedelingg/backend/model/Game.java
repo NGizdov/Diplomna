@@ -1,7 +1,9 @@
 package com.nedelingg.backend.model;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.Set;
@@ -19,6 +21,7 @@ import com.nedelingg.backend.exceptions.NotEnoughMoney;
 import com.nedelingg.backend.exceptions.NotEnoughShares;
 import com.nedelingg.backend.exceptions.UnsupportedCompanyID;
 import com.nedelingg.backend.utils.Options;
+import com.nedelingg.design.R;
 import com.nedelingg.design.game.GameMainActivity;
 
 public class Game {
@@ -105,24 +108,14 @@ public class Game {
 		int randomCard = RANDOMISER.nextInt(size);
 		card = player.chooseCard(randomType, randomCard);
 		
-	//	chooseBuyOrSellCPU(player);
+		player.resetBuyForbidden();
+		player.resetSellForbidden();
+		
+		chooseBuyOrSellCPU(player);
 		
 		playCPUCard(player, card);
 
-		//chooseBuyOrSellCPU(player);
-	}
-	
-	public void playPhase(){
-		for (int i = 0; i < 10; i++) {
-			for (Player player : players) {
-				Card card = phaseOne(player);
-				phaseTwo(player);
-				phaseTree(player, card);
-				phaseFour(player);
-			}
-		} 
-		
-		finalPhase();
+		chooseBuyOrSellCPU(player);
 	}
 	
 	private void finalPhase() {
@@ -136,61 +129,6 @@ public class Game {
 			}
 		}
 		System.out.println("And the winner is: ###  " + winner + "  ###  --- with " + maxMoney + " dollars");
-	}
-
-	private Card phaseOne(Player player) {
-		Card card = null;
-		List<DeckTypes> availableDecks = player.getDecksTypes();
-		if (player.isHuman()) {
-			while (card == null) {
-				int typeCard = 0;
-				while (true) {
-					System.out.println("Please choose card type to play: ");
-					if (availableDecks.contains(DeckTypes.Hundreds)) System.out.println("\t1. Hundreds");
-					if (availableDecks.contains(DeckTypes.ByTwo)) System.out.println("\t2. By Two");
-					if (availableDecks.contains(DeckTypes.Percentage)) System.out.println("\t3. 60/40");
-					typeCard = this.sc.nextInt();
-					if ((typeCard < 1) || (typeCard > 3)) {
-						continue;
-					}
-					break;
-				}
-				DeckTypes choosenDeck = null;
-				switch (typeCard) {
-					case 1: choosenDeck = DeckTypes.Hundreds;
-						break;
-					case 2: choosenDeck = DeckTypes.ByTwo;
-						break;
-					case 3: choosenDeck = DeckTypes.Percentage;
-						break;
-				}
-				int size = player.getDeckSize(choosenDeck);
-				int indexCard = 0;
-				while (true) {
-					System.out.println("Please choose card index to play (1 - " + size + "): ");
-					for (int i = 0; i < size; i++) {
-						System.out.println("\t" +(i + 1) + ". " + (i + 1));						
-					}
-					indexCard = this.sc.nextInt();
-					if ((indexCard < 1) || (indexCard > size)) {
-						continue;
-					}
-					break;
-				}
-				card = player.getCardByID(indexCard);
-			}
-		} else {
-			int randomIndex = RANDOMISER.nextInt(availableDecks.size());
-			DeckTypes randomType = availableDecks.get(randomIndex);
-			int size = player.getDeckSize(randomType);
-			int randomCard = RANDOMISER.nextInt(size);
-			card = player.chooseCard(randomType, randomCard);
-		}
-		return card;
-	}
-	
-	private void phaseTwo(Player player) {
-		chooseBuyOrSell(player);				
 	}
 	
 	public Card getHumanCardByID(int cardID){
@@ -211,6 +149,8 @@ public class Game {
 			try {
 				this.board.changeCompanyValue(choosenCompany, raiser);
 				this.board.changeCompanyValue(lowerCompanyID, lower);
+				player.addBuyForbidden(lowerCompanyID);
+				player.addSellForbidden(choosenCompany);
 			} catch (UnsupportedCompanyID e) {
 				e.printStackTrace();
 			}
@@ -218,6 +158,8 @@ public class Game {
 			try {
 				this.board.changeCompanyValue(choosenCompany, lower);
 				this.board.changeCompanyValue(raiserCompanyID, raiser);
+				player.addBuyForbidden(choosenCompany);
+				player.addSellForbidden(raiserCompanyID);
 			} catch (UnsupportedCompanyID e) {
 				e.printStackTrace();
 			}
@@ -233,16 +175,20 @@ public class Game {
 		CompanyID lowerCompanyID = lower.getCompany();
 		
 		if (raiserCompanyID.equals(CompanyID.ALL)) {
-				this.board.changeAllCompaniesValue(raiser, lowerCompanyID);
-				try {
-					this.board.changeCompanyValue(lowerCompanyID, lower);
-				} catch (UnsupportedCompanyID e) {
-					e.printStackTrace();
-				}
+			this.board.changeAllCompaniesValue(raiser, lowerCompanyID);
+			player.addLeftTreeSellForbidden(lowerCompanyID);
+			try {
+				this.board.changeCompanyValue(lowerCompanyID, lower);
+				player.addBuyForbidden(lowerCompanyID);
+			} catch (UnsupportedCompanyID e) {
+				e.printStackTrace();
+			}
 		} else {
 			this.board.changeAllCompaniesValue(lower, raiserCompanyID);
+			player.addLeftTreeBuyForbidden(raiserCompanyID);
 			try {
 				this.board.changeCompanyValue(raiserCompanyID, raiser);
+				player.addSellForbidden(raiserCompanyID);
 			} catch (UnsupportedCompanyID e) {
 				e.printStackTrace();
 			}
@@ -250,6 +196,66 @@ public class Game {
 	}
 	
 	private void playCPUCard(Player player, Card card){
+		Raiser raiser = card.getRaiser();
+		Lowerer lower = card.getLowerer();
+		CompanyID raiserCompanyID = raiser.getCompany();
+		CompanyID lowerCompanyID = lower.getCompany();	
+		
+		if (raiserCompanyID.equals(CompanyID.BY_CHOICE) || lowerCompanyID.equals(CompanyID.BY_CHOICE)) {
+			CompanyID choosenCompany = null;
+			ArrayList<CompanyID> leftIDs = new ArrayList<CompanyID>();
+			leftIDs.add(CompanyID.FIRST);
+			leftIDs.add(CompanyID.SECOND);
+			leftIDs.add(CompanyID.THIRD);
+			leftIDs.add(CompanyID.FOURTH);
+			if (raiserCompanyID.equals(CompanyID.BY_CHOICE)) {
+				leftIDs.remove(lowerCompanyID);
+				int choosenID = RANDOMISER.nextInt(3);
+				choosenCompany = leftIDs.get(choosenID);
+				try {
+					this.board.changeCompanyValue(choosenCompany, raiser);
+					this.board.changeCompanyValue(lowerCompanyID, lower);
+					player.addBuyForbidden(lowerCompanyID);
+					player.addSellForbidden(choosenCompany);
+				} catch (UnsupportedCompanyID e) {
+					e.printStackTrace();
+				}
+			} else {
+				leftIDs.remove(raiserCompanyID);
+				int choosenID = RANDOMISER.nextInt(3);
+				choosenCompany = leftIDs.get(choosenID);
+				try {
+					this.board.changeCompanyValue(choosenCompany, lower);
+					this.board.changeCompanyValue(raiserCompanyID, raiser);
+					player.addBuyForbidden(choosenCompany);
+					player.addSellForbidden(raiserCompanyID);
+				} catch (UnsupportedCompanyID e) {
+					e.printStackTrace();
+				}
+			}
+		} else {
+			if (raiserCompanyID.equals(CompanyID.ALL)) {
+				this.board.changeAllCompaniesValue(raiser, lowerCompanyID);
+				player.addLeftTreeSellForbidden(lowerCompanyID);
+				try {
+					this.board.changeCompanyValue(lowerCompanyID, lower);
+					player.addBuyForbidden(lowerCompanyID);
+				} catch (UnsupportedCompanyID e) {
+					e.printStackTrace();
+				}
+			} else {
+				this.board.changeAllCompaniesValue(lower, raiserCompanyID);
+				player.addLeftTreeBuyForbidden(raiserCompanyID);
+				try {
+					this.board.changeCompanyValue(raiserCompanyID, raiser);
+					player.addSellForbidden(raiserCompanyID);
+				} catch (UnsupportedCompanyID e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	/*private void playCPUCard(Player player, Card card){
 		Raiser raiser = card.getRaiser();
 		Lowerer lower = card.getLowerer();
 		CompanyID raiserCompanyID = raiser.getCompany();
@@ -319,7 +325,7 @@ public class Game {
 					break;
 				case 3 : id = CompanyID.FOURTH;	
 					break;
-			}*/
+			}
 			try {
 				this.board.changeCompanyValue(id, raiser);
 			} catch (UnsupportedCompanyID e) {
@@ -351,190 +357,19 @@ public class Game {
 					break;
 				case 3 : id = CompanyID.FOURTH;	
 					break;
-			}*/
+			}
 			try {
 				this.board.changeCompanyValue(id, lower);
 			} catch (UnsupportedCompanyID e) {
 				System.out.println("Not supported company ID");
 			}
 		}		
-	}
-	
-	private void phaseTree(Player player, Card card){
-		Raiser raiser = card.getRaiser();
-		Lowerer lower = card.getLowerer();
-		CompanyID raiserCompanyID = raiser.getCompany();
-		CompanyID lowerCompanyID = lower.getCompany();
+	}*/
 		
-		
-		if (!raiserCompanyID.equals(CompanyID.BY_CHOICE)) {
-			if (raiserCompanyID.equals(CompanyID.ALL)) {
-				this.board.changeAllCompaniesValue(raiser, lowerCompanyID);
-			} else {
-				try {
-					this.board.changeCompanyValue(raiserCompanyID, raiser);
-				} catch (UnsupportedCompanyID e) {
-				}
-			}
-		} else {
-			if (player.isHuman()) {
-				int companyID = -100;
-				while(true){
-					System.out.println("Please choose company to raise the value: ");
-					System.out.println("\t1. First");
-					System.out.println("\t2. Second");
-					System.out.println("\t3. Third");
-					System.out.println("\t4. Fourth");
-					companyID = this.sc.nextInt();
-					if ((companyID < 0) || (companyID > 4)) {
-						continue;
-					}
-					break;
-				}
-				CompanyID id = null;
-				switch(companyID) {
-					case 1 : id = CompanyID.FIRST;				
-						break;
-					case 2 : id = CompanyID.SECOND;	
-						break;
-					case 3 : id = CompanyID.THIRD;	
-						break;
-					case 4 : id = CompanyID.FOURTH;	
-						break;
-				}
-				try {
-					this.board.changeCompanyValue(id, raiser);
-				} catch (UnsupportedCompanyID e) {
-					System.out.println("Not supported company ID");
-				}
-			} else {
-				int companyID = RANDOMISER.nextInt(4);
-				CompanyID id = null;
-				switch(companyID) {
-					case 0 : id = CompanyID.FIRST;				
-						break;
-					case 1 : id = CompanyID.SECOND;	
-						break;
-					case 2 : id = CompanyID.THIRD;	
-						break;
-					case 3 : id = CompanyID.FOURTH;	
-						break;
-				}
-				try {
-					this.board.changeCompanyValue(id, raiser);
-				} catch (UnsupportedCompanyID e) {
-					System.out.println("Not supported company ID");
-				}
-			}
-		}
-		if (!lowerCompanyID.equals(CompanyID.BY_CHOICE)) {
-			if (lowerCompanyID.equals(CompanyID.ALL)) {
-				this.board.changeAllCompaniesValue(lower, raiserCompanyID);
-			} else {
-				try {
-					this.board.changeCompanyValue(lowerCompanyID, lower);
-				} catch (UnsupportedCompanyID e) {
-				}
-			}
-		} else {
-			if (player.isHuman()) {
-				int companyID = -100;
-				while(true){
-					System.out.println("Please choose company to lower the value: ");
-					System.out.println("\t1. First");
-					System.out.println("\t2. Second");
-					System.out.println("\t3. Third");
-					System.out.println("\t4. Fourth");
-					companyID = this.sc.nextInt();
-					if ((companyID < 0) || (companyID > 4)) {
-						continue;
-					}
-					break;
-				}
-				CompanyID id = null;
-				switch(companyID) {
-					case 1 : id = CompanyID.FIRST;				
-						break;
-					case 2 : id = CompanyID.SECOND;	
-						break;
-					case 3 : id = CompanyID.THIRD;	
-						break;
-					case 4 : id = CompanyID.FOURTH;	
-						break;
-				}
-				try {
-					this.board.changeCompanyValue(id, lower);
-				} catch (UnsupportedCompanyID e) {
-					System.out.println("Not supported company ID");
-				}
-			} else {
-				int companyID = RANDOMISER.nextInt(4);
-				CompanyID id = null;
-				switch(companyID) {
-					case 0 : id = CompanyID.FIRST;				
-						break;
-					case 1 : id = CompanyID.SECOND;	
-						break;
-					case 2 : id = CompanyID.THIRD;	
-						break;
-					case 3 : id = CompanyID.FOURTH;	
-						break;
-				}
-				try {
-					this.board.changeCompanyValue(id, lower);
-				} catch (UnsupportedCompanyID e) {
-					System.out.println("Not supported company ID");
-				}
-			}
-		}
-	}
-	
 	public Board getBoard() {
 		return board;
 	}
 
-	private void phaseFour(Player player) {
-		chooseBuyOrSell(player);				
-	}
-	
-	private void chooseBuyOrSell(Player player){
-		if (player.isHuman()) {
-			while (true) {
-				System.out.println(player.getName() + " choose option: ");
-				System.out.println("\t0. Skip");
-				System.out.println("\t1. Buy");
-				System.out.println("\t2. Sell");
-				int answer = this.sc.nextInt();
-				if ((answer < 0) || (answer > 2)) {
-					continue;
-				}
-
-				switch (answer) {
-				case 1:
-					buyShares(player);
-					break;
-				case 2:
-					sellShares(player);
-					break;
-				default:
-					return;
-				}
-			}
-		} else {
-			int option = RANDOMISER.nextInt(3);
-			switch (option) {
-			case 1:
-				buyShares(player);
-				break;
-			case 2:
-				sellShares(player);
-				break;
-			default:
-				return;
-			}
-		}
-	}
-	
 	private void chooseBuyOrSellCPU(Player player){
 		int option = RANDOMISER.nextInt(3);
 		switch (option) {
@@ -550,219 +385,128 @@ public class Game {
 	}
 	
 	private void buyShares(Player player){
-		if (player.isHuman()) {
-			while (true) {
-				System.out.println(player.getName() + " choose company to buy shares: ");
-				System.out.println("\t1. First");
-				System.out.println("\t2. Second");
-				System.out.println("\t3. Third");
-				System.out.println("\t4. Fourth");
-				System.out.println("\t0. Skip");
-				int companyID = this.sc.nextInt();
-				if ((companyID < 0) || (companyID > 4)) {
-					continue;
-				}
-
-				//			boolean enought = this.board.checkAvailableShares(shareAmount, companyID);
-				CompanyID id = null;
-				switch (companyID) {
-				case 1:
-					id = CompanyID.FIRST;
-					break;
-				case 2:
-					id = CompanyID.SECOND;
-					break;
-				case 3:
-					id = CompanyID.THIRD;
-					break;
-				case 4:
-					id = CompanyID.FOURTH;
-					break;
-				default:
-					return;
-				}
-
-				int availableShares = 0;
-				try {
-					availableShares = board.getAvailableSharesCount(id);
-				} catch (UnsupportedCompanyID e2) {
-					System.out.println("Not supported company ID");
-					continue;
-				}
-
-				if (availableShares < 1) {
-					System.out.println("No more shares for that company");
-					continue;
-				}
-				System.out.println(player.getName() + " choose the amount of the shares to buy (1 - " + availableShares + "): ");
-				int shareAmount = this.sc.nextInt();
-				if ((shareAmount < 1) || (shareAmount > availableShares)) {
-					System.err.println("Enter the right amount of shares");
-					continue;
-				}
-				try {
-					player.buyCompanyShares(shareAmount, id);
-				} catch (NotEnoughMoney e) {
-					System.out.println("Not enough moneys");
-					continue;
-				} catch (NotEnoughShares e) {
-					System.out.println("Not enough available shares");
-					continue;
-				} catch (UnsupportedCompanyID e) {
-					System.out.println("Not supported company ID");
-					continue;
-				}
+		List<CompanyID> forbidenIDs = player.getBuyForbidden();
+		ArrayList<CompanyID> leftIDs = new ArrayList<CompanyID>();
+		leftIDs.add(CompanyID.FIRST);
+		leftIDs.add(CompanyID.SECOND);
+		leftIDs.add(CompanyID.THIRD);
+		leftIDs.add(CompanyID.FOURTH);
+		for (CompanyID companyID : forbidenIDs) {
+			leftIDs.remove(companyID);
+		}
+		int i = 0;
+		boolean toContinue = true;
+		while (toContinue && (i < 5)) {
+			i++;
+			int intCompanyID = RANDOMISER.nextInt(leftIDs.size());
+			
+			CompanyID id = null;
+			switch (intCompanyID) {
+			case 0:
+				id = CompanyID.FIRST;
+				break;
+			case 1:
+				id = CompanyID.SECOND;
+				break;
+			case 2:
+				id = CompanyID.THIRD;
+				break;
+			case 3:
+				id = CompanyID.FOURTH;
+				break;
+			default:
+				toContinue = false;
+				return;
 			}
-		} else {
-			while (true) {
-				int intCompanyID = RANDOMISER.nextInt(5);
-				CompanyID id = null;
-				switch (intCompanyID) {
-				case 1:
-					id = CompanyID.FIRST;
-					break;
-				case 2:
-					id = CompanyID.SECOND;
-					break;
-				case 3:
-					id = CompanyID.THIRD;
-					break;
-				case 4:
-					id = CompanyID.FOURTH;
-					break;
-				default:
-					return;
-				}
-				int availableShares = 0;
-				try {
-					availableShares = board.getAvailableSharesCount(id);
-				} catch (UnsupportedCompanyID e2) {
-					System.out.println("Not supported company ID");
-					continue;
-				}
-				if (availableShares < 1) {
-					System.out.println("No more shares for that company");
-					continue;
-				}
-				
-				int shareAmount = RANDOMISER.nextInt(availableShares);
-				try {
-					player.buyCompanyShares(shareAmount, id);
-				} catch (NotEnoughMoney e) {
-					System.out.println("Not enough moneys");
-					continue;
-				} catch (NotEnoughShares e) {
-					System.out.println("Not enough available shares");
-					continue;
-				} catch (UnsupportedCompanyID e) {
-					System.out.println("Not supported company ID");
-					continue;
-				}
+			int availableShares = 0;
+			try {
+				availableShares = board.getAvailableSharesCount(id);
+			} catch (UnsupportedCompanyID e2) {
+				System.out.println("Not supported company ID");
+				continue;
 			}
+			if (availableShares < 1) {
+				System.out.println("No more shares for that company");
+				continue;
+			}
+			
+			int shareAmount = RANDOMISER.nextInt(availableShares);
+			try {
+				player.buyCompanyShares(shareAmount, id);
+			} catch (NotEnoughMoney e) {
+				System.out.println("Not enough moneys");
+				continue;
+			} catch (NotEnoughShares e) {
+				System.out.println("Not enough available shares");
+				continue;
+			} catch (UnsupportedCompanyID e) {
+				System.out.println("Not supported company ID");
+				continue;
+			}
+			
+			int intToContinue = RANDOMISER.nextInt(2);
+			if (intToContinue == 0) 
+				toContinue = false;
 		}
 	}
 	
 	private void sellShares(Player player){
-		if (player.isHuman()) {
-			while (true) {
-				System.out.println(player.getName() + " choose company to sell shares: ");
-				System.out.println("\t1. First");
-				System.out.println("\t2. Second");
-				System.out.println("\t3. Third");
-				System.out.println("\t4. Fourth");
-				System.out.println("\t0. Skip");
-				int companyID = this.sc.nextInt();
-				if ((companyID < 0) || (companyID > 4)) {
-					continue;
-				}
-
-				CompanyID id = null;
-				switch (companyID) {
-				case 1:
-					id = CompanyID.FIRST;
-					break;
-				case 2:
-					id = CompanyID.SECOND;
-					break;
-				case 3:
-					id = CompanyID.THIRD;
-					break;
-				case 4:
-					id = CompanyID.FOURTH;
-					break;
-				default:
-					return;
-				}
-				Set<CompanyID> ownShares = player.getOwnCompanies();
-				if (ownShares == null) {
-					return;
-				}
-				if (!ownShares.contains(id)) {
-					System.out.println("You don't have shares of that company");
-					continue;
-				}
-
-				int availableShares = player.checkCompanyShares(id);
-				System.out.println(player.getName() + " choose the amount of the shares to sell (1 - " + availableShares + "): ");
-				int shareAmount = this.sc.nextInt();
-				if ((shareAmount < 0) || (shareAmount > availableShares)) {
-					System.err.println("Enter the right amount of shares");
-					continue;
-				}
-				if (shareAmount == 0) {
-					return;
-				}
-				try {
-					player.sellCompanyShares(shareAmount, id);
-				} catch (NotEnoughShares e) {
-					System.out.println("Not enough available shares");
-					continue;
-				} catch (UnsupportedCompanyID e) {
-					System.out.println("Not supported company ID");
-					continue;
-				}
+		List<CompanyID> forbidenIDs = player.getSellForbidden();
+		ArrayList<CompanyID> leftIDs = new ArrayList<CompanyID>();
+		leftIDs.add(CompanyID.FIRST);
+		leftIDs.add(CompanyID.SECOND);
+		leftIDs.add(CompanyID.THIRD);
+		leftIDs.add(CompanyID.FOURTH);
+		for (CompanyID companyID : forbidenIDs) {
+			leftIDs.remove(companyID);
+		}
+		int i = 0;
+		boolean toContinue = true;
+		
+		while (toContinue && (i < 5)) {
+			i++;
+			int intCompanyID = RANDOMISER.nextInt(leftIDs.size());
+			
+			CompanyID id = null;
+			switch (intCompanyID) {
+			case 1:
+				id = CompanyID.FIRST;
+				break;
+			case 2:
+				id = CompanyID.SECOND;
+				break;
+			case 3:
+				id = CompanyID.THIRD;
+				break;
+			case 4:
+				id = CompanyID.FOURTH;
+				break;
+			default:
+				return;
 			}
-		} else {
-			while (true) {
-//				System.out.println("");
-				int intCompanyID = RANDOMISER.nextInt(5);
-				CompanyID id = null;
-				switch (intCompanyID) {
-				case 1:
-					id = CompanyID.FIRST;
-					break;
-				case 2:
-					id = CompanyID.SECOND;
-					break;
-				case 3:
-					id = CompanyID.THIRD;
-					break;
-				case 4:
-					id = CompanyID.FOURTH;
-					break;
-				default:
-					return;
-				}
-				Set<CompanyID> ownShares = player.getOwnCompanies();
-				if (ownShares == null) {
-					return;
-				}
-				if (!ownShares.contains(id)) {
-					continue;
-				}
-				
-				int availableShares = player.checkCompanyShares(id);
-				int shareAmount = RANDOMISER.nextInt(availableShares);
-				try {
-					player.sellCompanyShares(shareAmount, id);
-				}  catch (NotEnoughShares e) {
-					System.out.println("Not enough available shares");
-					continue;
-				} catch (UnsupportedCompanyID e) {
-					System.out.println("Not supported company ID");
-					continue;
-				}
+			Set<CompanyID> ownShares = player.getOwnCompanies();
+			if (ownShares == null) {
+				return;
 			}
+			if (!ownShares.contains(id)) {
+				continue;
+			}
+			
+			int availableShares = player.checkCompanyShares(id);
+			int shareAmount = RANDOMISER.nextInt(availableShares);
+			try {
+				player.sellCompanyShares(shareAmount, id);
+			}  catch (NotEnoughShares e) {
+				System.out.println("Not enough available shares");
+				continue;
+			} catch (UnsupportedCompanyID e) {
+				System.out.println("Not supported company ID");
+				continue;
+			}
+			
+			int intToContinue = RANDOMISER.nextInt(2);
+			if (intToContinue == 0) 
+				toContinue = false;
 		}
 	}
 }
